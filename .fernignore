@@ -1,0 +1,11 @@
+# Hand-written high-level wrapper around the generated IsloClient
+Islo.ts
+
+# Hand-written extensions (auth/token providers, etc.)
+custom/
+
+# Customized to re-export hand-written wrappers
+index.ts
+
+# Hand-written TypeScript compiler config used by CI typecheck
+tsconfig.json
