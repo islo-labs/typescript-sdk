@@ -4,6 +4,7 @@
 
 # Hand-written high-level wrapper around the generated IsloApiClient
 src/Islo.ts
+Islo.ts
 
 # Hand-written extensions (auth/token providers, etc.)
 src/custom/
@@ -14,5 +15,7 @@ src/index.ts
 # Hand-written TypeScript compiler config used by CI typecheck
 tsconfig.json
 
-# Hand-written workflow that tags after Fern PR merges so ci.yml publishes
-.github/workflows/auto-tag.yml
+# Hand-written release workflow that fires after a Fern PR merges:
+# builds, publishes to npm via Trusted Publishing, and pushes the
+# v<version> tag.
+.github/workflows/release.yml
