@@ -1,11 +1,15 @@
-# Hand-written high-level wrapper around the generated IsloClient
-Islo.ts
+# This file itself — without this entry, Fern's next regen would replace
+# the list below with an empty template, losing all preservation rules.
+.fernignore
+
+# Hand-written high-level wrapper around the generated IsloApiClient
+src/Islo.ts
 
 # Hand-written extensions (auth/token providers, etc.)
-custom/
+src/custom/
 
 # Customized to re-export hand-written wrappers
-index.ts
+src/index.ts
 
 # Hand-written TypeScript compiler config used by CI typecheck
 tsconfig.json
