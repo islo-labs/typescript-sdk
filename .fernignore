@@ -1,3 +1,7 @@
+# This file itself — without this entry, Fern's next regen would replace
+# the list below with an empty template, losing all preservation rules.
+.fernignore
+
 # Hand-written high-level wrapper around the generated IsloClient
 Islo.ts
 
