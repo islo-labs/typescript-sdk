@@ -941,7 +941,7 @@ export class SandboxesClient {
         const { sandbox_id: sandboxId, since, include_subagents: includeSubagents } = request;
         const _queryParams: Record<string, unknown> = {
             since: since !== undefined ? since : undefined,
-            include_subagents: includeSubagents ?? "false",
+            include_subagents: includeSubagents,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -1045,7 +1045,7 @@ export class SandboxesClient {
         } = request;
         const _queryParams: Record<string, unknown> = {
             session_path: sessionPath,
-            include_descendants: includeDescendants ?? "true",
+            include_descendants: includeDescendants,
             limit,
             offset,
             since: since !== undefined ? since : undefined,
