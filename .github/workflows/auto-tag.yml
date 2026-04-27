@@ -1,0 +1,50 @@
+name: Auto-tag on Fern release
+
+# When Fern merges a regeneration PR into main, package.json's version is
+# bumped but no git tag is pushed — so the publish job in ci.yml (gated on
+# refs/tags/) never fires. This workflow reads the package version, creates
+# a v<version> tag if missing, and pushes it. That tag push then triggers
+# ci.yml -> publish.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-tag
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read package version
+        id: pkg
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Tag if missing
+        env:
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists; nothing to do."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$TAG"
+          git push origin "$TAG"
+          echo "Pushed $TAG"
