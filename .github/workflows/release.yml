@@ -1,0 +1,106 @@
+name: Release on version bump
+
+# When package.json's version on main is newer than the latest git tag, this
+# workflow runs build/test, publishes to npm via Trusted Publishing (OIDC),
+# and pushes a v<version> tag pointing at the release commit. Tag-after-
+# publish ensures a failed publish is retryable without manually deleting
+# a tag pointing at an unpublished version.
+#
+# Replaces the old auto-tag.yml -> ci.yml split. That split was broken
+# because tags pushed by GITHUB_TOKEN don't trigger downstream workflows,
+# so ci.yml's tag-gated publish job never fired on Fern bumps. ci.yml is
+# Fern-generated and stays as-is for PR/main checks; its publish job is
+# now a harmless backup that only fires on manual tag pushes.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - package.json
+
+permissions:
+  contents: write    # to push the v<version> tag
+  id-token: write    # for npm Trusted Publishing (OIDC)
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Read package version
+        id: pkg
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+
+      - name: Skip if tag already exists
+        id: check
+        env:
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists; skipping release."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.check.outputs.skip != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        if: steps.check.outputs.skip != 'true'
+        run: pnpm build
+
+      - name: Test
+        if: steps.check.outputs.skip != 'true'
+        run: pnpm test
+
+      - name: Publish to npm
+        if: steps.check.outputs.skip != 'true'
+        env:
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          publish() {  # use latest npm to ensure OIDC support
+            npx -y npm@latest publish "$@"
+          }
+          if [[ "$TAG" == *alpha* ]]; then
+            publish --access public --tag alpha
+          elif [[ "$TAG" == *beta* ]]; then
+            publish --access public --tag beta
+          else
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver "${PKG_VERSION}" -r "<${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing ${PKG_VERSION} with --tag backport (current latest is ${CURRENT_LATEST})"
+              publish --access public --tag backport
+            else
+              publish --access public
+            fi
+          fi
+
+      - name: Tag release
+        if: steps.check.outputs.skip != 'true'
+        env:
+          TAG: ${{ steps.pkg.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$TAG"
+          git push origin "$TAG"
