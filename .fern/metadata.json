@@ -1,0 +1,24 @@
+{
+    "cliVersion": "4.60.0",
+    "generatorName": "fernapi/fern-typescript-node-sdk",
+    "generatorVersion": "3.65.5",
+    "generatorConfig": {
+        "namespaceExport": "IsloApi",
+        "allowCustomFetcher": true,
+        "includeApiReference": true,
+        "noSerdeLayer": true,
+        "useBrandedStringAliases": false,
+        "packageJson": {
+            "name": "@islo-labs/sdk",
+            "description": "Official TypeScript SDK for islo.dev",
+            "repository": "https://github.com/islo-labs/typescript-sdk",
+            "license": "MIT",
+            "keywords": ["islo", "sdk", "sandbox", "ai-agents", "api-client"],
+            "publishConfig": {
+                "access": "public"
+            }
+        }
+    },
+    "originGitCommit": "58da0c82f202456f8e32935d22fffe1d911b9862",
+    "sdkVersion": "0.0.14"
+}
