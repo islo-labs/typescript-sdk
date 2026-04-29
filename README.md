@@ -126,7 +126,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { IsloApiClient } from "@islo-labs/sdk";
 
-const client = new IsloApiClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN", publicTenantId: "YOUR_PUBLIC_TENANT_ID", publicUserId: "YOUR_PUBLIC_USER_ID" });
+const client = new IsloApiClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
 await client.sandboxes.createSandbox();
 ```
 

@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
@@ -62,10 +62,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -142,10 +138,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -237,10 +229,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -314,10 +302,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -396,10 +380,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -479,10 +459,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -541,6 +517,184 @@ export class SandboxesClient {
     }
 
     /**
+     * Snapshot the sandbox VM state to disk and free CPU/memory. The sandbox can be resumed later.
+     *
+     * @param {IsloApi.PauseSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.sandboxes.pauseSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public pauseSandbox(
+        request: IsloApi.PauseSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__pauseSandbox(request, requestOptions));
+    }
+
+    private async __pauseSandbox(
+        request: IsloApi.PauseSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/pause`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/pause",
+        );
+    }
+
+    /**
+     * Resume a paused sandbox from its local snapshot.
+     *
+     * @param {IsloApi.ResumeSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.sandboxes.resumeSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public resumeSandbox(
+        request: IsloApi.ResumeSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__resumeSandbox(request, requestOptions));
+    }
+
+    private async __resumeSandbox(
+        request: IsloApi.ResumeSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/resume`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/resume",
+        );
+    }
+
+    /**
      * Promote the sandbox's tool cache to golden cache for reuse.
      *
      * @param {IsloApi.PromoteSandboxCacheRequest} request
@@ -571,10 +725,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -661,10 +811,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -756,10 +902,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -852,10 +994,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -947,10 +1085,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1054,10 +1188,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1149,10 +1279,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1244,10 +1370,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1339,10 +1461,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1434,10 +1552,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1528,10 +1642,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1619,10 +1729,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -1709,10 +1815,6 @@ export class SandboxesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

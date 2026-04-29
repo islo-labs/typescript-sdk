@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -53,10 +53,6 @@ export class SnapshotsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -135,10 +131,6 @@ export class SnapshotsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -230,10 +222,6 @@ export class SnapshotsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -312,10 +300,6 @@ export class SnapshotsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

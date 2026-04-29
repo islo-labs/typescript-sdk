@@ -386,6 +386,136 @@ await client.sandboxes.stopSandbox({
 </dl>
 </details>
 
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">pauseSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Snapshot the sandbox VM state to disk and free CPU/memory. The sandbox can be resumed later.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.pauseSandbox({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.PauseSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">resumeSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resume a paused sandbox from its local snapshot.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.resumeSandbox({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ResumeSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">promoteSandboxCache</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>

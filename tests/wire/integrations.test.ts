@@ -7,13 +7,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("IntegrationsClient", () => {
     test("list_integration_providers", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { providers: [{ name: "name", hosts: ["hosts"] }] };
 
@@ -31,13 +25,7 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { integrations: [{ provider: "provider", connected: true, level: "user" }] };
 
@@ -49,13 +37,7 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -68,13 +50,7 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { key: "value" };
 
@@ -87,13 +63,7 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             provider: "provider",
@@ -129,13 +99,7 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -156,13 +120,7 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -183,13 +141,7 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { key: "value" };
 
@@ -210,13 +162,7 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { key: "value" };
 
@@ -236,13 +182,7 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -263,13 +203,7 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -290,13 +224,7 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -317,13 +245,7 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new IsloApiClient({
-            maxRetries: 0,
-            token: "test",
-            publicTenantId: "test",
-            publicUserId: "test",
-            environment: server.baseUrl,
-        });
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
         const rawResponseBody = { key: "value" };
 
