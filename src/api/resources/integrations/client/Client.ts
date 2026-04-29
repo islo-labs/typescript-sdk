@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -43,14 +43,7 @@ export class IntegrationsClient {
     private async __listIntegrationProviders(
         requestOptions?: IntegrationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.IntegrationProvidersResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -108,10 +101,6 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -187,10 +176,6 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -277,10 +262,6 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "x-public-tenant-id": requestOptions?.publicTenantId ?? this._options?.publicTenantId,
-                "x-public-user-id": requestOptions?.publicUserId ?? this._options?.publicUserId,
-            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

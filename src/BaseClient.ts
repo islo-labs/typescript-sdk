@@ -8,10 +8,6 @@ export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    /** Override the x-public-tenant-id header */
-    publicTenantId?: core.Supplier<(string | null) | undefined>;
-    /** Override the x-public-user-id header */
-    publicUserId?: core.Supplier<(string | null) | undefined>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -32,10 +28,6 @@ export interface BaseRequestOptions {
     maxRetries?: number;
     /** A hook to abort the request. */
     abortSignal?: AbortSignal;
-    /** Override the x-public-tenant-id header */
-    publicTenantId?: (string | null) | undefined;
-    /** Override the x-public-user-id header */
-    publicUserId?: (string | null) | undefined;
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
@@ -59,12 +51,10 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "@islo-labs/sdk",
-            "X-Fern-SDK-Version": "0.0.15",
-            "User-Agent": "@islo-labs/sdk/0.0.15",
+            "X-Fern-SDK-Version": "0.0.16",
+            "User-Agent": "@islo-labs/sdk/0.0.16",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
-            "x-public-tenant-id": options?.publicTenantId,
-            "x-public-user-id": options?.publicUserId,
         },
         options?.headers,
     );

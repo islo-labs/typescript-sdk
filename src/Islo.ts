@@ -43,20 +43,20 @@ export class Islo extends IsloApiClient {
         const baseUrl = options.baseUrl ?? readEnv(ENV_BASE_URL) ?? DEFAULT_BASE_URL;
         const apiKey = options.apiKey ?? readEnv(ENV_API_KEY);
 
-        let token = options.token;
-        if (token == null && apiKey != null) {
+        let bearer: BaseClientOptions["apiKey"];
+        if (apiKey != null) {
             const provider = new TokenProvider({
                 baseUrl,
                 apiKey,
                 refreshMarginSec: options.refreshMarginSec,
             });
-            token = () => provider.getToken();
+            bearer = () => provider.getToken();
         }
 
         super({
             ...options,
             environment: baseUrl,
-            token,
+            apiKey: bearer,
         });
     }
 }
