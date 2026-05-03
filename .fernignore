@@ -6,6 +6,12 @@
 src/Islo.ts
 Islo.ts
 
+# Hand-edited so all snippets reference the `Islo` wrapper instead of
+# the generated `IsloApiClient`. Fern's TS generator can't redirect
+# snippets to a hand-written class (Python/Go can; TS cannot — see
+# https://buildwithfern.com/learn/sdks/generators/typescript/configuration).
+README.md
+
 # Hand-written extensions (auth/token providers, etc.)
 src/custom/
 
