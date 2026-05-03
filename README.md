@@ -81,17 +81,6 @@ const client = new Islo(); // Picks up ISLO_API_KEY automatically
 const client = new Islo({ apiKey: "your-api-key" });
 ```
 
-### Custom token provider
-
-```typescript
-import { IsloClient } from "@islo-labs/sdk";
-
-const client = new IsloClient({
-    environment: "https://api.islo.dev",
-    token: async () => fetchTokenFromYourAuthService(),
-});
-```
-
 ## Configuration
 
 | Environment Variable | Description | Default |
@@ -124,9 +113,9 @@ A full reference for this library is available [here](https://github.com/islo-la
 Instantiate and use the client with the following:
 
 ```typescript
-import { IsloApiClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloApiClient({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+const client = new Islo({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
 await client.sandboxes.createSandbox();
 ```
 
@@ -180,9 +169,9 @@ const client = new SandboxesClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { IsloApiClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloApiClient({
+const client = new Islo({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -267,9 +256,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { IsloApiClient, logging } from "@islo-labs/sdk";
+import { Islo, logging } from "@islo-labs/sdk";
 
-const client = new IsloApiClient({
+const client = new Islo({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
@@ -351,9 +340,9 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { IsloApiClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloApiClient({
+const client = new Islo({
     ...
     fetcher: // provide your implementation here
 });
