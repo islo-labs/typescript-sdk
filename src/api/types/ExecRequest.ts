@@ -13,8 +13,8 @@ export interface ExecRequest {
     workdir?: (string | null) | undefined;
     /** Environment variables to inject into this execution session */
     env?: (Record<string, string | null> | null) | undefined;
-    /** Tmux session name. For POST /exec, creates a detached tmux session (replace semantics - kills any existing session with the same name). For WebSocket /exec, uses attach-or-create semantics (interactive). Ignored for POST /exec/stream. */
-    session?: (string | null) | undefined;
+    /** Optional client-side timeout hint. Currently accepted for API compatibility. */
+    timeout_secs?: (number | null) | undefined;
     /** User to run the command as (e.g., 'islo'). If not provided, uses image default. */
     user?: (string | null) | undefined;
 }

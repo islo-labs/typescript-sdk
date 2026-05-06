@@ -1,3 +1,4 @@
+export type { CreateSessionRequest } from "./CreateSessionRequest.js";
 export type { DeleteSandboxRequest } from "./DeleteSandboxRequest.js";
 export type { DownloadArchiveRequest } from "./DownloadArchiveRequest.js";
 export type { DownloadFileRequest } from "./DownloadFileRequest.js";
@@ -9,9 +10,11 @@ export type { GetExecSessionAsciinemaRequest } from "./GetExecSessionAsciinemaRe
 export type { GetExecSessionLogsRequest } from "./GetExecSessionLogsRequest.js";
 export type { GetSandboxByIdSandboxesByIdSandboxIdGetRequest } from "./GetSandboxByIdSandboxesByIdSandboxIdGetRequest.js";
 export type { GetSandboxRequest } from "./GetSandboxRequest.js";
+export type { KillSessionRequest } from "./KillSessionRequest.js";
 export type { ListAgentSessionsRequest } from "./ListAgentSessionsRequest.js";
 export type { ListExecSessionsRequest } from "./ListExecSessionsRequest.js";
 export type { ListSandboxesRequest } from "./ListSandboxesRequest.js";
+export type { ListSessionsRequest } from "./ListSessionsRequest.js";
 export type { PauseSandboxRequest } from "./PauseSandboxRequest.js";
 export type { PromoteSandboxCacheRequest } from "./PromoteSandboxCacheRequest.js";
 export type { ResumeSandboxRequest } from "./ResumeSandboxRequest.js";

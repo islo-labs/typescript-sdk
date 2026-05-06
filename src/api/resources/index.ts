@@ -1,3 +1,5 @@
+export * from "./credits/client/requests/index.js";
+export * as credits from "./credits/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";
 export * as gatewayProfiles from "./gatewayProfiles/index.js";
 export * from "./integrations/client/requests/index.js";

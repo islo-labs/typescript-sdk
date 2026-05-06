@@ -13,7 +13,9 @@ export interface SandboxResponse {
     network?: (IsloApi.SandboxNetwork | null) | undefined;
     spec: IsloApi.SandboxSpec;
     workdir?: (string | null) | undefined;
+    setup_steps?: (IsloApi.SetupStepResult[] | null) | undefined;
     created_at?: (string | null) | undefined;
     created_by?: (string | null) | undefined;
+    created_by_entity?: (string | null) | undefined;
     deleted_at?: (string | null) | undefined;
 }
