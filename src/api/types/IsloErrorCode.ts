@@ -15,6 +15,7 @@ export const IsloErrorCode = {
     ResourceNotFound: "RESOURCE_NOT_FOUND",
     CacheConflict: "CACHE_CONFLICT",
     RateLimited: "RATE_LIMITED",
+    InsufficientCredits: "INSUFFICIENT_CREDITS",
     ValidationError: "VALIDATION_ERROR",
     InvalidRequest: "INVALID_REQUEST",
     UpstreamError: "UPSTREAM_ERROR",

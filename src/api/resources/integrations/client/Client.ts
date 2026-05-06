@@ -25,9 +25,11 @@ export class IntegrationsClient {
     }
 
     /**
-     * List available integration providers.
+     * List available preset providers and their pre-provisioned Descope apps.
      *
-     * Returns provider names and their supported hosts.
+     * The ``apps`` array carries every (auth_method, scope) -> app_id combo a
+     * preset supports, so the modal can resolve the right ``app_id`` locally
+     * and skip a server round-trip on the connect path.
      *
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -75,10 +77,15 @@ export class IntegrationsClient {
     }
 
     /**
-     * List all integrations for the current user and tenant.
+     * List the integrations the user/tenant has connected.
      *
-     * Shows both user-level and tenant-level integrations.
-     * User-level integrations take precedence in display.
+     * Includes preset providers (from the PROVIDERS registry) and tenant-scoped
+     * custom outbound apps (filtered out of Descope's load_all_applications).
+     * Returns one entry per connected (provider, scope, auth_type) slot, so a
+     * provider with both a personal api_key and a personal oauth token will
+     * appear twice. Disconnected slots are not emitted; clients that need a
+     * list of available-but-not-connected providers should call
+     * ``GET /integrations/providers`` instead.
      *
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -141,6 +148,274 @@ export class IntegrationsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations");
+    }
+
+    /**
+     * List custom service definitions in the current tenant (catalog view).
+     *
+     * Returns every custom Descope app belonging to the tenant regardless of
+     * connection status, so the Add Integration picker can surface them for
+     * any tenant member to connect to. Connection state (per-user/per-workspace
+     * tokens) lives on ``GET /integrations``; this endpoint is purely the
+     * service catalog.
+     *
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.integrations.listCustomServices()
+     */
+    public listCustomServices(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.CustomServicesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listCustomServices(requestOptions));
+    }
+
+    private async __listCustomServices(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.CustomServicesResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "integrations/custom-services",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.CustomServicesResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/custom-services");
+    }
+
+    /**
+     * Create a tenant-scoped custom Descope outbound app.
+     *
+     * Returns the ``app_id`` so the frontend can immediately kick off the
+     * connect flow (OAuth) or surface the API key form. Presets do not pass
+     * through this endpoint -- their app ids come straight from
+     * ``GET /integrations/providers``.
+     *
+     * @param {IsloApi.CustomServiceCreateRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.BadRequestError}
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.integrations.createCustomService({
+     *         custom: {
+     *             name: "name",
+     *             slug: "slug"
+     *         }
+     *     })
+     */
+    public createCustomService(
+        request: IsloApi.CustomServiceCreateRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.CustomServiceCreateResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createCustomService(request, requestOptions));
+    }
+
+    private async __createCustomService(
+        request: IsloApi.CustomServiceCreateRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.CustomServiceCreateResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "integrations/custom-services",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.CustomServiceCreateResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/integrations/custom-services",
+        );
+    }
+
+    /**
+     * Disconnect a custom integration by its Descope app ID.
+     *
+     * Authorization is by deterministic-ID prefix: only apps whose ID matches
+     * ``cust-{tenant-prefix}-`` are accepted, which scopes the operation to the
+     * caller's workspace without a DB lookup. ``scope`` selects which side's
+     * tokens to revoke (per-user vs tenant-wide); ``delete_app=true`` removes
+     * the Descope app entirely (affects every user in the workspace).
+     *
+     * @param {IsloApi.DisconnectCustomIntegrationRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.BadRequestError}
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.integrations.disconnectCustomIntegration({
+     *         descope_app_id: "descope_app_id"
+     *     })
+     */
+    public disconnectCustomIntegration(
+        request: IsloApi.DisconnectCustomIntegrationRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, unknown>> {
+        return core.HttpResponsePromise.fromPromise(this.__disconnectCustomIntegration(request, requestOptions));
+    }
+
+    private async __disconnectCustomIntegration(
+        request: IsloApi.DisconnectCustomIntegrationRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, unknown>>> {
+        const { descope_app_id: descopeAppId, scope, delete_app: deleteApp } = request;
+        const _queryParams: Record<string, unknown> = {
+            scope: scope != null ? scope : undefined,
+            delete_app: deleteApp,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                `integrations/custom/${core.url.encodePathParam(descopeAppId)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as Record<string, unknown>, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/integrations/custom/{descope_app_id}",
+        );
     }
 
     /**
@@ -229,6 +504,7 @@ export class IntegrationsClient {
      * Args:
      *     provider: Provider name
      *     level: Which level to disconnect (USER or TENANT)
+     *     auth_type: Optional. Defaults to provider's primary type.
      *
      * @param {IsloApi.DisconnectIntegrationRequest} request
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -254,9 +530,10 @@ export class IntegrationsClient {
         request: IsloApi.DisconnectIntegrationRequest,
         requestOptions?: IntegrationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, unknown>>> {
-        const { provider, level } = request;
+        const { provider, level, auth_type: authType } = request;
         const _queryParams: Record<string, unknown> = {
             level: level != null ? level : undefined,
+            auth_type: authType !== undefined ? authType : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

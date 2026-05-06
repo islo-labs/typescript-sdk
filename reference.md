@@ -256,7 +256,7 @@ await client.sandboxes.getSandbox({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">deleteSandbox</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">deleteSandbox</a>({ ...params }) -> unknown</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +268,7 @@ await client.sandboxes.getSandbox({
 <dl>
 <dd>
 
-Stop and permanently remove a sandbox.
+Mark a sandbox for deletion. VM teardown happens asynchronously.
 </dd>
 </dl>
 </dd>
@@ -321,7 +321,7 @@ await client.sandboxes.deleteSandbox({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">stopSandbox</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">stopSandbox</a>({ ...params }) -> unknown</code></summary>
 <dl>
 <dd>
 
@@ -333,7 +333,7 @@ await client.sandboxes.deleteSandbox({
 <dl>
 <dd>
 
-Stop a sandbox (destroy VM) but keep the record visible.
+Stop a sandbox. VM teardown happens asynchronously; the record stays visible.
 </dd>
 </dl>
 </dd>
@@ -562,6 +562,205 @@ await client.sandboxes.promoteSandboxCache({
 <dd>
 
 **request:** `IsloApi.PromoteSandboxCacheRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listSessions</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List active persistent sessions in a sandbox.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.listSessions({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSessionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">createSession</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a persistent session in a sandbox.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.createSession({
+    sandbox_name: "sandbox_name",
+    body: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateSessionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">killSession</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Kill a persistent session in a sandbox.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.killSession({
+    sandbox_name: "sandbox_name",
+    session_name: "session_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.KillSessionRequest` 
     
 </dd>
 </dl>
@@ -1634,6 +1833,153 @@ await client.snapshots.deleteSnapshot({
 </dl>
 </details>
 
+## Credits
+<details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">getCreditBalance</a>() -> IsloApi.CreditBalance</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.credits.getCreditBalance();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `CreditsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">createCreditCheckout</a>({ ...params }) -> IsloApi.CreateCheckoutResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.credits.createCreditCheckout({
+    amount_cents: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateCheckoutRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CreditsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">handlePaddleWebhook</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.credits.handlePaddleWebhook({
+    "paddle-signature": "paddleSignature",
+    body: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.HandlePaddleWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CreditsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## integrations
 <details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationProviders</a>() -> IsloApi.IntegrationProvidersResponse</code></summary>
 <dl>
@@ -1647,9 +1993,11 @@ await client.snapshots.deleteSnapshot({
 <dl>
 <dd>
 
-List available integration providers.
+List available preset providers and their pre-provisioned Descope apps.
 
-Returns provider names and their supported hosts.
+The ``apps`` array carries every (auth_method, scope) -> app_id combo a
+preset supports, so the modal can resolve the right ``app_id`` locally
+and skip a server round-trip on the connect path.
 </dd>
 </dl>
 </dd>
@@ -1704,10 +2052,15 @@ await client.integrations.listIntegrationProviders();
 <dl>
 <dd>
 
-List all integrations for the current user and tenant.
+List the integrations the user/tenant has connected.
 
-Shows both user-level and tenant-level integrations.
-User-level integrations take precedence in display.
+Includes preset providers (from the PROVIDERS registry) and tenant-scoped
+custom outbound apps (filtered out of Descope's load_all_applications).
+Returns one entry per connected (provider, scope, auth_type) slot, so a
+provider with both a personal api_key and a personal oauth token will
+appear twice. Disconnected slots are not emitted; clients that need a
+list of available-but-not-connected providers should call
+``GET /integrations/providers`` instead.
 </dd>
 </dl>
 </dd>
@@ -1734,6 +2087,211 @@ await client.integrations.listIntegrations();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listCustomServices</a>() -> IsloApi.CustomServicesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List custom service definitions in the current tenant (catalog view).
+
+Returns every custom Descope app belonging to the tenant regardless of
+connection status, so the Add Integration picker can surface them for
+any tenant member to connect to. Connection state (per-user/per-workspace
+tokens) lives on ``GET /integrations``; this endpoint is purely the
+service catalog.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.listCustomServices();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">createCustomService</a>({ ...params }) -> IsloApi.CustomServiceCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a tenant-scoped custom Descope outbound app.
+
+Returns the ``app_id`` so the frontend can immediately kick off the
+connect flow (OAuth) or surface the API key form. Presets do not pass
+through this endpoint -- their app ids come straight from
+``GET /integrations/providers``.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.createCustomService({
+    custom: {
+        name: "name",
+        slug: "slug"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CustomServiceCreateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">disconnectCustomIntegration</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disconnect a custom integration by its Descope app ID.
+
+Authorization is by deterministic-ID prefix: only apps whose ID matches
+``cust-{tenant-prefix}-`` are accepted, which scopes the operation to the
+caller's workspace without a DB lookup. ``scope`` selects which side's
+tokens to revoke (per-user vs tenant-wide); ``delete_app=true`` removes
+the Descope app entirely (affects every user in the workspace).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.disconnectCustomIntegration({
+    descope_app_id: "descope_app_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DisconnectCustomIntegrationRequest` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -1834,6 +2392,7 @@ Disconnect/revoke an integration.
 Args:
     provider: Provider name
     level: Which level to disconnect (USER or TENANT)
+    auth_type: Optional. Defaults to provider's primary type.
 </dd>
 </dl>
 </dd>

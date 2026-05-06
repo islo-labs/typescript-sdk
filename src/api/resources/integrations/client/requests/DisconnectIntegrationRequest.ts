@@ -11,4 +11,6 @@ import type * as IsloApi from "../../../../index.js";
 export interface DisconnectIntegrationRequest {
     provider: string;
     level?: IsloApi.IntegrationLevel;
+    /** oauth or api_key */
+    auth_type?: IsloApi.AuthMethod | null;
 }

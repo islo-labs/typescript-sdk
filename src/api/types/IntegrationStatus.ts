@@ -4,9 +4,18 @@ import type * as IsloApi from "../index.js";
 
 /**
  * Status of a single integration (for list view).
+ *
+ * ``provider`` is the stable identifier (preset id or custom slug).
+ * ``display_name`` carries the human-readable label for customs (the
+ * free-form text the creator typed); presets surface their static name
+ * via the frontend's preset catalog so this stays None for them.
  */
 export interface IntegrationStatus {
     provider: string;
     connected: boolean;
     level?: (IsloApi.IntegrationLevel | null) | undefined;
+    auth_method?: (IsloApi.AuthMethod | null) | undefined;
+    descope_app_id?: (string | null) | undefined;
+    preset_id?: (string | null) | undefined;
+    display_name?: (string | null) | undefined;
 }

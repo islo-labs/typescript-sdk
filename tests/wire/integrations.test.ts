@@ -9,7 +9,11 @@ describe("IntegrationsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
-        const rawResponseBody = { providers: [{ name: "name", hosts: ["hosts"] }] };
+        const rawResponseBody = {
+            providers: [
+                { name: "name", hosts: ["hosts"], apps: [{ auth_method: "oauth", scope: "user", app_id: "app_id" }] },
+            ],
+        };
 
         server
             .mockEndpoint()
@@ -27,7 +31,19 @@ describe("IntegrationsClient", () => {
         const server = mockServerPool.createServer();
         const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
 
-        const rawResponseBody = { integrations: [{ provider: "provider", connected: true, level: "user" }] };
+        const rawResponseBody = {
+            integrations: [
+                {
+                    provider: "provider",
+                    connected: true,
+                    level: "user",
+                    auth_method: "oauth",
+                    descope_app_id: "descope_app_id",
+                    preset_id: "preset_id",
+                    display_name: "display_name",
+                },
+            ],
+        };
 
         server.mockEndpoint().get("/integrations").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -58,6 +74,267 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.listIntegrations();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("list_custom_services (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            services: [{ descope_app_id: "descope_app_id", name: "name", slug: "slug", auth_method: "oauth" }],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/custom-services")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.listCustomServices();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_custom_services (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/custom-services")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.listCustomServices();
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("list_custom_services (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/custom-services")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.listCustomServices();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("create_custom_service (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { custom: { name: "name", slug: "slug" } };
+        const rawResponseBody = { app_id: "app_id", name: "name", slug: "slug", auth_method: "oauth" };
+
+        server
+            .mockEndpoint()
+            .post("/integrations/custom-services")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.createCustomService({
+            custom: {
+                name: "name",
+                slug: "slug",
+            },
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("create_custom_service (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { custom: { name: "name", slug: "slug" } };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/integrations/custom-services")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.createCustomService({
+                custom: {
+                    name: "name",
+                    slug: "slug",
+                },
+            });
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("create_custom_service (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { custom: { name: "name", slug: "slug" } };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/integrations/custom-services")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.createCustomService({
+                custom: {
+                    name: "name",
+                    slug: "slug",
+                },
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("create_custom_service (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const rawRequestBody = { custom: { name: "name", slug: "slug" } };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/integrations/custom-services")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.createCustomService({
+                custom: {
+                    name: "name",
+                    slug: "slug",
+                },
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("disconnect_custom_integration (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/integrations/custom/descope_app_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.disconnectCustomIntegration({
+            descope_app_id: "descope_app_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("disconnect_custom_integration (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/integrations/custom/descope_app_id")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.disconnectCustomIntegration({
+                descope_app_id: "descope_app_id",
+            });
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("disconnect_custom_integration (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/integrations/custom/descope_app_id")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.disconnectCustomIntegration({
+                descope_app_id: "descope_app_id",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("disconnect_custom_integration (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/integrations/custom/descope_app_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.disconnectCustomIntegration({
+                descope_app_id: "descope_app_id",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("disconnect_custom_integration (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new IsloApiClient({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .delete("/integrations/custom/descope_app_id")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.disconnectCustomIntegration({
+                descope_app_id: "descope_app_id",
+            });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
