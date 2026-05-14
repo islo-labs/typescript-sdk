@@ -1,3 +1,5 @@
+export * from "./cloudRoles/client/requests/index.js";
+export * as cloudRoles from "./cloudRoles/index.js";
 export * from "./credits/client/requests/index.js";
 export * as credits from "./credits/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";
