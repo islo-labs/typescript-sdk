@@ -9,6 +9,7 @@ export interface GatewayProfileDetailResponse {
     default_action: string;
     internet_enabled: boolean;
     is_default: boolean;
+    cloud_role?: (IsloApi.CloudRoleRef | null) | undefined;
     rule_count?: number | undefined;
     created_at?: (string | null) | undefined;
     updated_at?: (string | null) | undefined;

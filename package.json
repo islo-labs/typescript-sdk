@@ -1,6 +1,6 @@
 {
     "name": "@islo-labs/sdk",
-    "version": "0.0.17",
+    "version": "0.0.18",
     "private": false,
     "repository": {
         "type": "git",
@@ -76,6 +76,28 @@
                 "default": "./dist/cjs/api/resources/gatewayProfiles/exports.js"
             },
             "default": "./dist/cjs/api/resources/gatewayProfiles/exports.js"
+        },
+        "./cloudRoles": {
+            "import": {
+                "types": "./dist/esm/api/resources/cloudRoles/exports.d.mts",
+                "default": "./dist/esm/api/resources/cloudRoles/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/cloudRoles/exports.d.ts",
+                "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
+        },
+        "./gatewayInternal": {
+            "import": {
+                "types": "./dist/esm/api/resources/gatewayInternal/exports.d.mts",
+                "default": "./dist/esm/api/resources/gatewayInternal/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/gatewayInternal/exports.d.ts",
+                "default": "./dist/cjs/api/resources/gatewayInternal/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/gatewayInternal/exports.js"
         },
         "./package.json": "./package.json"
     },
