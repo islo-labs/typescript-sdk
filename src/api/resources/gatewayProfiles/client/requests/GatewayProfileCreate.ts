@@ -14,4 +14,6 @@ export interface GatewayProfileCreate {
     default_action?: IsloApi.GatewayAction;
     internet_enabled?: boolean;
     is_default?: boolean;
+    /** Cloud role name or public_id */
+    cloud_role?: string | null;
 }
