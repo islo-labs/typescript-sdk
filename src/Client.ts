@@ -10,14 +10,14 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace IsloApiClient {
+export declare namespace Islo {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class IsloApiClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<IsloApiClient.Options>;
+export class Islo {
+    protected readonly _options: NormalizedClientOptionsWithAuth<Islo.Options>;
     protected _sandboxes: SandboxesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
     protected _credits: CreditsClient | undefined;
@@ -25,7 +25,7 @@ export class IsloApiClient {
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
     protected _cloudRoles: CloudRolesClient | undefined;
 
-    constructor(options: IsloApiClient.Options) {
+    constructor(options: Islo.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
