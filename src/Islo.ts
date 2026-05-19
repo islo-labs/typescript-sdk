@@ -6,7 +6,7 @@
  */
 
 import type { BaseClientOptions } from "./BaseClient.js";
-import { IsloApiClient } from "./Client.js";
+import { Islo as FernIslo } from "./Client.js";
 import { TokenProvider } from "./custom/tokenProvider.js";
 
 const DEFAULT_BASE_URL = "https://api.islo.dev";
@@ -38,7 +38,7 @@ export declare namespace Islo {
     }
 }
 
-export class Islo extends IsloApiClient {
+export class Islo extends FernIslo {
     constructor(options: Islo.Options = {}) {
         const baseUrl = options.baseUrl ?? readEnv(ENV_BASE_URL) ?? DEFAULT_BASE_URL;
         const apiKey = options.apiKey ?? readEnv(ENV_API_KEY);
