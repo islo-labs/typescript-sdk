@@ -3,7 +3,10 @@
     "generatorName": "fernapi/fern-typescript-node-sdk",
     "generatorVersion": "3.65.5",
     "generatorConfig": {
-        "namespaceExport": "IsloApi",
+        "naming": {
+            "namespace": "IsloApi",
+            "client": "Islo"
+        },
         "allowCustomFetcher": true,
         "includeApiReference": true,
         "noSerdeLayer": true,
@@ -19,10 +22,10 @@
             }
         }
     },
-    "originGitCommit": "bf66a357f78a55fffb0f9c241f593f42ec98210b",
+    "originGitCommit": "9d31fb0158e9491fb4394323b1a8effd38f36157",
     "originGitCommitIsDirty": false,
     "invokedBy": "ci",
     "requestedVersion": null,
     "ciProvider": "github",
-    "sdkVersion": "0.0.18"
+    "sdkVersion": "0.0.19"
 }
