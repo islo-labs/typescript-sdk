@@ -2,6 +2,7 @@
 
 import { CloudRolesClient } from "./api/resources/cloudRoles/client/Client.js";
 import { CreditsClient } from "./api/resources/credits/client/Client.js";
+import { GatewayInternalClient } from "./api/resources/gatewayInternal/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
 import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
@@ -10,22 +11,23 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
-export declare namespace IsloApiClient {
+export declare namespace Islo {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class IsloApiClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<IsloApiClient.Options>;
+export class Islo {
+    protected readonly _options: NormalizedClientOptionsWithAuth<Islo.Options>;
     protected _sandboxes: SandboxesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
     protected _credits: CreditsClient | undefined;
     protected _integrations: IntegrationsClient | undefined;
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
     protected _cloudRoles: CloudRolesClient | undefined;
+    protected _gatewayInternal: GatewayInternalClient | undefined;
 
-    constructor(options: IsloApiClient.Options) {
+    constructor(options: Islo.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
@@ -51,6 +53,10 @@ export class IsloApiClient {
 
     public get cloudRoles(): CloudRolesClient {
         return (this._cloudRoles ??= new CloudRolesClient(this._options));
+    }
+
+    public get gatewayInternal(): GatewayInternalClient {
+        return (this._gatewayInternal ??= new GatewayInternalClient(this._options));
     }
 
     /**
