@@ -1,4 +1,790 @@
 # Reference
+<details><summary><code>client.<a href="/src/Client.ts">healthcheck</a>() -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.healthcheck();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `Islo.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## api-keys
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listApiKeys</a>() -> IsloApi.ApiKeyResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all API keys for the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.listApiKeys();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">createApiKey</a>({ ...params }) -> IsloApi.CreateApiKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new API key for the tenant. The key secret is only returned once.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.createApiKey({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">getApiKey</a>({ ...params }) -> IsloApi.ApiKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details of a specific API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.getApiKey({
+    api_key_id: "api_key_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">deleteApiKey</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an API key. This cannot be undone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.deleteApiKey({
+    api_key_id: "api_key_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">deactivateApiKey</a>({ ...params }) -> IsloApi.ApiKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deactivate an API key. It can be reactivated later.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.deactivateApiKey({
+    api_key_id: "api_key_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeactivateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">activateApiKey</a>({ ...params }) -> IsloApi.ApiKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Reactivate a previously deactivated API key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.activateApiKey({
+    api_key_id: "api_key_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ActivateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## users
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">authorizeUser</a>() -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.users.authorizeUser();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">inviteUser</a>({ ...params }) -> IsloApi.InviteUserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Invite a user to join the current tenant.
+Sends an invitation email via Loops.so.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.users.inviteUser({
+    email: "email"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.InviteUserRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsersClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## tenants
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">listTenants</a>() -> IsloApi.PublicTenant[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.listTenants();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `TenantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">createTenant</a>({ ...params }) -> IsloApi.CreateTenantResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.createTenant({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateTenant` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TenantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">getSubscription</a>() -> IsloApi.PublicSubscription</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.getSubscription();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `TenantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">getTenantSettings</a>() -> IsloApi.TenantSettingsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all tenant settings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.getTenantSettings();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `TenantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">updateTenantSettings</a>({ ...params }) -> IsloApi.TenantSettingsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partial update tenant settings (deep merge).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.tenants.updateTenantSettings({
+    data: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.TenantSettingsUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `TenantsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## sandboxes
 <details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listSandboxes</a>({ ...params }) -> IsloApi.PaginatedSandboxResponse</code></summary>
 <dl>
@@ -1833,6 +2619,424 @@ await client.snapshots.deleteSnapshot({
 </dl>
 </details>
 
+## certificate-authority
+<details><summary><code>client.certificateAuthority.<a href="/src/api/resources/certificateAuthority/client/Client.ts">getCaPublicKey</a>() -> IsloApi.CaPublicKeyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the CA public key for trusting SSH certificates (unauthenticated).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.certificateAuthority.getCaPublicKey();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `CertificateAuthorityClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.certificateAuthority.<a href="/src/api/resources/certificateAuthority/client/Client.ts">createSshCertificate</a>({ ...params }) -> IsloApi.SshCertificateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sign an SSH public key with the ISLO CA for sandbox access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.certificateAuthority.createSshCertificate({
+    public_key: "public_key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SshCertificateRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CertificateAuthorityClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## shares
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">listShares</a>({ ...params }) -> IsloApi.ShareResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List active shares for a sandbox.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.listShares({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSharesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">createShare</a>({ ...params }) -> IsloApi.ShareResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a shareable URL for a sandbox port.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.createShare({
+    sandbox_name: "sandbox_name",
+    port: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateShareRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">revokeShare</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revoke a shareable URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.revokeShare({
+    sandbox_name: "sandbox_name",
+    share_id: "share_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.RevokeShareRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## usage
+<details><summary><code>client.usage.<a href="/src/api/resources/usage/client/Client.ts">getUsageSummary</a>({ ...params }) -> IsloApi.UsageSummary</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.usage.getUsageSummary();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetUsageSummaryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsageClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.usage.<a href="/src/api/resources/usage/client/Client.ts">getSandboxUsage</a>({ ...params }) -> IsloApi.SandboxUsageDetail[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.usage.getSandboxUsage();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetSandboxUsageRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UsageClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Credits
 <details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">getCreditBalance</a>() -> IsloApi.CreditBalance</code></summary>
 <dl>
@@ -1940,10 +3144,13 @@ await client.credits.createCreditCheckout({
 
 ```typescript
 await client.credits.handlePaddleWebhook({
-    "paddle-signature": "paddleSignature",
-    body: {
+    "paddle-signature": "paddle-signature",
+    event_id: "event_id",
+    event_type: "event_type",
+    data: {
         "key": "value"
-    }
+    },
+    occurred_at: "occurred_at"
 });
 
 ```
@@ -1960,7 +3167,7 @@ await client.credits.handlePaddleWebhook({
 <dl>
 <dd>
 
-**request:** `IsloApi.HandlePaddleWebhookRequest` 
+**request:** `IsloApi.PaddlePayload` 
     
 </dd>
 </dl>
@@ -3138,6 +4345,272 @@ await client.cloudRoles.updateCloudRole({
 <dd>
 
 **requestOptions:** `CloudRolesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## models
+<details><summary><code>client.models.<a href="/src/api/resources/models/client/Client.ts">getModelPricing</a>() -> IsloApi.ModelPricingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns per-1M-token pricing for chat models across all providers. Data is sourced from LiteLLM's community-maintained pricing file and refreshed every hour.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.models.getModelPricing();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ModelsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## GatewayInternal
+<details><summary><code>client.gatewayInternal.<a href="/src/api/resources/gatewayInternal/client/Client.ts">getSandboxPolicy</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stateless policy endpoint for the Rust gateway's ETag revalidation.
+
+- Parses ``If-None-Match`` to extract profile_id, skipping PG on 304 path.
+- Redis MGET only on revalidation (~0.5ms).
+- Full PG load only on first request or version change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.gatewayInternal.getSandboxPolicy({
+    sandbox_id: "sandbox_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetSandboxPolicyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `GatewayInternalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gatewayInternal.<a href="/src/api/resources/gatewayInternal/client/Client.ts">getGatewayPolicyByKey</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Policy endpoint keyed by (tenant_id, profile_key) instead of sandbox lookup.
+
+Eliminates the race where vm_id isn't yet committed to Postgres.
+``x_sandbox_id`` is accepted for tracing but not used for policy resolution.
+
+Returns 404 (not a permissive default) when the profile is not found — this is
+intentional: a missing key means something is misconfigured, so the gateway should
+fail closed (503) rather than silently allow traffic.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.gatewayInternal.getGatewayPolicyByKey({
+    profile_key: "profile_key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetGatewayPolicyByKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `GatewayInternalClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.gatewayInternal.<a href="/src/api/resources/gatewayInternal/client/Client.ts">getGatewayToken</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Token endpoint for the Rust gateway's credential injection.
+
+Wraps the existing ``_token_cache`` + ``get_integration_token`` and returns
+``access_token`` + ``ttl_seconds`` so the Rust gateway can cache locally.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.gatewayInternal.getGatewayToken({
+    provider_key: "provider_key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetGatewayTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `GatewayInternalClient.RequestOptions` 
     
 </dd>
 </dl>

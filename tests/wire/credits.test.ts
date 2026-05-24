@@ -76,13 +76,18 @@ describe("CreditsClient", () => {
     test("handle_paddle_webhook (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
+        const rawRequestBody = {
+            event_id: "event_id",
+            event_type: "event_type",
+            data: { key: "value" },
+            occurred_at: "occurred_at",
+        };
         const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
             .post("/credits/paddle_webhook")
-            .header("paddle-signature", "paddleSignature")
+            .header("paddle-signature", "paddle-signature")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
@@ -90,10 +95,13 @@ describe("CreditsClient", () => {
             .build();
 
         const response = await client.credits.handlePaddleWebhook({
-            "paddle-signature": "paddleSignature",
-            body: {
+            "paddle-signature": "paddle-signature",
+            event_id: "event_id",
+            event_type: "event_type",
+            data: {
                 key: "value",
             },
+            occurred_at: "occurred_at",
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -101,7 +109,12 @@ describe("CreditsClient", () => {
     test("handle_paddle_webhook (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
+        const rawRequestBody = {
+            event_id: "event_id",
+            event_type: "event_type",
+            data: { data: { key: "value" } },
+            occurred_at: "occurred_at",
+        };
         const rawResponseBody = { key: "value" };
 
         server
@@ -117,9 +130,14 @@ describe("CreditsClient", () => {
         await expect(async () => {
             return await client.credits.handlePaddleWebhook({
                 "paddle-signature": "paddleSignature",
-                body: {
-                    key: "value",
+                event_id: "event_id",
+                event_type: "event_type",
+                data: {
+                    data: {
+                        key: "value",
+                    },
                 },
+                occurred_at: "occurred_at",
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });

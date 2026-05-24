@@ -146,31 +146,34 @@ export class CreditsClient {
     }
 
     /**
-     * @param {IsloApi.HandlePaddleWebhookRequest} request
+     * @param {IsloApi.PaddlePayload} request
      * @param {CreditsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.credits.handlePaddleWebhook({
-     *         "paddle-signature": "paddleSignature",
-     *         body: {
+     *         "paddle-signature": "paddle-signature",
+     *         event_id: "event_id",
+     *         event_type: "event_type",
+     *         data: {
      *             "key": "value"
-     *         }
+     *         },
+     *         occurred_at: "occurred_at"
      *     })
      */
     public handlePaddleWebhook(
-        request: IsloApi.HandlePaddleWebhookRequest,
+        request: IsloApi.PaddlePayload,
         requestOptions?: CreditsClient.RequestOptions,
     ): core.HttpResponsePromise<unknown> {
         return core.HttpResponsePromise.fromPromise(this.__handlePaddleWebhook(request, requestOptions));
     }
 
     private async __handlePaddleWebhook(
-        request: IsloApi.HandlePaddleWebhookRequest,
+        request: IsloApi.PaddlePayload,
         requestOptions?: CreditsClient.RequestOptions,
     ): Promise<core.WithRawResponse<unknown>> {
-        const { "paddle-signature": paddleSignature, body: _body } = request;
+        const { "paddle-signature": paddleSignature, ..._body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

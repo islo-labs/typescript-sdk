@@ -1,6 +1,6 @@
 {
     "name": "@islo-labs/sdk",
-    "version": "0.0.19",
+    "version": "0.0.20",
     "private": false,
     "repository": {
         "type": "git",
@@ -21,6 +21,39 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./apiKeys": {
+            "import": {
+                "types": "./dist/esm/api/resources/apiKeys/exports.d.mts",
+                "default": "./dist/esm/api/resources/apiKeys/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/apiKeys/exports.d.ts",
+                "default": "./dist/cjs/api/resources/apiKeys/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/apiKeys/exports.js"
+        },
+        "./users": {
+            "import": {
+                "types": "./dist/esm/api/resources/users/exports.d.mts",
+                "default": "./dist/esm/api/resources/users/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/users/exports.d.ts",
+                "default": "./dist/cjs/api/resources/users/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/users/exports.js"
+        },
+        "./tenants": {
+            "import": {
+                "types": "./dist/esm/api/resources/tenants/exports.d.mts",
+                "default": "./dist/esm/api/resources/tenants/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/tenants/exports.d.ts",
+                "default": "./dist/cjs/api/resources/tenants/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/tenants/exports.js"
         },
         "./sandboxes": {
             "import": {
@@ -43,6 +76,39 @@
                 "default": "./dist/cjs/api/resources/snapshots/exports.js"
             },
             "default": "./dist/cjs/api/resources/snapshots/exports.js"
+        },
+        "./certificateAuthority": {
+            "import": {
+                "types": "./dist/esm/api/resources/certificateAuthority/exports.d.mts",
+                "default": "./dist/esm/api/resources/certificateAuthority/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/certificateAuthority/exports.d.ts",
+                "default": "./dist/cjs/api/resources/certificateAuthority/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/certificateAuthority/exports.js"
+        },
+        "./shares": {
+            "import": {
+                "types": "./dist/esm/api/resources/shares/exports.d.mts",
+                "default": "./dist/esm/api/resources/shares/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/shares/exports.d.ts",
+                "default": "./dist/cjs/api/resources/shares/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/shares/exports.js"
+        },
+        "./usage": {
+            "import": {
+                "types": "./dist/esm/api/resources/usage/exports.d.mts",
+                "default": "./dist/esm/api/resources/usage/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/usage/exports.d.ts",
+                "default": "./dist/cjs/api/resources/usage/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/usage/exports.js"
         },
         "./credits": {
             "import": {
@@ -87,6 +153,28 @@
                 "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
             },
             "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
+        },
+        "./models": {
+            "import": {
+                "types": "./dist/esm/api/resources/models/exports.d.mts",
+                "default": "./dist/esm/api/resources/models/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/models/exports.d.ts",
+                "default": "./dist/cjs/api/resources/models/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/models/exports.js"
+        },
+        "./gatewayInternal": {
+            "import": {
+                "types": "./dist/esm/api/resources/gatewayInternal/exports.d.mts",
+                "default": "./dist/esm/api/resources/gatewayInternal/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/gatewayInternal/exports.d.ts",
+                "default": "./dist/cjs/api/resources/gatewayInternal/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/gatewayInternal/exports.js"
         },
         "./package.json": "./package.json"
     },
