@@ -7,5 +7,6 @@
  *     }
  */
 export interface GetSnapshotRequest {
+    /** Name */
     name: string;
 }

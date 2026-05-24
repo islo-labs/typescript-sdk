@@ -7,7 +7,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("IntegrationsClient", () => {
     test("list_integration_providers", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             providers: [
@@ -29,7 +33,11 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             integrations: [
@@ -53,9 +61,13 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server.mockEndpoint().get("/integrations").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
@@ -66,7 +78,11 @@ describe("IntegrationsClient", () => {
 
     test("list_integrations (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -79,7 +95,11 @@ describe("IntegrationsClient", () => {
 
     test("list_custom_services (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             services: [{ descope_app_id: "descope_app_id", name: "name", slug: "slug", auth_method: "oauth" }],
@@ -99,9 +119,13 @@ describe("IntegrationsClient", () => {
 
     test("list_custom_services (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -118,7 +142,11 @@ describe("IntegrationsClient", () => {
 
     test("list_custom_services (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -137,7 +165,11 @@ describe("IntegrationsClient", () => {
 
     test("create_custom_service (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
         const rawResponseBody = { app_id: "app_id", name: "name", slug: "slug", auth_method: "oauth" };
 
@@ -161,9 +193,13 @@ describe("IntegrationsClient", () => {
 
     test("create_custom_service (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -186,9 +222,13 @@ describe("IntegrationsClient", () => {
 
     test("create_custom_service (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -211,7 +251,11 @@ describe("IntegrationsClient", () => {
 
     test("create_custom_service (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
         const rawResponseBody = { key: "value" };
 
@@ -236,7 +280,11 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_custom_integration (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -256,9 +304,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_custom_integration (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -277,9 +329,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_custom_integration (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -298,9 +354,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_custom_integration (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -319,7 +379,11 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_custom_integration (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -340,7 +404,11 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             provider: "provider",
@@ -376,9 +444,13 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -397,9 +469,13 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -418,7 +494,11 @@ describe("IntegrationsClient", () => {
 
     test("get_integration_status (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -439,7 +519,11 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -459,9 +543,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -480,9 +568,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -501,9 +593,13 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -522,7 +618,11 @@ describe("IntegrationsClient", () => {
 
     test("disconnect_integration (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 

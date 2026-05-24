@@ -5,6 +5,8 @@ import { CreditsClient } from "./api/resources/credits/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
 import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
+import { SessionsClient } from "./api/resources/sessions/client/Client.js";
+import { SharesClient } from "./api/resources/shares/client/Client.js";
 import { SnapshotsClient } from "./api/resources/snapshots/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
@@ -19,11 +21,13 @@ export declare namespace Islo {
 export class Islo {
     protected readonly _options: NormalizedClientOptionsWithAuth<Islo.Options>;
     protected _sandboxes: SandboxesClient | undefined;
-    protected _snapshots: SnapshotsClient | undefined;
     protected _credits: CreditsClient | undefined;
     protected _integrations: IntegrationsClient | undefined;
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
     protected _cloudRoles: CloudRolesClient | undefined;
+    protected _sessions: SessionsClient | undefined;
+    protected _shares: SharesClient | undefined;
+    protected _snapshots: SnapshotsClient | undefined;
 
     constructor(options: Islo.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -31,10 +35,6 @@ export class Islo {
 
     public get sandboxes(): SandboxesClient {
         return (this._sandboxes ??= new SandboxesClient(this._options));
-    }
-
-    public get snapshots(): SnapshotsClient {
-        return (this._snapshots ??= new SnapshotsClient(this._options));
     }
 
     public get credits(): CreditsClient {
@@ -51,6 +51,18 @@ export class Islo {
 
     public get cloudRoles(): CloudRolesClient {
         return (this._cloudRoles ??= new CloudRolesClient(this._options));
+    }
+
+    public get sessions(): SessionsClient {
+        return (this._sessions ??= new SessionsClient(this._options));
+    }
+
+    public get shares(): SharesClient {
+        return (this._shares ??= new SharesClient(this._options));
+    }
+
+    public get snapshots(): SnapshotsClient {
+        return (this._snapshots ??= new SnapshotsClient(this._options));
     }
 
     /**
@@ -72,7 +84,12 @@ export class Islo {
             input,
             init,
             {
-                baseUrl: this._options.baseUrl ?? this._options.environment,
+                baseUrl:
+                    this._options.baseUrl ??
+                    (async () => {
+                        const env = await core.Supplier.get(this._options.environment);
+                        return typeof env === "string" ? env : (env as Record<string, string>)?.control;
+                    }),
                 headers: this._options.headers,
                 timeoutInSeconds: this._options.timeoutInSeconds,
                 maxRetries: this._options.maxRetries,

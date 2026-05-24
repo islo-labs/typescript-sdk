@@ -7,7 +7,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("CreditsClient", () => {
     test("get_credit_balance (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { balance_cents: 1, currency: "currency" };
 
@@ -19,7 +23,11 @@ describe("CreditsClient", () => {
 
     test("get_credit_balance (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -27,100 +35,6 @@ describe("CreditsClient", () => {
 
         await expect(async () => {
             return await client.credits.getCreditBalance();
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("create_credit_checkout (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { amount_cents: 1 };
-        const rawResponseBody = { transaction_id: "transaction_id" };
-
-        server
-            .mockEndpoint()
-            .post("/credits/checkout")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.credits.createCreditCheckout({
-            amount_cents: 1,
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("create_credit_checkout (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { amount_cents: 100000 };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/credits/checkout")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.credits.createCreditCheckout({
-                amount_cents: 100000,
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("handle_paddle_webhook (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/credits/paddle_webhook")
-            .header("paddle-signature", "paddleSignature")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.credits.handlePaddleWebhook({
-            "paddle-signature": "paddleSignature",
-            body: {
-                key: "value",
-            },
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("handle_paddle_webhook (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/credits/paddle_webhook")
-            .header("paddle-signature", "paddleSignature")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.credits.handlePaddleWebhook({
-                "paddle-signature": "paddleSignature",
-                body: {
-                    key: "value",
-                },
-            });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 });

@@ -7,5 +7,6 @@
  *     }
  */
 export interface DeleteSnapshotRequest {
+    /** Name */
     name: string;
 }

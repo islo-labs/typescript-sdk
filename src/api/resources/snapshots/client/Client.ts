@@ -14,6 +14,9 @@ export declare namespace SnapshotsClient {
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
+/**
+ * Snapshot metadata and lifecycle
+ */
 export class SnapshotsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SnapshotsClient.Options>;
 
@@ -28,7 +31,6 @@ export class SnapshotsClient {
      * @param {SnapshotsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.snapshots.listSnapshots()
@@ -58,7 +60,7 @@ export class SnapshotsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 "snapshots/",
             ),
             method: "GET",
@@ -85,8 +87,6 @@ export class SnapshotsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -108,7 +108,6 @@ export class SnapshotsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      * @throws {@link IsloApi.ServiceUnavailableError}
      *
      * @example
@@ -136,7 +135,7 @@ export class SnapshotsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 "snapshots/",
             ),
             method: "POST",
@@ -172,8 +171,6 @@ export class SnapshotsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 case 503:
                     throw new IsloApi.ServiceUnavailableError(
                         _response.error.body as IsloApi.ErrorResponse,
@@ -199,7 +196,6 @@ export class SnapshotsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.snapshots.getSnapshot({
@@ -227,7 +223,7 @@ export class SnapshotsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `snapshots/${core.url.encodePathParam(name)}`,
             ),
             method: "GET",
@@ -255,8 +251,6 @@ export class SnapshotsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -277,7 +271,6 @@ export class SnapshotsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.snapshots.deleteSnapshot({
@@ -305,7 +298,7 @@ export class SnapshotsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `snapshots/${core.url.encodePathParam(name)}`,
             ),
             method: "DELETE",
@@ -333,8 +326,6 @@ export class SnapshotsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
