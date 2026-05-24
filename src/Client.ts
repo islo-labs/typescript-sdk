@@ -5,6 +5,7 @@ import { CreditsClient } from "./api/resources/credits/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
 import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
+import { SharesClient } from "./api/resources/shares/client/Client.js";
 import { SnapshotsClient } from "./api/resources/snapshots/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
@@ -20,6 +21,7 @@ export class Islo {
     protected readonly _options: NormalizedClientOptionsWithAuth<Islo.Options>;
     protected _sandboxes: SandboxesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
+    protected _shares: SharesClient | undefined;
     protected _credits: CreditsClient | undefined;
     protected _integrations: IntegrationsClient | undefined;
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
@@ -35,6 +37,10 @@ export class Islo {
 
     public get snapshots(): SnapshotsClient {
         return (this._snapshots ??= new SnapshotsClient(this._options));
+    }
+
+    public get shares(): SharesClient {
+        return (this._shares ??= new SharesClient(this._options));
     }
 
     public get credits(): CreditsClient {
