@@ -9,6 +9,7 @@ The Islo TypeScript library provides convenient access to the Islo APIs from Typ
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+- [Environments](#environments)
 - [Authentication](#authentication)
 - [Configuration](#configuration)
 - [Development](#development)
@@ -63,32 +64,46 @@ console.log(result.exitCode);
 await client.sandboxes.deleteSandbox({ sandboxName: sandbox.name });
 ```
 
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+
+const client = new Islo({
+    environment: IsloApiEnvironment.Production,
+});
+```
+
 ## Authentication
 
-### Environment variable (recommended)
+The SDK supports OAuth authentication with two options:
 
-```bash
-export ISLO_API_KEY="your-api-key"
-```
+**Option 1: OAuth Client Credentials Flow**
 
-```typescript
-const client = new Islo(); // Picks up ISLO_API_KEY automatically
-```
-
-### Explicit API key
+Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:
 
 ```typescript
-const client = new Islo({ apiKey: "your-api-key" });
+import { Islo } from "@islo-labs/sdk";
+
+const client = new Islo({
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
+    ...
+});
 ```
 
-### Custom token provider
+**Option 2: Token Override**
+
+Use this when you already have a valid bearer token and want to skip the OAuth flow:
 
 ```typescript
-import { IsloClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloClient({
-    environment: "https://api.islo.dev",
-    token: async () => fetchTokenFromYourAuthService(),
+const client = new Islo({
+    token: "my-pre-generated-bearer-token",
+    ...
 });
 ```
 
@@ -124,10 +139,12 @@ A full reference for this library is available [here](https://github.com/islo-la
 Instantiate and use the client with the following:
 
 ```typescript
-import { Islo } from "@islo-labs/sdk";
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
-await client.sandboxes.createSandbox();
+const client = new Islo({ environment: IsloApiEnvironment.Production, clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
+await client.auth.exchangeAccessKey({
+    access_key: "access_key"
+});
 ```
 
 ## Request and Response Types
@@ -138,7 +155,7 @@ following namespace:
 ```typescript
 import { IsloApi } from "@islo-labs/sdk";
 
-const request: IsloApi.ListSandboxesRequest = {
+const request: IsloApi.TokenRequest = {
     ...
 };
 ```
@@ -152,7 +169,7 @@ will be thrown.
 import { IsloApiError } from "@islo-labs/sdk";
 
 try {
-    await client.sandboxes.createSandbox(...);
+    await client.auth.exchangeAccessKey(...);
 } catch (err) {
     if (err instanceof IsloApiError) {
         console.log(err.statusCode);
@@ -170,9 +187,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { SandboxesClient } from '@islo-labs/sdk/sandboxes';
+import { AuthClient } from '@islo-labs/sdk/auth';
 
-const client = new SandboxesClient({...});
+const client = new AuthClient({...});
 ```
 
 ### Additional Headers
@@ -189,7 +206,7 @@ const client = new Islo({
     }
 });
 
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.auth.exchangeAccessKey(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -201,7 +218,7 @@ const response = await client.sandboxes.createSandbox(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.auth.exchangeAccessKey(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -223,7 +240,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.auth.exchangeAccessKey(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -233,7 +250,7 @@ const response = await client.sandboxes.createSandbox(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.auth.exchangeAccessKey(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -244,7 +261,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.auth.exchangeAccessKey(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -256,7 +273,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.sandboxes.createSandbox(...).withRawResponse();
+const { data, rawResponse } = await client.auth.exchangeAccessKey(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

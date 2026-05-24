@@ -49,7 +49,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "integrations/providers",
             ),
             method: "GET",
@@ -113,7 +113,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "integrations",
             ),
             method: "GET",
@@ -185,7 +185,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "integrations/custom-services",
             ),
             method: "GET",
@@ -265,7 +265,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "integrations/custom-services",
             ),
             method: "POST",
@@ -362,7 +362,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `integrations/custom/${core.url.encodePathParam(descopeAppId)}`,
             ),
             method: "DELETE",
@@ -456,7 +456,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `integrations/${core.url.encodePathParam(provider)}`,
             ),
             method: "GET",
@@ -544,7 +544,7 @@ export class IntegrationsClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `integrations/${core.url.encodePathParam(provider)}`,
             ),
             method: "DELETE",

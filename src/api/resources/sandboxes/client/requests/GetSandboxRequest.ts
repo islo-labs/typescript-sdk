@@ -3,9 +3,10 @@
 /**
  * @example
  *     {
- *         sandbox_name: "sandbox_name"
+ *         name: "name"
  *     }
  */
 export interface GetSandboxRequest {
-    sandbox_name: string;
+    /** Sandbox name */
+    name: string;
 }

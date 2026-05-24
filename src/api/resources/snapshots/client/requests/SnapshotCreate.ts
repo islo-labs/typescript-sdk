@@ -7,6 +7,6 @@
  *     }
  */
 export interface SnapshotCreate {
-    sandbox_id: string;
     name?: string | null;
+    sandbox_id: string;
 }

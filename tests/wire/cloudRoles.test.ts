@@ -3,11 +3,19 @@
 import * as IsloApi from "../../src/api/index";
 import { Islo } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
+import { mockIsloAccessKey } from "./mockAuth";
 
 describe("CloudRolesClient", () => {
     test("list_cloud_roles (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
             {
@@ -30,9 +38,16 @@ describe("CloudRolesClient", () => {
 
     test("list_cloud_roles (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
 
@@ -43,7 +58,14 @@ describe("CloudRolesClient", () => {
 
     test("list_cloud_roles (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -56,7 +78,14 @@ describe("CloudRolesClient", () => {
 
     test("create_cloud_role (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { provider: "aws", role_arn: "role_arn" };
         const rawResponseBody = {
             id: "id",
@@ -87,9 +116,16 @@ describe("CloudRolesClient", () => {
 
     test("create_cloud_role (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -110,9 +146,16 @@ describe("CloudRolesClient", () => {
 
     test("create_cloud_role (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -133,7 +176,14 @@ describe("CloudRolesClient", () => {
 
     test("create_cloud_role (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
         const rawResponseBody = { key: "value" };
 
@@ -156,7 +206,14 @@ describe("CloudRolesClient", () => {
 
     test("get_cloud_role (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             id: "id",
@@ -185,9 +242,16 @@ describe("CloudRolesClient", () => {
 
     test("get_cloud_role (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -206,9 +270,16 @@ describe("CloudRolesClient", () => {
 
     test("get_cloud_role (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -227,7 +298,14 @@ describe("CloudRolesClient", () => {
 
     test("get_cloud_role (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -248,7 +326,14 @@ describe("CloudRolesClient", () => {
 
     test("delete_cloud_role (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         server.mockEndpoint().delete("/cloud-roles/role_id").respondWith().statusCode(200).build();
 
@@ -260,9 +345,16 @@ describe("CloudRolesClient", () => {
 
     test("delete_cloud_role (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -281,9 +373,16 @@ describe("CloudRolesClient", () => {
 
     test("delete_cloud_role (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -302,7 +401,14 @@ describe("CloudRolesClient", () => {
 
     test("delete_cloud_role (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -323,7 +429,14 @@ describe("CloudRolesClient", () => {
 
     test("update_cloud_role (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = {
             id: "id",
@@ -353,9 +466,16 @@ describe("CloudRolesClient", () => {
 
     test("update_cloud_role (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -375,9 +495,16 @@ describe("CloudRolesClient", () => {
 
     test("update_cloud_role (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -397,9 +524,16 @@ describe("CloudRolesClient", () => {
 
     test("update_cloud_role (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -419,7 +553,14 @@ describe("CloudRolesClient", () => {
 
     test("update_cloud_role (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        mockIsloAccessKey(server);
+
+        const client = new Islo({
+            maxRetries: 0,
+            clientId: "access_key",
+            clientSecret: "test_client_secret",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 

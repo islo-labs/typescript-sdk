@@ -1,6 +1,7 @@
+export * from "./auth/client/requests/index.js";
+export * as auth from "./auth/index.js";
 export * from "./cloudRoles/client/requests/index.js";
 export * as cloudRoles from "./cloudRoles/index.js";
-export * from "./credits/client/requests/index.js";
 export * as credits from "./credits/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";
 export * as gatewayProfiles from "./gatewayProfiles/index.js";
@@ -8,5 +9,9 @@ export * from "./integrations/client/requests/index.js";
 export * as integrations from "./integrations/index.js";
 export * from "./sandboxes/client/requests/index.js";
 export * as sandboxes from "./sandboxes/index.js";
+export * from "./sessions/client/requests/index.js";
+export * as sessions from "./sessions/index.js";
+export * from "./shares/client/requests/index.js";
+export * as shares from "./shares/index.js";
 export * from "./snapshots/client/requests/index.js";
 export * as snapshots from "./snapshots/index.js";
