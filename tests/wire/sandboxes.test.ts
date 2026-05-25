@@ -5,1157 +5,13 @@ import { Islo } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SandboxesClient", () => {
-    test("list_sandboxes (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            items: [
-                {
-                    id: "id",
-                    name: "name",
-                    status: "status",
-                    image: "image",
-                    spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-                    workdir: "workdir",
-                    setup_steps: [{ name: "name", status: "status" }],
-                    created_at: "2024-01-15T09:30:00Z",
-                    created_by: "created_by",
-                    created_by_entity: "created_by_entity",
-                    deleted_at: "2024-01-15T09:30:00Z",
-                },
-            ],
-            total: 1,
-            limit: 1,
-            offset: 1,
-        };
-
-        server.mockEndpoint().get("/sandboxes/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.sandboxes.listSandboxes();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("list_sandboxes (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server.mockEndpoint().get("/sandboxes/").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.sandboxes.listSandboxes();
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("list_sandboxes (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server.mockEndpoint().get("/sandboxes/").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.sandboxes.listSandboxes();
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("create_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            image: "image",
-            network: { ip: "ip", mac: "mac" },
-            spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-            workdir: "workdir",
-            setup_steps: [{ name: "name", status: "status", stderr: "stderr", stdout: "stdout", script: "script" }],
-            created_at: "2024-01-15T09:30:00Z",
-            created_by: "created_by",
-            created_by_entity: "created_by_entity",
-            deleted_at: "2024-01-15T09:30:00Z",
-        };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.createSandbox();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("create_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("create_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(402)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.PaymentRequiredError);
-    });
-
-    test("create_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(409)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.ConflictError);
-    });
-
-    test("create_sandbox (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("create_sandbox (6)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(429)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.TooManyRequestsError);
-    });
-
-    test("create_sandbox (7)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(503)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSandbox();
-        }).rejects.toThrow(IsloApi.ServiceUnavailableError);
-    });
-
-    test("get_sandbox_by_id_sandboxes___by_id__sandbox_id__get (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            image: "image",
-            network: { ip: "ip", mac: "mac" },
-            spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-            workdir: "workdir",
-            setup_steps: [{ name: "name", status: "status", stderr: "stderr", stdout: "stdout", script: "script" }],
-            created_at: "2024-01-15T09:30:00Z",
-            created_by: "created_by",
-            created_by_entity: "created_by_entity",
-            deleted_at: "2024-01-15T09:30:00Z",
-        };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/-/by-id/sandbox_id")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.getSandboxByIdSandboxesByIdSandboxIdGet({
-            sandbox_id: "sandbox_id",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("get_sandbox_by_id_sandboxes___by_id__sandbox_id__get (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/-/by-id/sandbox_id")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.getSandboxByIdSandboxesByIdSandboxIdGet({
-                sandbox_id: "sandbox_id",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("get_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            image: "image",
-            network: { ip: "ip", mac: "mac" },
-            spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-            workdir: "workdir",
-            setup_steps: [{ name: "name", status: "status", stderr: "stderr", stdout: "stdout", script: "script" }],
-            created_at: "2024-01-15T09:30:00Z",
-            created_by: "created_by",
-            created_by_entity: "created_by_entity",
-            deleted_at: "2024-01-15T09:30:00Z",
-        };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.getSandbox({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("get_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.getSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("get_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.getSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("get_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.getSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("delete_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.deleteSandbox({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("delete_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.deleteSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("delete_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.deleteSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("delete_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.deleteSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("stop_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/stop")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.stopSandbox({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("stop_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/stop")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.stopSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("stop_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/stop")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.stopSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("stop_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/stop")
-            .respondWith()
-            .statusCode(409)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.stopSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.ConflictError);
-    });
-
-    test("stop_sandbox (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/stop")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.stopSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("pause_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            image: "image",
-            network: { ip: "ip", mac: "mac" },
-            spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-            workdir: "workdir",
-            setup_steps: [{ name: "name", status: "status", stderr: "stderr", stdout: "stdout", script: "script" }],
-            created_at: "2024-01-15T09:30:00Z",
-            created_by: "created_by",
-            created_by_entity: "created_by_entity",
-            deleted_at: "2024-01-15T09:30:00Z",
-        };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/pause")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.pauseSandbox({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("pause_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/pause")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.pauseSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("pause_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/pause")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.pauseSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("pause_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/pause")
-            .respondWith()
-            .statusCode(409)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.pauseSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.ConflictError);
-    });
-
-    test("pause_sandbox (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/pause")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.pauseSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("resume_sandbox (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            image: "image",
-            network: { ip: "ip", mac: "mac" },
-            spec: { vcpus: 1, memory_mb: 1, disk_gb: 1 },
-            workdir: "workdir",
-            setup_steps: [{ name: "name", status: "status", stderr: "stderr", stdout: "stdout", script: "script" }],
-            created_at: "2024-01-15T09:30:00Z",
-            created_by: "created_by",
-            created_by_entity: "created_by_entity",
-            deleted_at: "2024-01-15T09:30:00Z",
-        };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.resumeSandbox({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("resume_sandbox (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.resumeSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("resume_sandbox (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(402)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.resumeSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.PaymentRequiredError);
-    });
-
-    test("resume_sandbox (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.resumeSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("resume_sandbox (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(409)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.resumeSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.ConflictError);
-    });
-
-    test("resume_sandbox (6)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/resume")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.resumeSandbox({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("promote_sandbox_cache (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        server.mockEndpoint().post("/sandboxes/sandbox_name/promote-cache").respondWith().statusCode(200).build();
-
-        const response = await client.sandboxes.promoteSandboxCache({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(undefined);
-    });
-
-    test("promote_sandbox_cache (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/promote-cache")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.promoteSandboxCache({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("promote_sandbox_cache (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/promote-cache")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.promoteSandboxCache({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("promote_sandbox_cache (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/promote-cache")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.promoteSandboxCache({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("list_sessions (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/sessions")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.listSessions({
-            sandbox_name: "sandbox_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("list_sessions (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/sessions")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.listSessions({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("list_sessions (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/sessions")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.listSessions({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("list_sessions (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/sessions")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.listSessions({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("create_session (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/sessions")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.createSession({
-            sandbox_name: "sandbox_name",
-            body: {
-                key: "value",
-            },
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("create_session (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { string: { key: "value" } };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/sessions")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSession({
-                sandbox_name: "sandbox_name",
-                body: {
-                    string: {
-                        key: "value",
-                    },
-                },
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("create_session (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { string: { key: "value" } };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/sessions")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSession({
-                sandbox_name: "sandbox_name",
-                body: {
-                    string: {
-                        key: "value",
-                    },
-                },
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("create_session (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { string: { key: "value" } };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/sessions")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.createSession({
-                sandbox_name: "sandbox_name",
-                body: {
-                    string: {
-                        key: "value",
-                    },
-                },
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("kill_session (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name/sessions/session_name")
-            .respondWith()
-            .statusCode(200)
-            .build();
-
-        const response = await client.sandboxes.killSession({
-            sandbox_name: "sandbox_name",
-            session_name: "session_name",
-        });
-        expect(response).toEqual(undefined);
-    });
-
-    test("kill_session (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name/sessions/session_name")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.killSession({
-                sandbox_name: "sandbox_name",
-                session_name: "session_name",
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("kill_session (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name/sessions/session_name")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.killSession({
-                sandbox_name: "sandbox_name",
-                session_name: "session_name",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("kill_session (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name/sessions/session_name")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.killSession({
-                sandbox_name: "sandbox_name",
-                session_name: "session_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("list_exec_sessions (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
             {
@@ -1184,9 +40,13 @@ describe("SandboxesClient", () => {
 
     test("list_exec_sessions (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1205,9 +65,13 @@ describe("SandboxesClient", () => {
 
     test("list_exec_sessions (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1226,7 +90,11 @@ describe("SandboxesClient", () => {
 
     test("list_exec_sessions (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1247,7 +115,11 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_asciinema (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1268,9 +140,13 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_asciinema (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1290,9 +166,13 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_asciinema (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1312,7 +192,11 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_asciinema (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1334,7 +218,11 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_logs (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             exec_id: "exec_id",
@@ -1358,9 +246,13 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_logs (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1380,9 +272,13 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_logs (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1402,7 +298,11 @@ describe("SandboxesClient", () => {
 
     test("get_exec_session_logs (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1424,7 +324,11 @@ describe("SandboxesClient", () => {
 
     test("list_agent_sessions (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
             {
@@ -1469,9 +373,13 @@ describe("SandboxesClient", () => {
 
     test("list_agent_sessions (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1490,9 +398,13 @@ describe("SandboxesClient", () => {
 
     test("list_agent_sessions (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1511,7 +423,11 @@ describe("SandboxesClient", () => {
 
     test("list_agent_sessions (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1532,7 +448,11 @@ describe("SandboxesClient", () => {
 
     test("get_agent_session_events (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
             {
@@ -1576,9 +496,13 @@ describe("SandboxesClient", () => {
 
     test("get_agent_session_events (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1598,9 +522,13 @@ describe("SandboxesClient", () => {
 
     test("get_agent_session_events (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -1620,7 +548,11 @@ describe("SandboxesClient", () => {
 
     test("get_agent_session_events (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -1640,359 +572,421 @@ describe("SandboxesClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
-    test("download_file (1)", async () => {
+    test("list_sandboxes (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {
+            items: [
+                {
+                    created_at: "created_at",
+                    created_by: "created_by",
+                    created_by_entity: "created_by_entity",
+                    deleted_at: "deleted_at",
+                    id: "id",
+                    image: "image",
+                    name: "name",
+                    owner_node_id: "owner_node_id",
+                    spec: { disk_gb: 1, memory_mb: 1, vcpus: 1 },
+                    status: "status",
+                    vm_id: "vm_id",
+                    workdir: "workdir",
+                },
+            ],
+            limit: 1,
+            offset: 1,
+            total: 1,
+        };
+
+        server.mockEndpoint().get("/sandboxes").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.sandboxes.listSandboxes();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_sandboxes (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server.mockEndpoint().get("/sandboxes").respondWith().statusCode(401).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.sandboxes.listSandboxes();
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("create_sandbox (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            created_at: "created_at",
+            created_by: "created_by",
+            created_by_entity: "created_by_entity",
+            deleted_at: "deleted_at",
+            id: "id",
+            image: "image",
+            name: "name",
+            owner_node_id: "owner_node_id",
+            setup_steps: [{ key: "value" }],
+            spec: { disk_gb: 1, memory_mb: 1, vcpus: 1 },
+            status: "status",
+            vm_id: "vm_id",
+            workdir: "workdir",
+        };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files")
+            .post("/sandboxes")
+            .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sandboxes.downloadFile({
-            sandbox_name: "sandbox_name",
-            path: "path",
-        });
+        const response = await client.sandboxes.createSandbox();
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("download_file (2)", async () => {
+    test("create_sandbox (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files")
+            .post("/sandboxes")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.createSandbox();
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("create_sandbox (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes")
+            .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.downloadFile({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
+            return await client.sandboxes.createSandbox();
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("download_file (3)", async () => {
+    test("create_sandbox (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files")
+            .post("/sandboxes")
+            .jsonBody(rawRequestBody)
             .respondWith()
-            .statusCode(404)
+            .statusCode(409)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.downloadFile({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
+            return await client.sandboxes.createSandbox();
+        }).rejects.toThrow(IsloApi.ConflictError);
     });
 
-    test("download_file (4)", async () => {
+    test("create_sandbox (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files")
+            .post("/sandboxes")
+            .jsonBody(rawRequestBody)
             .respondWith()
-            .statusCode(422)
+            .statusCode(503)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.downloadFile({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+            return await client.sandboxes.createSandbox();
+        }).rejects.toThrow(IsloApi.ServiceUnavailableError);
     });
 
-    test("upload_file (1)", async () => {
+    test("get_sandbox (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {
+            created_at: "created_at",
+            created_by: "created_by",
+            created_by_entity: "created_by_entity",
+            deleted_at: "deleted_at",
+            id: "id",
+            image: "image",
+            name: "name",
+            owner_node_id: "owner_node_id",
+            setup_steps: [{ key: "value" }],
+            spec: { disk_gb: 1, memory_mb: 1, vcpus: 1 },
+            status: "status",
+            vm_id: "vm_id",
+            workdir: "workdir",
+        };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files")
+            .get("/sandboxes/sandbox_name")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sandboxes.uploadFile({
+        const response = await client.sandboxes.getSandbox({
             sandbox_name: "sandbox_name",
-            path: "path",
         });
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("upload_file (2)", async () => {
+    test("get_sandbox (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files")
+            .get("/sandboxes/sandbox_name")
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.uploadFile({
+            return await client.sandboxes.getSandbox({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("upload_file (3)", async () => {
+    test("get_sandbox (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files")
+            .get("/sandboxes/sandbox_name")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.uploadFile({
+            return await client.sandboxes.getSandbox({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("upload_file (4)", async () => {
+    test("delete_sandbox (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.uploadFile({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("download_archive (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files-archive")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.downloadArchive({
-            sandbox_name: "sandbox_name",
-            path: "path",
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        expect(response).toEqual(rawResponseBody);
+
+        server.mockEndpoint().delete("/sandboxes/sandbox_name").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.deleteSandbox({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(undefined);
     });
 
-    test("download_archive (2)", async () => {
+    test("delete_sandbox (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files-archive")
+            .delete("/sandboxes/sandbox_name")
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.downloadArchive({
+            return await client.sandboxes.deleteSandbox({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("download_archive (3)", async () => {
+    test("delete_sandbox (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files-archive")
+            .delete("/sandboxes/sandbox_name")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.downloadArchive({
+            return await client.sandboxes.deleteSandbox({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("download_archive (4)", async () => {
+    test("sandbox_exec_interactive (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/files-archive")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.downloadArchive({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("upload_archive (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files-archive")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.sandboxes.uploadArchive({
-            sandbox_name: "sandbox_name",
-            path: "path",
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        expect(response).toEqual(rawResponseBody);
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/exec").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.sandboxExecInteractive({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(undefined);
     });
 
-    test("upload_archive (2)", async () => {
+    test("sandbox_exec_interactive (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files-archive")
+            .get("/sandboxes/sandbox_name/exec")
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.uploadArchive({
+            return await client.sandboxes.sandboxExecInteractive({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("upload_archive (3)", async () => {
+    test("sandbox_exec_interactive (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files-archive")
+            .get("/sandboxes/sandbox_name/exec")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.uploadArchive({
+            return await client.sandboxes.sandboxExecInteractive({
                 sandbox_name: "sandbox_name",
-                path: "path",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("upload_archive (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/files-archive")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.sandboxes.uploadArchive({
-                sandbox_name: "sandbox_name",
-                path: "path",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
     test("exec_in_sandbox (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { command: ["command"] };
-        const rawResponseBody = { exec_id: "exec_id", status: "status", sandbox_id: "sandbox_id" };
+        const rawResponseBody = { exec_id: "exec_id", sandbox_id: "sandbox_id", status: "status" };
 
         server
             .mockEndpoint()
@@ -2005,18 +999,47 @@ describe("SandboxesClient", () => {
 
         const response = await client.sandboxes.execInSandbox({
             sandbox_name: "sandbox_name",
-            body: {
-                command: ["command"],
-            },
+            command: ["command"],
         });
         expect(response).toEqual(rawResponseBody);
     });
 
     test("exec_in_sandbox (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/exec")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.execInSandbox({
+                sandbox_name: "sandbox_name",
+                command: ["command", "command"],
+            });
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("exec_in_sandbox (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { command: ["command", "command"] };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -2030,18 +1053,20 @@ describe("SandboxesClient", () => {
         await expect(async () => {
             return await client.sandboxes.execInSandbox({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                command: ["command", "command"],
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("exec_in_sandbox (3)", async () => {
+    test("exec_in_sandbox (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -2055,48 +1080,130 @@ describe("SandboxesClient", () => {
         await expect(async () => {
             return await client.sandboxes.execInSandbox({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                command: ["command", "command"],
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("exec_in_sandbox (4)", async () => {
+    test("exec_in_sandbox_stream (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { key: "value" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { args: ["args"] };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/exec")
+            .post("/sandboxes/sandbox_name/exec/stream")
             .jsonBody(rawRequestBody)
             .respondWith()
-            .statusCode(422)
+            .statusCode(200)
+            .build();
+
+        const response = await client.sandboxes.execInSandboxStream({
+            sandbox_name: "sandbox_name",
+            args: ["args"],
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("exec_in_sandbox_stream (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { args: ["args", "args"] };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/exec/stream")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.execInSandbox({
+            return await client.sandboxes.execInSandboxStream({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                args: ["args", "args"],
             });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("exec_in_sandbox_stream (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { args: ["args", "args"] };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/exec/stream")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.execInSandboxStream({
+                sandbox_name: "sandbox_name",
+                args: ["args", "args"],
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("exec_in_sandbox_stream (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { args: ["args", "args"] };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/exec/stream")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.execInSandboxStream({
+                sandbox_name: "sandbox_name",
+                args: ["args", "args"],
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
     test("get_exec_result (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             exec_id: "exec_id",
-            status: "status",
             exit_code: 1,
-            stdout: "stdout",
+            status: "status",
             stderr: "stderr",
+            stdout: "stdout",
             truncated: true,
         };
 
@@ -2117,9 +1224,39 @@ describe("SandboxesClient", () => {
 
     test("get_exec_result (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/exec/exec_id")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.getExecResult({
+                sandbox_name: "sandbox_name",
+                exec_id: "exec_id",
+            });
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("get_exec_result (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -2137,11 +1274,15 @@ describe("SandboxesClient", () => {
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("get_exec_result (3)", async () => {
+    test("get_exec_result (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
@@ -2159,61 +1300,921 @@ describe("SandboxesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("get_exec_result (4)", async () => {
+    test("download_file (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
-        const rawResponseBody = { key: "value" };
+        server.mockEndpoint().get("/sandboxes/sandbox_name/files").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.downloadFile({
+            sandbox_name: "sandbox_name",
+            path: "path",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("download_file (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .get("/sandboxes/sandbox_name/exec/exec_id")
+            .get("/sandboxes/sandbox_name/files")
             .respondWith()
-            .statusCode(422)
+            .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.getExecResult({
+            return await client.sandboxes.downloadFile({
                 sandbox_name: "sandbox_name",
-                exec_id: "exec_id",
+                path: "path",
             });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("exec_in_sandbox_stream (1)", async () => {
+    test("download_file (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { command: ["command"] };
-        const rawResponseBody = { key: "value" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/exec/stream")
+            .get("/sandboxes/sandbox_name/files")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.downloadFile({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("upload_file (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { status: "status" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.uploadFile({
+            sandbox_name: "sandbox_name",
+            path: "path",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("upload_file (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.uploadFile({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("upload_file (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.uploadFile({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("download_archive (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/files-archive").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.downloadArchive({
+            sandbox_name: "sandbox_name",
+            path: "path",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("download_archive (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/files-archive")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.downloadArchive({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("download_archive (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/files-archive")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.downloadArchive({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("upload_archive (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { status: "status" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files-archive")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.uploadArchive({
+            sandbox_name: "sandbox_name",
+            path: "path",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("upload_archive (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files-archive")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.uploadArchive({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("upload_archive (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/files-archive")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.uploadArchive({
+                sandbox_name: "sandbox_name",
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("pause_sandbox (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            created_at: "created_at",
+            created_by: "created_by",
+            created_by_entity: "created_by_entity",
+            deleted_at: "deleted_at",
+            id: "id",
+            image: "image",
+            name: "name",
+            owner_node_id: "owner_node_id",
+            setup_steps: [{ key: "value" }],
+            spec: { disk_gb: 1, memory_mb: 1, vcpus: 1 },
+            status: "status",
+            vm_id: "vm_id",
+            workdir: "workdir",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/pause")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.pauseSandbox({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("pause_sandbox (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/pause")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.pauseSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("pause_sandbox (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/pause")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.pauseSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("pause_sandbox (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/pause")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.pauseSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.ConflictError);
+    });
+
+    test("sandbox_port_forward (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/port-forward").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.sandboxPortForward({
+            sandbox_name: "sandbox_name",
+            port: 1,
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("sandbox_port_forward (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/port-forward")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxPortForward({
+                sandbox_name: "sandbox_name",
+                port: 1,
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("sandbox_port_forward (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/port-forward")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxPortForward({
+                sandbox_name: "sandbox_name",
+                port: 1,
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("promote_sandbox_cache (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { cache_key: "cache_key", status: "status", tenant_id: "tenant_id" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/promote-cache")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.promoteSandboxCache({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("promote_sandbox_cache (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/promote-cache")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.promoteSandboxCache({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("promote_sandbox_cache (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/promote-cache")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.promoteSandboxCache({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("sandbox_proxy_root (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/proxy/1").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.sandboxProxyRoot({
+            sandbox_name: "sandbox_name",
+            port: 1,
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("sandbox_proxy_root (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/proxy/1")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxProxyRoot({
+                sandbox_name: "sandbox_name",
+                port: 1,
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("sandbox_proxy_root (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/proxy/1")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxProxyRoot({
+                sandbox_name: "sandbox_name",
+                port: 1,
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("sandbox_proxy (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/proxy/1/path").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.sandboxProxy({
+            sandbox_name: "sandbox_name",
+            port: 1,
+            path: "path",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("sandbox_proxy (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/proxy/1/path")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxProxy({
+                sandbox_name: "sandbox_name",
+                port: 1,
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("sandbox_proxy (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/proxy/1/path")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxProxy({
+                sandbox_name: "sandbox_name",
+                port: 1,
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("resume_sandbox (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            created_at: "created_at",
+            created_by: "created_by",
+            created_by_entity: "created_by_entity",
+            deleted_at: "deleted_at",
+            id: "id",
+            image: "image",
+            name: "name",
+            owner_node_id: "owner_node_id",
+            setup_steps: [{ key: "value" }],
+            spec: { disk_gb: 1, memory_mb: 1, vcpus: 1 },
+            status: "status",
+            vm_id: "vm_id",
+            workdir: "workdir",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/resume")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.resumeSandbox({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("resume_sandbox (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/resume")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.resumeSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("resume_sandbox (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/resume")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.resumeSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("resume_sandbox (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/resume")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.resumeSandbox({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.ConflictError);
+    });
+
+    test("list_sessions (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { sessions: [{ name: "name", started_at_unix_ms: 1000000, status: "connected" }] };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/sessions")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.listSessions({
+            sandbox_name: "sandbox_name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_sessions (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/sessions")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.listSessions({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("list_sessions (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/sessions")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.listSessions({
+                sandbox_name: "sandbox_name",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("create_session (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { name: "name", status: "status" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/sessions")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.sandboxes.execInSandboxStream({
+        const response = await client.sandboxes.createSession({
             sandbox_name: "sandbox_name",
-            body: {
-                command: ["command"],
-            },
+            name: "name",
         });
         expect(response).toEqual(rawResponseBody);
     });
 
-    test("exec_in_sandbox_stream (2)", async () => {
+    test("create_session (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/exec/stream")
+            .post("/sandboxes/sandbox_name/sessions")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(401)
@@ -2221,24 +2222,26 @@ describe("SandboxesClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.execInSandboxStream({
+            return await client.sandboxes.createSession({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                name: "name",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("exec_in_sandbox_stream (3)", async () => {
+    test("create_session (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { name: "name" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/exec/stream")
+            .post("/sandboxes/sandbox_name/sessions")
             .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(404)
@@ -2246,37 +2249,231 @@ describe("SandboxesClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.execInSandboxStream({
+            return await client.sandboxes.createSession({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                name: "name",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("exec_in_sandbox_stream (4)", async () => {
+    test("kill_session (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { key: "value" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/sandboxes/sandbox_name/sessions/session").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.killSession({
+            sandbox_name: "sandbox_name",
+            session: "session",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("kill_session (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
 
         server
             .mockEndpoint()
-            .post("/sandboxes/sandbox_name/exec/stream")
-            .jsonBody(rawRequestBody)
+            .delete("/sandboxes/sandbox_name/sessions/session")
             .respondWith()
-            .statusCode(422)
+            .statusCode(401)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.sandboxes.execInSandboxStream({
+            return await client.sandboxes.killSession({
                 sandbox_name: "sandbox_name",
-                body: {
-                    command: ["command", "command"],
-                },
+                session: "session",
             });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("kill_session (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/sandboxes/sandbox_name/sessions/session")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.killSession({
+                sandbox_name: "sandbox_name",
+                session: "session",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("sandbox_save_snapshot (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { presigned_url: "presigned_url" };
+        const rawResponseBody = { checksum_sha256: "checksum_sha256", size_bytes: 1000000 };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/snapshot")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.sandboxes.sandboxSaveSnapshot({
+            sandbox_name: "sandbox_name",
+            presigned_url: "presigned_url",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("sandbox_save_snapshot (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { presigned_url: "presigned_url" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/snapshot")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxSaveSnapshot({
+                sandbox_name: "sandbox_name",
+                presigned_url: "presigned_url",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("sandbox_save_snapshot (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { presigned_url: "presigned_url" };
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/snapshot")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxSaveSnapshot({
+                sandbox_name: "sandbox_name",
+                presigned_url: "presigned_url",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("sandbox_ws_proxy (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().get("/sandboxes/sandbox_name/ws-proxy/1/path").respondWith().statusCode(200).build();
+
+        const response = await client.sandboxes.sandboxWsProxy({
+            sandbox_name: "sandbox_name",
+            port: 1,
+            path: "path",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("sandbox_ws_proxy (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/ws-proxy/1/path")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxWsProxy({
+                sandbox_name: "sandbox_name",
+                port: 1,
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("sandbox_ws_proxy (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "UNAUTHORIZED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/sandboxes/sandbox_name/ws-proxy/1/path")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.sandboxes.sandboxWsProxy({
+                sandbox_name: "sandbox_name",
+                port: 1,
+                path: "path",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
     });
 });

@@ -4,12 +4,16 @@
  * @example
  *     {
  *         sandbox_name: "sandbox_name",
- *         body: {
- *             "key": "value"
- *         }
+ *         name: "name"
  *     }
  */
 export interface CreateSessionRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    body: Record<string, unknown>;
+    command?: string[] | null;
+    env?: Record<string, string | null> | null;
+    name: string;
+    ttl?: string | null;
+    user?: string | null;
+    workdir?: string | null;
 }

@@ -4,7 +4,7 @@ import type * as IsloApi from "../index.js";
 
 export interface PaginatedSnapshotResponse {
     items: IsloApi.SnapshotResponse[];
-    total: number;
     limit: number;
     offset: number;
+    total: number;
 }

@@ -6,6 +6,7 @@
  *         sandbox_name: "sandbox_name"
  *     }
  */
-export interface StopSandboxRequest {
+export interface ListSharesRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }
