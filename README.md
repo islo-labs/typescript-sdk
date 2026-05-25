@@ -82,14 +82,15 @@ const client = new Islo(); // Picks up ISLO_API_KEY automatically
 const client = new Islo({ apiKey: "your-api-key" });
 ```
 
-### Custom token provider
+### Custom URLs
 
 ```typescript
-import { IsloClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloClient({
-    environment: "https://api.islo.dev",
-    token: async () => fetchTokenFromYourAuthService(),
+const client = new Islo({
+    apiKey: "your-api-key",
+    baseUrl: "https://api.customer.example.com",
+    computeUrl: "https://compute.customer.example.com",
 });
 ```
 
@@ -98,7 +99,8 @@ const client = new IsloClient({
 | Environment Variable | Description | Default |
 |---------------------|-------------|---------|
 | `ISLO_API_KEY` | API key exchanged for a short-lived JWT | — |
-| `ISLO_BASE_URL` | API base URL | `https://api.islo.dev` |
+| `ISLO_BASE_URL` | Control-plane API base URL | `https://api.islo.dev` |
+| `ISLO_COMPUTE_URL` | Compute-plane API base URL | `https://compute.islo.dev` |
 
 ## Development
 
@@ -125,9 +127,9 @@ A full reference for this library is available [here](https://github.com/islo-la
 Instantiate and use the client with the following:
 
 ```typescript
-import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
+const client = new Islo({ apiKey: "YOUR_API_KEY" });
 await client.sandboxes.createSandbox();
 ```
 
@@ -140,6 +142,15 @@ import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
 const client = new Islo({
     environment: IsloApiEnvironment.Production,
+});
+```
+
+You can also override the control and compute planes independently:
+
+```typescript
+const client = new Islo({
+    baseUrl: "https://api.customer.example.com",
+    computeUrl: "https://compute.customer.example.com",
 });
 ```
 
