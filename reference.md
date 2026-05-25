@@ -1,785 +1,5 @@
 # Reference
-## sandboxes
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listSandboxes</a>({ ...params }) -> IsloApi.PaginatedSandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List and filter sandboxes for the authenticated tenant.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.listSandboxes();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListSandboxesRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">createSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new sandbox with the specified configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.createSandbox();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.SandboxCreate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">getSandboxByIdSandboxesByIdSandboxIdGet</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get details of a specific sandbox by stable public ID, including deleted sandboxes.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.getSandboxByIdSandboxesByIdSandboxIdGet({
-    sandbox_id: "sandbox_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetSandboxByIdSandboxesByIdSandboxIdGetRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">getSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get details of a specific sandbox by name.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.getSandbox({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetSandboxRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">deleteSandbox</a>({ ...params }) -> unknown</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Mark a sandbox for deletion. VM teardown happens asynchronously.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.deleteSandbox({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.DeleteSandboxRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">stopSandbox</a>({ ...params }) -> unknown</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stop a sandbox. VM teardown happens asynchronously; the record stays visible.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.stopSandbox({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.StopSandboxRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">pauseSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Snapshot the sandbox VM state to disk and free CPU/memory. The sandbox can be resumed later.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.pauseSandbox({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.PauseSandboxRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">resumeSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Resume a paused sandbox from its local snapshot.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.resumeSandbox({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ResumeSandboxRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">promoteSandboxCache</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Promote the sandbox's tool cache to golden cache for reuse.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.promoteSandboxCache({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.PromoteSandboxCacheRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listSessions</a>({ ...params }) -> unknown</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List active persistent sessions in a sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.listSessions({
-    sandbox_name: "sandbox_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListSessionsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">createSession</a>({ ...params }) -> unknown</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a persistent session in a sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.createSession({
-    sandbox_name: "sandbox_name",
-    body: {
-        "key": "value"
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.CreateSessionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">killSession</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Kill a persistent session in a sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.sandboxes.killSession({
-    sandbox_name: "sandbox_name",
-    session_name: "session_name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.KillSessionRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SandboxesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
+## Sandboxes
 <details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listExecSessions</a>({ ...params }) -> IsloApi.ExecSessionResponse[]</code></summary>
 <dl>
 <dd>
@@ -1108,23 +328,9 @@ await client.sandboxes.getAgentSessionEvents({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">downloadFile</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">listSandboxes</a>({ ...params }) -> IsloApi.PaginatedSandboxResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Download a single file from a sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1135,7 +341,310 @@ Download a single file from a sandbox.
 <dd>
 
 ```typescript
-await client.sandboxes.downloadFile({
+await client.sandboxes.listSandboxes();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSandboxesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">createSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.createSandbox();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">getSandbox</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.getSandbox({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">deleteSandbox</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.deleteSandbox({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxExecInteractive</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxExecInteractive({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxExecInteractiveRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxExecStream</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxExecStream({
+    sandbox_name: "sandbox_name",
+    args: ["args"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ExecVmRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxDownloadFile</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxDownloadFile({
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -1154,7 +663,7 @@ await client.sandboxes.downloadFile({
 <dl>
 <dd>
 
-**request:** `IsloApi.DownloadFileRequest` 
+**request:** `IsloApi.SandboxDownloadFileRequest` 
     
 </dd>
 </dl>
@@ -1174,23 +683,9 @@ await client.sandboxes.downloadFile({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">uploadFile</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxUploadFile</a>({ ...params }) -> IsloApi.FileUploadStatusResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Upload a single file into a sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1201,7 +696,7 @@ Upload a single file into a sandbox.
 <dd>
 
 ```typescript
-await client.sandboxes.uploadFile({
+await client.sandboxes.sandboxUploadFile({
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -1220,7 +715,7 @@ await client.sandboxes.uploadFile({
 <dl>
 <dd>
 
-**request:** `IsloApi.UploadFileRequest` 
+**request:** `IsloApi.SandboxUploadFileRequest` 
     
 </dd>
 </dl>
@@ -1240,23 +735,9 @@ await client.sandboxes.uploadFile({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">downloadArchive</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxDownloadArchive</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Download a directory from a sandbox as a tar.gz archive.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1267,7 +748,7 @@ Download a directory from a sandbox as a tar.gz archive.
 <dd>
 
 ```typescript
-await client.sandboxes.downloadArchive({
+await client.sandboxes.sandboxDownloadArchive({
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -1286,7 +767,7 @@ await client.sandboxes.downloadArchive({
 <dl>
 <dd>
 
-**request:** `IsloApi.DownloadArchiveRequest` 
+**request:** `IsloApi.SandboxDownloadArchiveRequest` 
     
 </dd>
 </dl>
@@ -1306,23 +787,9 @@ await client.sandboxes.downloadArchive({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">uploadArchive</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxUploadArchive</a>({ ...params }) -> IsloApi.FileUploadStatusResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Upload a tar.gz archive and extract it into a sandbox directory.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1333,7 +800,7 @@ Upload a tar.gz archive and extract it into a sandbox directory.
 <dd>
 
 ```typescript
-await client.sandboxes.uploadArchive({
+await client.sandboxes.sandboxUploadArchive({
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -1352,7 +819,7 @@ await client.sandboxes.uploadArchive({
 <dl>
 <dd>
 
-**request:** `IsloApi.UploadArchiveRequest` 
+**request:** `IsloApi.SandboxUploadArchiveRequest` 
     
 </dd>
 </dl>
@@ -1372,23 +839,9 @@ await client.sandboxes.uploadArchive({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">execInSandbox</a>({ ...params }) -> IsloApi.ExecResponse</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxPause</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Execute a command inside a sandbox by name.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1399,11 +852,60 @@ Execute a command inside a sandbox by name.
 <dd>
 
 ```typescript
-await client.sandboxes.execInSandbox({
+await client.sandboxes.sandboxPause({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxPauseRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxPortForward</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxPortForward({
     sandbox_name: "sandbox_name",
-    body: {
-        command: ["command"]
-    }
+    port: 1
 });
 
 ```
@@ -1420,7 +922,7 @@ await client.sandboxes.execInSandbox({
 <dl>
 <dd>
 
-**request:** `IsloApi.ExecInSandboxRequest` 
+**request:** `IsloApi.SandboxPortForwardRequest` 
     
 </dd>
 </dl>
@@ -1440,23 +942,9 @@ await client.sandboxes.execInSandbox({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">getExecResult</a>({ ...params }) -> IsloApi.ExecResultResponse</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxPromoteCache</a>({ ...params }) -> IsloApi.PromoteCacheResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Poll the result of a previously started exec command.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1467,9 +955,60 @@ Poll the result of a previously started exec command.
 <dd>
 
 ```typescript
-await client.sandboxes.getExecResult({
+await client.sandboxes.sandboxPromoteCache({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxPromoteCacheRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxProxyRoot</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxProxyRoot({
     sandbox_name: "sandbox_name",
-    exec_id: "exec_id"
+    port: 1
 });
 
 ```
@@ -1486,7 +1025,7 @@ await client.sandboxes.getExecResult({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetExecResultRequest` 
+**request:** `IsloApi.SandboxProxyRootRequest` 
     
 </dd>
 </dl>
@@ -1506,23 +1045,9 @@ await client.sandboxes.getExecResult({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">execInSandboxStream</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxProxy</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Execute a command inside a sandbox and stream stdout/stderr as SSE.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1533,11 +1058,10 @@ Execute a command inside a sandbox and stream stdout/stderr as SSE.
 <dd>
 
 ```typescript
-await client.sandboxes.execInSandboxStream({
+await client.sandboxes.sandboxProxy({
     sandbox_name: "sandbox_name",
-    body: {
-        command: ["command"]
-    }
+    port: 1,
+    path: "path"
 });
 
 ```
@@ -1554,7 +1078,7 @@ await client.sandboxes.execInSandboxStream({
 <dl>
 <dd>
 
-**request:** `IsloApi.ExecInSandboxStreamRequest` 
+**request:** `IsloApi.SandboxProxyRequest` 
     
 </dd>
 </dl>
@@ -1574,24 +1098,9 @@ await client.sandboxes.execInSandboxStream({
 </dl>
 </details>
 
-## Snapshots
-<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">listSnapshots</a>({ ...params }) -> IsloApi.PaginatedSnapshotResponse</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxResume</a>({ ...params }) -> IsloApi.SandboxResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List all snapshots for the current tenant.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1602,71 +1111,8 @@ List all snapshots for the current tenant.
 <dd>
 
 ```typescript
-await client.snapshots.listSnapshots();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListSnapshotsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `SnapshotsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">createSnapshot</a>({ ...params }) -> IsloApi.SnapshotResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a snapshot from a running sandbox.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.snapshots.createSnapshot({
-    sandbox_id: "sandbox_id"
+await client.sandboxes.sandboxResume({
+    sandbox_name: "sandbox_name"
 });
 
 ```
@@ -1683,7 +1129,7 @@ await client.snapshots.createSnapshot({
 <dl>
 <dd>
 
-**request:** `IsloApi.SnapshotCreate` 
+**request:** `IsloApi.SandboxResumeRequest` 
     
 </dd>
 </dl>
@@ -1691,7 +1137,7 @@ await client.snapshots.createSnapshot({
 <dl>
 <dd>
 
-**requestOptions:** `SnapshotsClient.RequestOptions` 
+**requestOptions:** `SandboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1703,23 +1149,9 @@ await client.snapshots.createSnapshot({
 </dl>
 </details>
 
-<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">getSnapshot</a>({ ...params }) -> IsloApi.SnapshotResponse</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxSaveSnapshot</a>({ ...params }) -> IsloApi.SaveSnapshotResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get snapshot details by name.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1730,8 +1162,9 @@ Get snapshot details by name.
 <dd>
 
 ```typescript
-await client.snapshots.getSnapshot({
-    name: "name"
+await client.sandboxes.sandboxSaveSnapshot({
+    sandbox_name: "sandbox_name",
+    presigned_url: "presigned_url"
 });
 
 ```
@@ -1748,7 +1181,7 @@ await client.snapshots.getSnapshot({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetSnapshotRequest` 
+**request:** `IsloApi.SaveSnapshotRequest` 
     
 </dd>
 </dl>
@@ -1756,7 +1189,7 @@ await client.snapshots.getSnapshot({
 <dl>
 <dd>
 
-**requestOptions:** `SnapshotsClient.RequestOptions` 
+**requestOptions:** `SandboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1768,23 +1201,9 @@ await client.snapshots.getSnapshot({
 </dl>
 </details>
 
-<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">deleteSnapshot</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxWsProxy</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a snapshot by name.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1795,8 +1214,10 @@ Delete a snapshot by name.
 <dd>
 
 ```typescript
-await client.snapshots.deleteSnapshot({
-    name: "name"
+await client.sandboxes.sandboxWsProxy({
+    sandbox_name: "sandbox_name",
+    port: 1,
+    path: "path"
 });
 
 ```
@@ -1813,7 +1234,7 @@ await client.snapshots.deleteSnapshot({
 <dl>
 <dd>
 
-**request:** `IsloApi.DeleteSnapshotRequest` 
+**request:** `IsloApi.SandboxWsProxyRequest` 
     
 </dd>
 </dl>
@@ -1821,7 +1242,7 @@ await client.snapshots.deleteSnapshot({
 <dl>
 <dd>
 
-**requestOptions:** `SnapshotsClient.RequestOptions` 
+**requestOptions:** `SandboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1859,111 +1280,6 @@ await client.credits.getCreditBalance();
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `CreditsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">createCreditCheckout</a>({ ...params }) -> IsloApi.CreateCheckoutResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.credits.createCreditCheckout({
-    amount_cents: 1
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.CreateCheckoutRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CreditsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.credits.<a href="/src/api/resources/credits/client/Client.ts">handlePaddleWebhook</a>({ ...params }) -> unknown</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.credits.handlePaddleWebhook({
-    "paddle-signature": "paddleSignature",
-    body: {
-        "key": "value"
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.HandlePaddleWebhookRequest` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -3138,6 +2454,629 @@ await client.cloudRoles.updateCloudRole({
 <dd>
 
 **requestOptions:** `CloudRolesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Sessions
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sandboxListSessions</a>({ ...params }) -> IsloApi.ListSessionsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.sandboxListSessions({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxListSessionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SessionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sandboxCreateSession</a>({ ...params }) -> IsloApi.CreateSessionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.sandboxCreateSession({
+    sandbox_name: "sandbox_name",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateSessionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SessionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sandboxKillSession</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.sandboxKillSession({
+    sandbox_name: "sandbox_name",
+    session: "session"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxKillSessionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SessionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sessions.<a href="/src/api/resources/sessions/client/Client.ts">sandboxAttachSession</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sessions.sandboxAttachSession({
+    sandbox_name: "sandbox_name",
+    session: "session"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxAttachSessionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SessionsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Shares
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">listShares</a>({ ...params }) -> IsloApi.ShareResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.listShares({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSharesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">createShare</a>({ ...params }) -> IsloApi.ShareResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.createShare({
+    sandbox_name: "sandbox_name",
+    port: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CreateShareRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.shares.<a href="/src/api/resources/shares/client/Client.ts">deleteShare</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.shares.deleteShare({
+    sandbox_name: "sandbox_name",
+    share_id: "share_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteShareRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SharesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## snapshots
+<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">listSnapshots</a>({ ...params }) -> IsloApi.PaginatedSnapshotResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all snapshots for the current tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.snapshots.listSnapshots();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSnapshotsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SnapshotsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">createSnapshot</a>({ ...params }) -> IsloApi.SnapshotResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a snapshot from a running sandbox.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.snapshots.createSnapshot({
+    sandbox_id: "sandbox_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SnapshotCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SnapshotsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">getSnapshot</a>({ ...params }) -> IsloApi.SnapshotResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get snapshot details by name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.snapshots.getSnapshot({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetSnapshotRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SnapshotsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.snapshots.<a href="/src/api/resources/snapshots/client/Client.ts">deleteSnapshot</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a snapshot by name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.snapshots.deleteSnapshot({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteSnapshotRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SnapshotsClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,9 +3,10 @@
 import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import type * as environments from "./environments.js";
 
 export type BaseClientOptions = {
-    environment: core.Supplier<string>;
+    environment: core.Supplier<environments.IsloApiEnvironment | environments.IsloApiEnvironmentUrls>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
     /** Additional headers to include in requests. */
@@ -51,8 +52,8 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "@islo-labs/sdk",
-            "X-Fern-SDK-Version": "0.0.19",
-            "User-Agent": "@islo-labs/sdk/0.0.19",
+            "X-Fern-SDK-Version": "0.0.20",
+            "User-Agent": "@islo-labs/sdk/0.0.20",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
