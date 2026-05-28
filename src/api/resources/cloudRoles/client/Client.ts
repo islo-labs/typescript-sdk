@@ -90,7 +90,6 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -142,11 +141,6 @@ export class CloudRolesClient {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
@@ -322,7 +316,6 @@ export class CloudRolesClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -379,11 +372,6 @@ export class CloudRolesClient {
                     );
                 case 404:
                     throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
