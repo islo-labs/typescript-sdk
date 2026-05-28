@@ -15,6 +15,6 @@ export interface GatewayProfileUpdate {
     default_action?: IsloApi.GatewayAction | null;
     internet_enabled?: boolean | null;
     is_default?: boolean | null;
-    /** Cloud role name or public_id, empty string to unset */
+    /** Cloud role public ID (UUID), empty string to unset */
     cloud_role?: string | null;
 }

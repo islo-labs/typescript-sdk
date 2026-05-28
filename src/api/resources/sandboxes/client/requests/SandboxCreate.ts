@@ -23,8 +23,10 @@ export interface SandboxCreate {
     env?: Record<string, string | null> | null;
     /** Working directory relative to /workspace (e.g. 'my-project') */
     workdir?: string | null;
-    /** Init capabilities to enable (in addition to Core which always runs). None = all capabilities (default, backward compatible), [] = Core only (minimal init), ['ssh', 'devtools'] = Core + specified capabilities. Valid values: ssh, terminal, devtools, docker. */
-    init_capabilities?: string[] | null;
+    /** Sandbox init intent. Omitted typed SDK values should send minimal. Raw requests that omit both init and init_capabilities use legacy full init during migration. Platform init always runs. */
+    init?: IsloApi.SandboxCreateInit;
+    /** Deprecated legacy init capabilities. Use init instead. None = full init, [] = platform init only, ['ssh'] = selected capabilities. Valid legacy values: core-gateway-proxy, ssh, docker. */
+    init_capabilities?: SandboxCreate.InitCapabilities.Item[] | null;
     /** Gateway profile name or ID to apply. Uses tenant default if omitted. */
     gateway_profile?: string | null;
     /** Name of a snapshot to restore from. When set, the VM is created from the snapshot's filesystem. */
@@ -33,4 +35,17 @@ export interface SandboxCreate {
     sources?: IsloApi.GitSource[] | null;
     /** Named setup script steps to execute sequentially after git clones. */
     setup_scripts?: IsloApi.SetupScript[] | null;
+}
+
+export namespace SandboxCreate {
+    export type InitCapabilities = InitCapabilities.Item[];
+
+    export namespace InitCapabilities {
+        export const Item = {
+            CoreGatewayProxy: "core-gateway-proxy",
+            Ssh: "ssh",
+            Docker: "docker",
+        } as const;
+        export type Item = (typeof Item)[keyof typeof Item];
+    }
 }
