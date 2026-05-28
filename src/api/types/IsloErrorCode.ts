@@ -5,6 +5,7 @@ export const IsloErrorCode = {
     AuthRequired: "AUTH_REQUIRED",
     AuthTokenExpired: "AUTH_TOKEN_EXPIRED",
     AuthTokenInvalid: "AUTH_TOKEN_INVALID",
+    AccessDenied: "ACCESS_DENIED",
     SandboxNotFound: "SANDBOX_NOT_FOUND",
     SandboxAlreadyExists: "SANDBOX_ALREADY_EXISTS",
     SandboxNotRunning: "SANDBOX_NOT_RUNNING",
@@ -13,6 +14,7 @@ export const IsloErrorCode = {
     ExecFailed: "EXEC_FAILED",
     ResourceUnavailable: "RESOURCE_UNAVAILABLE",
     ResourceNotFound: "RESOURCE_NOT_FOUND",
+    FileNotFound: "FILE_NOT_FOUND",
     CacheConflict: "CACHE_CONFLICT",
     RateLimited: "RATE_LIMITED",
     InsufficientCredits: "INSUFFICIENT_CREDITS",
@@ -21,6 +23,7 @@ export const IsloErrorCode = {
     UpstreamError: "UPSTREAM_ERROR",
     UpstreamTimeout: "UPSTREAM_TIMEOUT",
     UpstreamUnavailable: "UPSTREAM_UNAVAILABLE",
+    Timeout: "TIMEOUT",
     InternalError: "INTERNAL_ERROR",
 } as const;
 export type IsloErrorCode = (typeof IsloErrorCode)[keyof typeof IsloErrorCode];

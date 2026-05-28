@@ -18,7 +18,7 @@ export type { ListSessionsRequest } from "./ListSessionsRequest.js";
 export type { PauseSandboxRequest } from "./PauseSandboxRequest.js";
 export type { PromoteSandboxCacheRequest } from "./PromoteSandboxCacheRequest.js";
 export type { ResumeSandboxRequest } from "./ResumeSandboxRequest.js";
-export type { SandboxCreate } from "./SandboxCreate.js";
+export { SandboxCreate } from "./SandboxCreate.js";
 export type { StopSandboxRequest } from "./StopSandboxRequest.js";
 export type { UploadArchiveRequest } from "./UploadArchiveRequest.js";
 export type { UploadFileRequest } from "./UploadFileRequest.js";

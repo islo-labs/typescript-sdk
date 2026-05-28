@@ -3,9 +3,9 @@
 /**
  * @example
  *     {
- *         amount_cents: 1
+ *         sandbox_name: "sandbox_name"
  *     }
  */
-export interface CreateCheckoutRequest {
-    amount_cents: number;
+export interface ListSharesRequest {
+    sandbox_name: string;
 }

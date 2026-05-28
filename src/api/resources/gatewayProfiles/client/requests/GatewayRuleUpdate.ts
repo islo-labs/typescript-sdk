@@ -20,5 +20,5 @@ export interface GatewayRuleUpdate {
     rate_limit_rpm?: number | null;
     provider_key?: string | null;
     auth_strategy?: IsloApi.AuthStrategySchema | null;
-    content_filter?: IsloApi.ContentFilterSchema | null;
+    content_filter?: IsloApi.GatewayRuleUpdateContentFilter | null;
 }
