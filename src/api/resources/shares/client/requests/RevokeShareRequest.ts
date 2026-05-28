@@ -8,6 +8,8 @@
  *     }
  */
 export interface RevokeShareRequest {
+    /** Sandbox name */
     sandbox_name: string;
+    /** Share ID */
     share_id: string;
 }

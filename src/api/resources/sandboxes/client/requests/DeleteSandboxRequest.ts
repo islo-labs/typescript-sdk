@@ -7,5 +7,6 @@
  *     }
  */
 export interface DeleteSandboxRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

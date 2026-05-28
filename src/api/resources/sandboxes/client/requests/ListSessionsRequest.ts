@@ -7,5 +7,6 @@
  *     }
  */
 export interface ListSessionsRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

@@ -7,5 +7,6 @@
  *     }
  */
 export interface PromoteSandboxCacheRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }
