@@ -170,9 +170,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { SandboxesClient } from '@islo-labs/sdk/sandboxes';
+import { ComputeClient } from '@islo-labs/sdk/compute';
 
-const client = new SandboxesClient({...});
+const client = new ComputeClient({...});
 ```
 
 ### Additional Headers
