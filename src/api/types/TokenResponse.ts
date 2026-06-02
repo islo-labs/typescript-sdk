@@ -6,4 +6,6 @@
 export interface TokenResponse {
     /** Descope session JWT */
     session_token: string;
+    /** Seconds until the session JWT expires */
+    expires_in: number;
 }

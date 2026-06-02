@@ -19,3 +19,6 @@ tsconfig.json
 # builds, publishes to npm via Trusted Publishing, and pushes the
 # v<version> tag.
 .github/workflows/release.yml
+.fern/replay.lock
+.fern/replay.yml
+.gitattributes

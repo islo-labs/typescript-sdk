@@ -4,10 +4,12 @@
  * @example
  *     {
  *         sandbox_name: "sandbox_name",
- *         session_name: "session_name"
+ *         session: "session"
  *     }
  */
 export interface KillSessionRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    session_name: string;
+    /** Session name */
+    session: string;
 }

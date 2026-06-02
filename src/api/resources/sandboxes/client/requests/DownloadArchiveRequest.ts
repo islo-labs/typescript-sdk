@@ -8,7 +8,8 @@
  *     }
  */
 export interface DownloadArchiveRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    /** Absolute source directory in the sandbox */
+    /** Directory path to archive inside the sandbox */
     path: string;
 }
