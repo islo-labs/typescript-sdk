@@ -48,7 +48,7 @@ export class CloudRolesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "cloud-roles",
             ),
             method: "GET",
@@ -118,7 +118,7 @@ export class CloudRolesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "cloud-roles",
             ),
             method: "POST",
@@ -192,7 +192,7 @@ export class CloudRolesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `cloud-roles/${core.url.encodePathParam(roleId)}`,
             ),
             method: "GET",
@@ -268,7 +268,7 @@ export class CloudRolesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `cloud-roles/${core.url.encodePathParam(roleId)}`,
             ),
             method: "DELETE",
@@ -344,7 +344,7 @@ export class CloudRolesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `cloud-roles/${core.url.encodePathParam(roleId)}`,
             ),
             method: "PATCH",

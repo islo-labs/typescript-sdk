@@ -2,12 +2,9 @@
 
 /**
  * Command execution started response.
- *
- * The command runs asynchronously in the sandbox. Poll the result via
- * GET /sandboxes/{name}/exec/{exec_id}.
  */
 export interface ExecResponse {
     exec_id: string;
-    status: string;
     sandbox_id: string;
+    status: string;
 }

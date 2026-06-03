@@ -4,11 +4,11 @@ import type * as core from "../../core/index.js";
 import * as errors from "../../errors/index.js";
 import type * as IsloApi from "../index.js";
 
-export class TooManyRequestsError extends errors.IsloApiError {
+export class ForbiddenError extends errors.IsloApiError {
     constructor(body: IsloApi.ErrorResponse, rawResponse?: core.RawResponse) {
         super({
-            message: "TooManyRequestsError",
-            statusCode: 429,
+            message: "ForbiddenError",
+            statusCode: 403,
             body: body,
             rawResponse: rawResponse,
         });

@@ -14,6 +14,7 @@ The Islo TypeScript library provides convenient access to the Islo APIs from Typ
 - [Development](#development)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -124,10 +125,22 @@ A full reference for this library is available [here](https://github.com/islo-la
 Instantiate and use the client with the following:
 
 ```typescript
-import { Islo } from "@islo-labs/sdk";
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
 await client.sandboxes.createSandbox();
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+
+const client = new Islo({
+    environment: IsloApiEnvironment.Production,
+});
 ```
 
 ## Request and Response Types
@@ -138,7 +151,7 @@ following namespace:
 ```typescript
 import { IsloApi } from "@islo-labs/sdk";
 
-const request: IsloApi.ListSandboxesRequest = {
+const request: IsloApi.ListExecSessionsRequest = {
     ...
 };
 ```
@@ -170,9 +183,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { SandboxesClient } from '@islo-labs/sdk/sandboxes';
+import { TenantsClient } from '@islo-labs/sdk/tenants';
 
-const client = new SandboxesClient({...});
+const client = new TenantsClient({...});
 ```
 
 ### Additional Headers

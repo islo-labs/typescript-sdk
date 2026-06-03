@@ -1,6 +1,6 @@
 {
     "name": "@islo-labs/sdk",
-    "version": "0.0.20",
+    "version": "0.0.21",
     "private": false,
     "repository": {
         "type": "git",
@@ -22,6 +22,17 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./tenants": {
+            "import": {
+                "types": "./dist/esm/api/resources/tenants/exports.d.mts",
+                "default": "./dist/esm/api/resources/tenants/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/tenants/exports.d.ts",
+                "default": "./dist/cjs/api/resources/tenants/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/tenants/exports.js"
+        },
         "./sandboxes": {
             "import": {
                 "types": "./dist/esm/api/resources/sandboxes/exports.d.mts",
@@ -33,27 +44,16 @@
             },
             "default": "./dist/cjs/api/resources/sandboxes/exports.js"
         },
-        "./snapshots": {
+        "./compute": {
             "import": {
-                "types": "./dist/esm/api/resources/snapshots/exports.d.mts",
-                "default": "./dist/esm/api/resources/snapshots/exports.mjs"
+                "types": "./dist/esm/api/resources/compute/exports.d.mts",
+                "default": "./dist/esm/api/resources/compute/exports.mjs"
             },
             "require": {
-                "types": "./dist/cjs/api/resources/snapshots/exports.d.ts",
-                "default": "./dist/cjs/api/resources/snapshots/exports.js"
+                "types": "./dist/cjs/api/resources/compute/exports.d.ts",
+                "default": "./dist/cjs/api/resources/compute/exports.js"
             },
-            "default": "./dist/cjs/api/resources/snapshots/exports.js"
-        },
-        "./shares": {
-            "import": {
-                "types": "./dist/esm/api/resources/shares/exports.d.mts",
-                "default": "./dist/esm/api/resources/shares/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/shares/exports.d.ts",
-                "default": "./dist/cjs/api/resources/shares/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/shares/exports.js"
+            "default": "./dist/cjs/api/resources/compute/exports.js"
         },
         "./credits": {
             "import": {
@@ -98,6 +98,39 @@
                 "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
             },
             "default": "./dist/cjs/api/resources/cloudRoles/exports.js"
+        },
+        "./sessions": {
+            "import": {
+                "types": "./dist/esm/api/resources/sessions/exports.d.mts",
+                "default": "./dist/esm/api/resources/sessions/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/sessions/exports.d.ts",
+                "default": "./dist/cjs/api/resources/sessions/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/sessions/exports.js"
+        },
+        "./shares": {
+            "import": {
+                "types": "./dist/esm/api/resources/shares/exports.d.mts",
+                "default": "./dist/esm/api/resources/shares/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/shares/exports.d.ts",
+                "default": "./dist/cjs/api/resources/shares/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/shares/exports.js"
+        },
+        "./snapshots": {
+            "import": {
+                "types": "./dist/esm/api/resources/snapshots/exports.d.mts",
+                "default": "./dist/esm/api/resources/snapshots/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/snapshots/exports.d.ts",
+                "default": "./dist/cjs/api/resources/snapshots/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/snapshots/exports.js"
         },
         "./package.json": "./package.json"
     },
