@@ -2,13 +2,17 @@
 
 import type * as IsloApi from "../index.js";
 
-/**
- * Structured error response for API clients.
- */
 export interface ErrorResponse {
-    code: IsloApi.IsloErrorCode;
+    available?: (number | null) | undefined;
+    code: IsloApi.ErrorCode;
+    limit?: (number | null) | undefined;
     message: string;
-    hint?: (string | null) | undefined;
-    details?: (Record<string, unknown> | null) | undefined;
     request_id?: (string | null) | undefined;
+    requested?: (number | null) | undefined;
+    /**
+     * Optional capacity fields populated for `InsufficientResources` errors so
+     * clients (including peer agents) can recover the typed payload across
+     * HTTP boundaries instead of collapsing it to an opaque message.
+     */
+    resource?: (string | null) | undefined;
 }

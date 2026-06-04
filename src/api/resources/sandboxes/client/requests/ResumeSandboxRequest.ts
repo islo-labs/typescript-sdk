@@ -7,5 +7,6 @@
  *     }
  */
 export interface ResumeSandboxRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

@@ -8,7 +8,8 @@
  *     }
  */
 export interface UploadFileRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    /** Absolute target path in the sandbox */
+    /** Destination path inside the sandbox */
     path: string;
 }

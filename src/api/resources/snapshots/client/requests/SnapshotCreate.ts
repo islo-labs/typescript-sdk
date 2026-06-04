@@ -3,10 +3,10 @@
 /**
  * @example
  *     {
- *         sandbox_id: "sandbox_id"
+ *         sandbox_name: "sandbox_name"
  *     }
  */
 export interface SnapshotCreate {
-    sandbox_id: string;
     name?: string | null;
+    sandbox_name: string;
 }

@@ -8,9 +8,8 @@
  *     }
  */
 export interface CreateShareRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    /** Port to share */
     port: number;
-    /** Time-to-live in seconds (1 minute to 7 days). Defaults to 24h. */
     ttl_seconds?: number | null;
 }

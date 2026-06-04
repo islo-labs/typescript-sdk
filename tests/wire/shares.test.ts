@@ -7,16 +7,14 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SharesClient", () => {
     test("list_shares (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
-            {
-                share_id: "share_id",
-                url: "url",
-                port: 1,
-                created_at: "2024-01-15T09:30:00Z",
-                expires_at: "2024-01-15T09:30:00Z",
-            },
+            { created_at: "created_at", expires_at: "expires_at", port: 1, share_id: "share_id", url: "url" },
         ];
 
         server
@@ -35,7 +33,11 @@ describe("SharesClient", () => {
 
     test("list_shares (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -56,7 +58,11 @@ describe("SharesClient", () => {
 
     test("list_shares (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -75,37 +81,20 @@ describe("SharesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("list_shares (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/sandboxes/sandbox_name/shares")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.shares.listShares({
-                sandbox_name: "sandbox_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("create_share (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { port: 1 };
         const rawResponseBody = {
+            created_at: "created_at",
+            expires_at: "expires_at",
+            port: 1,
             share_id: "share_id",
             url: "url",
-            port: 1,
-            created_at: "2024-01-15T09:30:00Z",
-            expires_at: "2024-01-15T09:30:00Z",
         };
 
         server
@@ -126,8 +115,39 @@ describe("SharesClient", () => {
 
     test("create_share (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { port: 65535 };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { port: 1 };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/sandboxes/sandbox_name/shares")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.shares.createShare({
+                sandbox_name: "sandbox_name",
+                port: 1,
+            });
+        }).rejects.toThrow(IsloApi.BadRequestError);
+    });
+
+    test("create_share (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { port: 1 };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -142,15 +162,19 @@ describe("SharesClient", () => {
         await expect(async () => {
             return await client.shares.createShare({
                 sandbox_name: "sandbox_name",
-                port: 65535,
+                port: 1,
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("create_share (3)", async () => {
+    test("create_share (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { port: 65535 };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { port: 1 };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -165,37 +189,18 @@ describe("SharesClient", () => {
         await expect(async () => {
             return await client.shares.createShare({
                 sandbox_name: "sandbox_name",
-                port: 65535,
+                port: 1,
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("create_share (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { port: 65535 };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/sandboxes/sandbox_name/shares")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.shares.createShare({
-                sandbox_name: "sandbox_name",
-                port: 65535,
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("revoke_share (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         server.mockEndpoint().delete("/sandboxes/sandbox_name/shares/share_id").respondWith().statusCode(200).build();
 
@@ -208,7 +213,11 @@ describe("SharesClient", () => {
 
     test("revoke_share (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -230,7 +239,11 @@ describe("SharesClient", () => {
 
     test("revoke_share (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -248,27 +261,5 @@ describe("SharesClient", () => {
                 share_id: "share_id",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("revoke_share (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .delete("/sandboxes/sandbox_name/shares/share_id")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.shares.revokeShare({
-                sandbox_name: "sandbox_name",
-                share_id: "share_id",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 });

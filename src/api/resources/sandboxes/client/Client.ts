@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -16,1033 +15,13 @@ export declare namespace SandboxesClient {
 }
 
 /**
- * Sandbox lifecycle and execution
+ * Sandbox lifecycle and operations (primary SDK surface)
  */
 export class SandboxesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SandboxesClient.Options>;
 
     constructor(options: SandboxesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-    }
-
-    /**
-     * List and filter sandboxes for the authenticated tenant.
-     *
-     * @param {IsloApi.ListSandboxesRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.listSandboxes()
-     */
-    public listSandboxes(
-        request: IsloApi.ListSandboxesRequest = {},
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.PaginatedSandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listSandboxes(request, requestOptions));
-    }
-
-    private async __listSandboxes(
-        request: IsloApi.ListSandboxesRequest = {},
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.PaginatedSandboxResponse>> {
-        const { search, status, date_from: dateFrom, date_to: dateTo, created_by: createdBy, limit, offset } = request;
-        const _queryParams: Record<string, unknown> = {
-            search,
-            status: status !== undefined ? toJson(status) : undefined,
-            date_from: dateFrom !== undefined ? dateFrom : undefined,
-            date_to: dateTo !== undefined ? dateTo : undefined,
-            created_by: createdBy,
-            limit,
-            offset,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "sandboxes/",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.PaginatedSandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sandboxes/");
-    }
-
-    /**
-     * Create a new sandbox with the specified configuration.
-     *
-     * @param {IsloApi.SandboxCreate} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.PaymentRequiredError}
-     * @throws {@link IsloApi.ConflictError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     * @throws {@link IsloApi.TooManyRequestsError}
-     * @throws {@link IsloApi.ServiceUnavailableError}
-     *
-     * @example
-     *     await client.sandboxes.createSandbox()
-     */
-    public createSandbox(
-        request: IsloApi.SandboxCreate = {},
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__createSandbox(request, requestOptions));
-    }
-
-    private async __createSandbox(
-        request: IsloApi.SandboxCreate = {},
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "sandboxes/",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 402:
-                    throw new IsloApi.PaymentRequiredError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                case 429:
-                    throw new IsloApi.TooManyRequestsError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 503:
-                    throw new IsloApi.ServiceUnavailableError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/sandboxes/");
-    }
-
-    /**
-     * Get details of a specific sandbox by stable public ID, including deleted sandboxes.
-     *
-     * @param {IsloApi.GetSandboxByIdSandboxesByIdSandboxIdGetRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.getSandboxByIdSandboxesByIdSandboxIdGet({
-     *         sandbox_id: "sandbox_id"
-     *     })
-     */
-    public getSandboxByIdSandboxesByIdSandboxIdGet(
-        request: IsloApi.GetSandboxByIdSandboxesByIdSandboxIdGetRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getSandboxByIdSandboxesByIdSandboxIdGet(request, requestOptions),
-        );
-    }
-
-    private async __getSandboxByIdSandboxesByIdSandboxIdGet(
-        request: IsloApi.GetSandboxByIdSandboxesByIdSandboxIdGetRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
-        const { sandbox_id: sandboxId } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/-/by-id/${core.url.encodePathParam(sandboxId)}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/sandboxes/-/by-id/{sandbox_id}",
-        );
-    }
-
-    /**
-     * Get details of a specific sandbox by name.
-     *
-     * @param {IsloApi.GetSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.getSandbox({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public getSandbox(
-        request: IsloApi.GetSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getSandbox(request, requestOptions));
-    }
-
-    private async __getSandbox(
-        request: IsloApi.GetSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sandboxes/{sandbox_name}");
-    }
-
-    /**
-     * Mark a sandbox for deletion. VM teardown happens asynchronously.
-     *
-     * @param {IsloApi.DeleteSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.deleteSandbox({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public deleteSandbox(
-        request: IsloApi.DeleteSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteSandbox(request, requestOptions));
-    }
-
-    private async __deleteSandbox(
-        request: IsloApi.DeleteSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/sandboxes/{sandbox_name}");
-    }
-
-    /**
-     * Stop a sandbox. VM teardown happens asynchronously; the record stays visible.
-     *
-     * @param {IsloApi.StopSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.ConflictError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.stopSandbox({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public stopSandbox(
-        request: IsloApi.StopSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__stopSandbox(request, requestOptions));
-    }
-
-    private async __stopSandbox(
-        request: IsloApi.StopSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/stop`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/stop",
-        );
-    }
-
-    /**
-     * Snapshot the sandbox VM state to disk and free CPU/memory. The sandbox can be resumed later.
-     *
-     * @param {IsloApi.PauseSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.ConflictError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.pauseSandbox({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public pauseSandbox(
-        request: IsloApi.PauseSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__pauseSandbox(request, requestOptions));
-    }
-
-    private async __pauseSandbox(
-        request: IsloApi.PauseSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/pause`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/pause",
-        );
-    }
-
-    /**
-     * Resume a paused sandbox from its local snapshot.
-     *
-     * @param {IsloApi.ResumeSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.PaymentRequiredError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.ConflictError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.resumeSandbox({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public resumeSandbox(
-        request: IsloApi.ResumeSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__resumeSandbox(request, requestOptions));
-    }
-
-    private async __resumeSandbox(
-        request: IsloApi.ResumeSandboxRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/resume`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 402:
-                    throw new IsloApi.PaymentRequiredError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new IsloApi.ConflictError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/resume",
-        );
-    }
-
-    /**
-     * Promote the sandbox's tool cache to golden cache for reuse.
-     *
-     * @param {IsloApi.PromoteSandboxCacheRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.promoteSandboxCache({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public promoteSandboxCache(
-        request: IsloApi.PromoteSandboxCacheRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__promoteSandboxCache(request, requestOptions));
-    }
-
-    private async __promoteSandboxCache(
-        request: IsloApi.PromoteSandboxCacheRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/promote-cache`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/promote-cache",
-        );
-    }
-
-    /**
-     * List active persistent sessions in a sandbox.
-     *
-     * @param {IsloApi.ListSessionsRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.listSessions({
-     *         sandbox_name: "sandbox_name"
-     *     })
-     */
-    public listSessions(
-        request: IsloApi.ListSessionsRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__listSessions(request, requestOptions));
-    }
-
-    private async __listSessions(
-        request: IsloApi.ListSessionsRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/sandboxes/{sandbox_name}/sessions",
-        );
-    }
-
-    /**
-     * Create a persistent session in a sandbox.
-     *
-     * @param {IsloApi.CreateSessionRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.createSession({
-     *         sandbox_name: "sandbox_name",
-     *         body: {
-     *             "key": "value"
-     *         }
-     *     })
-     */
-    public createSession(
-        request: IsloApi.CreateSessionRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__createSession(request, requestOptions));
-    }
-
-    private async __createSession(
-        request: IsloApi.CreateSessionRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, body: _body } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/sessions",
-        );
-    }
-
-    /**
-     * Kill a persistent session in a sandbox.
-     *
-     * @param {IsloApi.KillSessionRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.killSession({
-     *         sandbox_name: "sandbox_name",
-     *         session_name: "session_name"
-     *     })
-     */
-    public killSession(
-        request: IsloApi.KillSessionRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__killSession(request, requestOptions));
-    }
-
-    private async __killSession(
-        request: IsloApi.KillSessionRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { sandbox_name: sandboxName, session_name: sessionName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions/${core.url.encodePathParam(sessionName)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/sandboxes/{sandbox_name}/sessions/{session_name}",
-        );
     }
 
     /**
@@ -1084,7 +63,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `sandboxes/${core.url.encodePathParam(sandboxId)}/exec-sessions`,
             ),
             method: "GET",
@@ -1175,7 +154,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `sandboxes/${core.url.encodePathParam(sandboxId)}/exec-sessions/${core.url.encodePathParam(execId)}/asciinema`,
             ),
             method: "GET",
@@ -1267,7 +246,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `sandboxes/${core.url.encodePathParam(sandboxId)}/exec-sessions/${core.url.encodePathParam(execId)}/logs`,
             ),
             method: "GET",
@@ -1358,7 +337,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `sandboxes/${core.url.encodePathParam(sandboxId)}/agent-sessions`,
             ),
             method: "GET",
@@ -1461,7 +440,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `sandboxes/${core.url.encodePathParam(sandboxId)}/agent-sessions/${core.url.encodePathParam(sessionName)}/events`,
             ),
             method: "GET",
@@ -1513,35 +492,32 @@ export class SandboxesClient {
     }
 
     /**
-     * Download a single file from a sandbox.
-     *
-     * @param {IsloApi.DownloadFileRequest} request
+     * @param {IsloApi.ListSandboxesRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
-     *     await client.sandboxes.downloadFile({
-     *         sandbox_name: "sandbox_name",
-     *         path: "path"
-     *     })
+     *     await client.sandboxes.listSandboxes()
      */
-    public downloadFile(
-        request: IsloApi.DownloadFileRequest,
+    public listSandboxes(
+        request: IsloApi.ListSandboxesRequest = {},
         requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__downloadFile(request, requestOptions));
+    ): core.HttpResponsePromise<IsloApi.PaginatedSandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listSandboxes(request, requestOptions));
     }
 
-    private async __downloadFile(
-        request: IsloApi.DownloadFileRequest,
+    private async __listSandboxes(
+        request: IsloApi.ListSandboxesRequest = {},
         requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, path } = request;
+    ): Promise<core.WithRawResponse<IsloApi.PaginatedSandboxResponse>> {
+        const { status, name_prefix: namePrefix, created_by: createdBy, limit, offset } = request;
         const _queryParams: Record<string, unknown> = {
-            path,
+            status,
+            name_prefix: namePrefix,
+            created_by: createdBy,
+            limit,
+            offset,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -1552,8 +528,8 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/files`,
+                    (await core.Supplier.get(this._options.environment)).compute,
+                "sandboxes",
             ),
             method: "GET",
             headers: _headers,
@@ -1569,7 +545,7 @@ export class SandboxesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.PaginatedSandboxResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1579,13 +555,6 @@ export class SandboxesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -1595,45 +564,32 @@ export class SandboxesClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/sandboxes/{sandbox_name}/files",
-        );
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sandboxes");
     }
 
     /**
-     * Upload a single file into a sandbox.
-     *
-     * @param {IsloApi.UploadFileRequest} request
+     * @param {IsloApi.CreateSandboxRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link IsloApi.ConflictError}
+     * @throws {@link IsloApi.ServiceUnavailableError}
      *
      * @example
-     *     await client.sandboxes.uploadFile({
-     *         sandbox_name: "sandbox_name",
-     *         path: "path"
-     *     })
+     *     await client.sandboxes.createSandbox()
      */
-    public uploadFile(
-        request: IsloApi.UploadFileRequest,
+    public createSandbox(
+        request: IsloApi.CreateSandboxRequest = {},
         requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createSandbox(request, requestOptions));
     }
 
-    private async __uploadFile(
-        request: IsloApi.UploadFileRequest,
+    private async __createSandbox(
+        request: IsloApi.CreateSandboxRequest = {},
         requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, path } = request;
-        const _queryParams: Record<string, unknown> = {
-            path,
-        };
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -1643,16 +599,15 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/files`,
+                    (await core.Supplier.get(this._options.environment)).compute,
+                "sandboxes",
             ),
             method: "POST",
             headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: request,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -1660,23 +615,31 @@ export class SandboxesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 401:
                     throw new IsloApi.UnauthorizedError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 404:
-                    throw new IsloApi.NotFoundError(
+                case 409:
+                    throw new IsloApi.ConflictError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                case 503:
+                    throw new IsloApi.ServiceUnavailableError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -1686,45 +649,37 @@ export class SandboxesClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/files",
-        );
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/sandboxes");
     }
 
     /**
-     * Download a directory from a sandbox as a tar.gz archive.
+     * Resolves the public_id to a sandbox name, then delegates to the same
+     * coordinator flow as get_sandbox for consistent cluster forwarding and
+     * setup_steps enrichment.
      *
-     * @param {IsloApi.DownloadArchiveRequest} request
+     * @param {IsloApi.GetSandboxByIdRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
-     *     await client.sandboxes.downloadArchive({
-     *         sandbox_name: "sandbox_name",
-     *         path: "path"
+     *     await client.sandboxes.getSandboxById({
+     *         id: "id"
      *     })
      */
-    public downloadArchive(
-        request: IsloApi.DownloadArchiveRequest,
+    public getSandboxById(
+        request: IsloApi.GetSandboxByIdRequest,
         requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__downloadArchive(request, requestOptions));
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSandboxById(request, requestOptions));
     }
 
-    private async __downloadArchive(
-        request: IsloApi.DownloadArchiveRequest,
+    private async __getSandboxById(
+        request: IsloApi.GetSandboxByIdRequest,
         requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, path } = request;
-        const _queryParams: Record<string, unknown> = {
-            path,
-        };
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { id } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -1734,16 +689,12 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/files-archive`,
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/-/by-id/${core.url.encodePathParam(id)}`,
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -1751,7 +702,7 @@ export class SandboxesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1766,8 +717,225 @@ export class SandboxesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sandboxes/-/by-id/{id}");
+    }
+
+    /**
+     * @param {IsloApi.GetSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.getSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public getSandbox(
+        request: IsloApi.GetSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getSandbox(request, requestOptions));
+    }
+
+    private async __getSandbox(
+        request: IsloApi.GetSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sandboxes/{sandbox_name}");
+    }
+
+    /**
+     * @param {IsloApi.DeleteSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.deleteSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public deleteSandbox(
+        request: IsloApi.DeleteSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteSandbox(request, requestOptions));
+    }
+
+    private async __deleteSandbox(
+        request: IsloApi.DeleteSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/sandboxes/{sandbox_name}");
+    }
+
+    /**
+     * @param {IsloApi.SandboxExecInteractiveRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.sandboxExecInteractive({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public sandboxExecInteractive(
+        request: IsloApi.SandboxExecInteractiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sandboxExecInteractive(request, requestOptions));
+    }
+
+    private async __sandboxExecInteractive(
+        request: IsloApi.SandboxExecInteractiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/exec`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -1781,131 +949,36 @@ export class SandboxesClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/sandboxes/{sandbox_name}/files-archive",
+            "/sandboxes/{sandbox_name}/exec",
         );
     }
 
     /**
-     * Upload a tar.gz archive and extract it into a sandbox directory.
-     *
-     * @param {IsloApi.UploadArchiveRequest} request
+     * @param {IsloApi.ExecRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.sandboxes.uploadArchive({
-     *         sandbox_name: "sandbox_name",
-     *         path: "path"
-     *     })
-     */
-    public uploadArchive(
-        request: IsloApi.UploadArchiveRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadArchive(request, requestOptions));
-    }
-
-    private async __uploadArchive(
-        request: IsloApi.UploadArchiveRequest,
-        requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, path } = request;
-        const _queryParams: Record<string, unknown> = {
-            path,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/files-archive`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/sandboxes/{sandbox_name}/files-archive",
-        );
-    }
-
-    /**
-     * Execute a command inside a sandbox by name.
-     *
-     * @param {IsloApi.ExecInSandboxRequest} request
-     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.sandboxes.execInSandbox({
      *         sandbox_name: "sandbox_name",
-     *         body: {
-     *             command: ["command"]
-     *         }
+     *         command: ["command"]
      *     })
      */
     public execInSandbox(
-        request: IsloApi.ExecInSandboxRequest,
+        request: IsloApi.ExecRequest,
         requestOptions?: SandboxesClient.RequestOptions,
     ): core.HttpResponsePromise<IsloApi.ExecResponse> {
         return core.HttpResponsePromise.fromPromise(this.__execInSandbox(request, requestOptions));
     }
 
     private async __execInSandbox(
-        request: IsloApi.ExecInSandboxRequest,
+        request: IsloApi.ExecRequest,
         requestOptions?: SandboxesClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.ExecResponse>> {
-        const { sandbox_name: sandboxName, body: _body } = request;
+        const { sandbox_name: sandboxName, ..._body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -1915,7 +988,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `sandboxes/${core.url.encodePathParam(sandboxName)}/exec`,
             ),
             method: "POST",
@@ -1936,6 +1009,11 @@ export class SandboxesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 401:
                     throw new IsloApi.UnauthorizedError(
                         _response.error.body as IsloApi.ErrorResponse,
@@ -1946,8 +1024,6 @@ export class SandboxesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -1966,14 +1042,100 @@ export class SandboxesClient {
     }
 
     /**
-     * Poll the result of a previously started exec command.
+     * @param {IsloApi.ExecVmRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IsloApi.BadRequestError}
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.execInSandboxStream({
+     *         sandbox_name: "sandbox_name",
+     *         args: ["args"]
+     *     })
+     */
+    public execInSandboxStream(
+        request: IsloApi.ExecVmRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__execInSandboxStream(request, requestOptions));
+    }
+
+    private async __execInSandboxStream(
+        request: IsloApi.ExecVmRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/exec/stream`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/exec/stream",
+        );
+    }
+
+    /**
      * @param {IsloApi.GetExecResultRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.sandboxes.getExecResult({
@@ -2002,7 +1164,7 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `sandboxes/${core.url.encodePathParam(sandboxName)}/exec/${core.url.encodePathParam(execId)}`,
             ),
             method: "GET",
@@ -2020,6 +1182,11 @@ export class SandboxesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 401:
                     throw new IsloApi.UnauthorizedError(
                         _response.error.body as IsloApi.ErrorResponse,
@@ -2030,8 +1197,6 @@ export class SandboxesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -2050,35 +1215,33 @@ export class SandboxesClient {
     }
 
     /**
-     * Execute a command inside a sandbox and stream stdout/stderr as SSE.
-     *
-     * @param {IsloApi.ExecInSandboxStreamRequest} request
+     * @param {IsloApi.DownloadFileRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
-     *     await client.sandboxes.execInSandboxStream({
+     *     await client.sandboxes.downloadFile({
      *         sandbox_name: "sandbox_name",
-     *         body: {
-     *             command: ["command"]
-     *         }
+     *         path: "path"
      *     })
      */
-    public execInSandboxStream(
-        request: IsloApi.ExecInSandboxStreamRequest,
+    public downloadFile(
+        request: IsloApi.DownloadFileRequest,
         requestOptions?: SandboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__execInSandboxStream(request, requestOptions));
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__downloadFile(request, requestOptions));
     }
 
-    private async __execInSandboxStream(
-        request: IsloApi.ExecInSandboxStreamRequest,
+    private async __downloadFile(
+        request: IsloApi.DownloadFileRequest,
         requestOptions?: SandboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
-        const { sandbox_name: sandboxName, body: _body } = request;
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, path } = request;
+        const _queryParams: Record<string, unknown> = {
+            path,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -2088,15 +1251,16 @@ export class SandboxesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `sandboxes/${core.url.encodePathParam(sandboxName)}/exec/stream`,
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/files`,
             ),
-            method: "POST",
+            method: "GET",
             headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: _body,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -2104,7 +1268,7 @@ export class SandboxesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -2119,8 +1283,92 @@ export class SandboxesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/files",
+        );
+    }
+
+    /**
+     * @param {IsloApi.UploadFileRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.uploadFile({
+     *         sandbox_name: "sandbox_name",
+     *         path: "path"
+     *     })
+     */
+    public uploadFile(
+        request: IsloApi.UploadFileRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.FileUploadStatusResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
+    }
+
+    private async __uploadFile(
+        request: IsloApi.UploadFileRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.FileUploadStatusResponse>> {
+        const { sandbox_name: sandboxName, path } = request;
+        const _queryParams: Record<string, unknown> = {
+            path,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/files`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.FileUploadStatusResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -2134,7 +1382,1085 @@ export class SandboxesClient {
             _response.error,
             _response.rawResponse,
             "POST",
-            "/sandboxes/{sandbox_name}/exec/stream",
+            "/sandboxes/{sandbox_name}/files",
+        );
+    }
+
+    /**
+     * @param {IsloApi.DownloadArchiveRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.downloadArchive({
+     *         sandbox_name: "sandbox_name",
+     *         path: "path"
+     *     })
+     */
+    public downloadArchive(
+        request: IsloApi.DownloadArchiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__downloadArchive(request, requestOptions));
+    }
+
+    private async __downloadArchive(
+        request: IsloApi.DownloadArchiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, path } = request;
+        const _queryParams: Record<string, unknown> = {
+            path,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/files-archive`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/files-archive",
+        );
+    }
+
+    /**
+     * @param {IsloApi.UploadArchiveRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.uploadArchive({
+     *         sandbox_name: "sandbox_name",
+     *         path: "path"
+     *     })
+     */
+    public uploadArchive(
+        request: IsloApi.UploadArchiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.FileUploadStatusResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__uploadArchive(request, requestOptions));
+    }
+
+    private async __uploadArchive(
+        request: IsloApi.UploadArchiveRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.FileUploadStatusResponse>> {
+        const { sandbox_name: sandboxName, path } = request;
+        const _queryParams: Record<string, unknown> = {
+            path,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/files-archive`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.FileUploadStatusResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/files-archive",
+        );
+    }
+
+    /**
+     * @param {IsloApi.PauseSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     *
+     * @example
+     *     await client.sandboxes.pauseSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public pauseSandbox(
+        request: IsloApi.PauseSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__pauseSandbox(request, requestOptions));
+    }
+
+    private async __pauseSandbox(
+        request: IsloApi.PauseSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/pause`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/pause",
+        );
+    }
+
+    /**
+     * @param {IsloApi.SandboxPortForwardRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.sandboxPortForward({
+     *         sandbox_name: "sandbox_name",
+     *         port: 1
+     *     })
+     */
+    public sandboxPortForward(
+        request: IsloApi.SandboxPortForwardRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sandboxPortForward(request, requestOptions));
+    }
+
+    private async __sandboxPortForward(
+        request: IsloApi.SandboxPortForwardRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, port } = request;
+        const _queryParams: Record<string, unknown> = {
+            port,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/port-forward`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/port-forward",
+        );
+    }
+
+    /**
+     * @param {IsloApi.PromoteSandboxCacheRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.promoteSandboxCache({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public promoteSandboxCache(
+        request: IsloApi.PromoteSandboxCacheRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.PromoteCacheResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__promoteSandboxCache(request, requestOptions));
+    }
+
+    private async __promoteSandboxCache(
+        request: IsloApi.PromoteSandboxCacheRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.PromoteCacheResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/promote-cache`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.PromoteCacheResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/promote-cache",
+        );
+    }
+
+    /**
+     * @param {IsloApi.SandboxProxyRootRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.sandboxProxyRoot({
+     *         sandbox_name: "sandbox_name",
+     *         port: 1
+     *     })
+     */
+    public sandboxProxyRoot(
+        request: IsloApi.SandboxProxyRootRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sandboxProxyRoot(request, requestOptions));
+    }
+
+    private async __sandboxProxyRoot(
+        request: IsloApi.SandboxProxyRootRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, port } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/proxy/${core.url.encodePathParam(port)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/proxy/{port}",
+        );
+    }
+
+    /**
+     * @param {IsloApi.SandboxProxyRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.sandboxProxy({
+     *         sandbox_name: "sandbox_name",
+     *         port: 1,
+     *         path: "path"
+     *     })
+     */
+    public sandboxProxy(
+        request: IsloApi.SandboxProxyRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sandboxProxy(request, requestOptions));
+    }
+
+    private async __sandboxProxy(
+        request: IsloApi.SandboxProxyRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, port, path } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/proxy/${core.url.encodePathParam(port)}/${core.url.encodePathParam(path)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/proxy/{port}/{path}",
+        );
+    }
+
+    /**
+     * @param {IsloApi.ResumeSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.PaymentRequiredError}
+     * @throws {@link IsloApi.ForbiddenError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     *
+     * @example
+     *     await client.sandboxes.resumeSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public resumeSandbox(
+        request: IsloApi.ResumeSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.SandboxResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__resumeSandbox(request, requestOptions));
+    }
+
+    private async __resumeSandbox(
+        request: IsloApi.ResumeSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.SandboxResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/resume`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.SandboxResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 402:
+                    throw new IsloApi.PaymentRequiredError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/resume",
+        );
+    }
+
+    /**
+     * @param {IsloApi.ListSessionsRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.listSessions({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public listSessions(
+        request: IsloApi.ListSessionsRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.ListSessionsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listSessions(request, requestOptions));
+    }
+
+    private async __listSessions(
+        request: IsloApi.ListSessionsRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.ListSessionsResponse>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.ListSessionsResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/sessions",
+        );
+    }
+
+    /**
+     * @param {IsloApi.CreateSessionRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.createSession({
+     *         sandbox_name: "sandbox_name",
+     *         name: "name"
+     *     })
+     */
+    public createSession(
+        request: IsloApi.CreateSessionRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.CreateSessionResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__createSession(request, requestOptions));
+    }
+
+    private async __createSession(
+        request: IsloApi.CreateSessionRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.CreateSessionResponse>> {
+        const { sandbox_name: sandboxName, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.CreateSessionResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/sessions",
+        );
+    }
+
+    /**
+     * @param {IsloApi.KillSessionRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.killSession({
+     *         sandbox_name: "sandbox_name",
+     *         session: "session"
+     *     })
+     */
+    public killSession(
+        request: IsloApi.KillSessionRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__killSession(request, requestOptions));
+    }
+
+    private async __killSession(
+        request: IsloApi.KillSessionRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, session } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/sessions/${core.url.encodePathParam(session)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/sandboxes/{sandbox_name}/sessions/{session}",
+        );
+    }
+
+    /**
+     * @param {IsloApi.StopSandboxRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     *
+     * @example
+     *     await client.sandboxes.stopSandbox({
+     *         sandbox_name: "sandbox_name"
+     *     })
+     */
+    public stopSandbox(
+        request: IsloApi.StopSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__stopSandbox(request, requestOptions));
+    }
+
+    private async __stopSandbox(
+        request: IsloApi.StopSandboxRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/stop`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sandboxes/{sandbox_name}/stop",
+        );
+    }
+
+    /**
+     * @param {IsloApi.SandboxWsProxyRequest} request
+     * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.sandboxes.sandboxWsProxy({
+     *         sandbox_name: "sandbox_name",
+     *         port: 1,
+     *         path: "path"
+     *     })
+     */
+    public sandboxWsProxy(
+        request: IsloApi.SandboxWsProxyRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__sandboxWsProxy(request, requestOptions));
+    }
+
+    private async __sandboxWsProxy(
+        request: IsloApi.SandboxWsProxyRequest,
+        requestOptions?: SandboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { sandbox_name: sandboxName, port, path } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `sandboxes/${core.url.encodePathParam(sandboxName)}/ws-proxy/${core.url.encodePathParam(port)}/${core.url.encodePathParam(path)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sandboxes/{sandbox_name}/ws-proxy/{port}/{path}",
         );
     }
 }

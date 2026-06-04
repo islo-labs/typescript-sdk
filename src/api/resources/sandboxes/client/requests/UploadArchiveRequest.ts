@@ -8,7 +8,8 @@
  *     }
  */
 export interface UploadArchiveRequest {
+    /** Sandbox name */
     sandbox_name: string;
-    /** Absolute target directory in the sandbox */
+    /** Destination directory inside the sandbox */
     path: string;
 }

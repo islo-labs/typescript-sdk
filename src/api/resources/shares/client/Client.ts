@@ -15,7 +15,7 @@ export declare namespace SharesClient {
 }
 
 /**
- * Sandbox sharing
+ * Public sandbox port shares
  */
 export class SharesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SharesClient.Options>;
@@ -25,14 +25,11 @@ export class SharesClient {
     }
 
     /**
-     * List active shares for a sandbox.
-     *
      * @param {IsloApi.ListSharesRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.shares.listShares({
@@ -60,7 +57,7 @@ export class SharesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `sandboxes/${core.url.encodePathParam(sandboxName)}/shares`,
             ),
             method: "GET",
@@ -88,8 +85,6 @@ export class SharesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -108,14 +103,12 @@ export class SharesClient {
     }
 
     /**
-     * Create a shareable URL for a sandbox port.
-     *
      * @param {IsloApi.CreateShareRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.shares.createShare({
@@ -144,7 +137,7 @@ export class SharesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `sandboxes/${core.url.encodePathParam(sandboxName)}/shares`,
             ),
             method: "POST",
@@ -165,6 +158,11 @@ export class SharesClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new IsloApi.BadRequestError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 401:
                     throw new IsloApi.UnauthorizedError(
                         _response.error.body as IsloApi.ErrorResponse,
@@ -175,8 +173,6 @@ export class SharesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -195,14 +191,11 @@ export class SharesClient {
     }
 
     /**
-     * Revoke a shareable URL.
-     *
      * @param {IsloApi.RevokeShareRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
      *     await client.shares.revokeShare({
@@ -231,7 +224,7 @@ export class SharesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).compute,
                 `sandboxes/${core.url.encodePathParam(sandboxName)}/shares/${core.url.encodePathParam(shareId)}`,
             ),
             method: "DELETE",
@@ -259,8 +252,6 @@ export class SharesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

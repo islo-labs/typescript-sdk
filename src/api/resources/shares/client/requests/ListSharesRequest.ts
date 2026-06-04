@@ -7,5 +7,6 @@
  *     }
  */
 export interface ListSharesRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

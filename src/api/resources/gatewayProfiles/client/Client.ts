@@ -51,7 +51,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "gateway/profiles",
             ),
             method: "GET",
@@ -121,7 +121,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 "gateway/profiles",
             ),
             method: "POST",
@@ -200,7 +200,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}`,
             ),
             method: "GET",
@@ -282,7 +282,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}`,
             ),
             method: "DELETE",
@@ -369,7 +369,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}`,
             ),
             method: "PATCH",
@@ -459,7 +459,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}/rules`,
             ),
             method: "POST",
@@ -544,7 +544,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}/rules/${core.url.encodePathParam(ruleId)}`,
             ),
             method: "DELETE",
@@ -626,7 +626,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}/rules/${core.url.encodePathParam(ruleId)}`,
             ),
             method: "PATCH",
@@ -714,7 +714,7 @@ export class GatewayProfilesClient {
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)).control,
                 `gateway/profiles/${core.url.encodePathParam(profileId)}/rules/reorder`,
             ),
             method: "POST",

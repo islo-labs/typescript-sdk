@@ -2,12 +2,9 @@
 
 import type * as IsloApi from "../index.js";
 
-/**
- * Paginated list of sandboxes.
- */
 export interface PaginatedSandboxResponse {
     items: IsloApi.SandboxResponse[];
-    total: number;
     limit: number;
     offset: number;
+    total: number;
 }
