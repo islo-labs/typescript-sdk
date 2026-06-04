@@ -19,7 +19,7 @@ describe("Islo wrapper", () => {
 
         expect((client as any)._options.environment).toEqual({
             control: "https://api.islo.dev",
-            compute: "https://compute.islo.dev",
+            compute: "https://ca.compute.islo.dev",
         });
     });
 

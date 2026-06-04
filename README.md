@@ -100,7 +100,7 @@ const client = new Islo({
 |---------------------|-------------|---------|
 | `ISLO_API_KEY` | API key exchanged for a short-lived JWT | — |
 | `ISLO_BASE_URL` | Control-plane API base URL | `https://api.islo.dev` |
-| `ISLO_COMPUTE_URL` | Compute-plane API base URL | `https://compute.islo.dev` |
+| `ISLO_COMPUTE_URL` | Compute-plane API base URL | `https://ca.compute.islo.dev` |
 
 ## Development
 

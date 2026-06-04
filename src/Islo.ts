@@ -11,7 +11,7 @@ import { TokenProvider } from "./custom/tokenProvider.js";
 import type { IsloApiEnvironmentUrls } from "./environments.js";
 
 const DEFAULT_BASE_URL = "https://api.islo.dev";
-const DEFAULT_COMPUTE_URL = "https://compute.islo.dev";
+const DEFAULT_COMPUTE_URL = "https://ca.compute.islo.dev";
 const ENV_API_KEY = "ISLO_API_KEY";
 const ENV_BASE_URL = "ISLO_BASE_URL";
 const ENV_COMPUTE_URL = "ISLO_COMPUTE_URL";
@@ -57,7 +57,7 @@ export declare namespace Islo {
         baseUrl?: string;
         /**
          * Override the compute-plane API base URL. Falls back to `ISLO_COMPUTE_URL` env var
-         * or `https://compute.islo.dev`.
+         * or `https://ca.compute.islo.dev`.
          */
         computeUrl?: string;
         /**
