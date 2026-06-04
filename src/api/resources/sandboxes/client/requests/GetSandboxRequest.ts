@@ -7,5 +7,6 @@
  *     }
  */
 export interface GetSandboxRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

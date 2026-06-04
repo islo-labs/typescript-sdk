@@ -14,6 +14,7 @@ The Islo TypeScript library provides convenient access to the Islo APIs from Typ
 - [Development](#development)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -81,14 +82,15 @@ const client = new Islo(); // Picks up ISLO_API_KEY automatically
 const client = new Islo({ apiKey: "your-api-key" });
 ```
 
-### Custom token provider
+### Custom URLs
 
 ```typescript
-import { IsloClient } from "@islo-labs/sdk";
+import { Islo } from "@islo-labs/sdk";
 
-const client = new IsloClient({
-    environment: "https://api.islo.dev",
-    token: async () => fetchTokenFromYourAuthService(),
+const client = new Islo({
+    apiKey: "your-api-key",
+    baseUrl: "https://api.customer.example.com",
+    computeUrl: "https://compute.customer.example.com",
 });
 ```
 
@@ -97,7 +99,8 @@ const client = new IsloClient({
 | Environment Variable | Description | Default |
 |---------------------|-------------|---------|
 | `ISLO_API_KEY` | API key exchanged for a short-lived JWT | — |
-| `ISLO_BASE_URL` | API base URL | `https://api.islo.dev` |
+| `ISLO_BASE_URL` | Control-plane API base URL | `https://api.islo.dev` |
+| `ISLO_COMPUTE_URL` | Compute-plane API base URL | `https://ca.compute.islo.dev` |
 
 ## Development
 
@@ -126,8 +129,29 @@ Instantiate and use the client with the following:
 ```typescript
 import { Islo } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: "YOUR_BASE_URL", apiKey: "YOUR_API_KEY" });
+const client = new Islo({ apiKey: "YOUR_API_KEY" });
 await client.sandboxes.createSandbox();
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```typescript
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+
+const client = new Islo({
+    environment: IsloApiEnvironment.Production,
+});
+```
+
+You can also override the control and compute planes independently:
+
+```typescript
+const client = new Islo({
+    baseUrl: "https://api.customer.example.com",
+    computeUrl: "https://compute.customer.example.com",
+});
 ```
 
 ## Request and Response Types
@@ -138,7 +162,7 @@ following namespace:
 ```typescript
 import { IsloApi } from "@islo-labs/sdk";
 
-const request: IsloApi.ListSandboxesRequest = {
+const request: IsloApi.ListExecSessionsRequest = {
     ...
 };
 ```
@@ -170,9 +194,9 @@ try {
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { SandboxesClient } from '@islo-labs/sdk/sandboxes';
+import { TenantsClient } from '@islo-labs/sdk/tenants';
 
-const client = new SandboxesClient({...});
+const client = new TenantsClient({...});
 ```
 
 ### Additional Headers

@@ -7,5 +7,6 @@
  *     }
  */
 export interface PauseSandboxRequest {
+    /** Sandbox name */
     sandbox_name: string;
 }

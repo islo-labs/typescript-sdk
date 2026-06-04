@@ -7,7 +7,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("CreditsClient", () => {
     test("get_credit_balance (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { balance_cents: 1, currency: "currency" };
 
@@ -19,7 +23,11 @@ describe("CreditsClient", () => {
 
     test("get_credit_balance (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 

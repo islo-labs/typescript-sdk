@@ -7,7 +7,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("GatewayProfilesClient", () => {
     test("list_gateway_profiles (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = [
             {
@@ -32,7 +36,11 @@ describe("GatewayProfilesClient", () => {
 
     test("list_gateway_profiles (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -45,7 +53,11 @@ describe("GatewayProfilesClient", () => {
 
     test("list_gateway_profiles (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -58,7 +70,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_profile (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = {
             id: "id",
@@ -90,7 +106,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_profile (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { name: "x" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -112,7 +132,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_profile (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { name: "x" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -134,7 +158,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_profile (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { name: "x" };
         const rawResponseBody = { key: "value" };
 
@@ -156,7 +184,11 @@ describe("GatewayProfilesClient", () => {
 
     test("get_gateway_profile (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             id: "id",
@@ -203,7 +235,11 @@ describe("GatewayProfilesClient", () => {
 
     test("get_gateway_profile (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -224,7 +260,11 @@ describe("GatewayProfilesClient", () => {
 
     test("get_gateway_profile (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -245,7 +285,11 @@ describe("GatewayProfilesClient", () => {
 
     test("get_gateway_profile (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -266,7 +310,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_profile (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         server.mockEndpoint().delete("/gateway/profiles/profile_id").respondWith().statusCode(200).build();
 
@@ -278,7 +326,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_profile (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -299,7 +351,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_profile (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -320,7 +376,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_profile (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -341,7 +401,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_profile (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -362,7 +426,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_profile (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = {
             id: "id",
@@ -394,7 +462,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_profile (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -416,7 +488,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_profile (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -438,7 +514,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_profile (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -460,7 +540,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_profile (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 
@@ -482,7 +566,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_rule (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { host_pattern: "host_pattern" };
         const rawResponseBody = {
             id: "id",
@@ -517,7 +605,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_rule (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { host_pattern: "x" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -540,7 +632,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_rule (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { host_pattern: "x" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -563,7 +659,11 @@ describe("GatewayProfilesClient", () => {
 
     test("create_gateway_rule (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { host_pattern: "x" };
         const rawResponseBody = { key: "value" };
 
@@ -586,7 +686,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_rule (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         server
             .mockEndpoint()
@@ -604,7 +708,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_rule (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -626,7 +734,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_rule (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -648,7 +760,11 @@ describe("GatewayProfilesClient", () => {
 
     test("delete_gateway_rule (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { key: "value" };
 
@@ -670,7 +786,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_rule (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = {
             id: "id",
@@ -705,7 +825,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_rule (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -728,7 +852,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_rule (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -751,7 +879,11 @@ describe("GatewayProfilesClient", () => {
 
     test("update_gateway_rule (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 
@@ -774,7 +906,11 @@ describe("GatewayProfilesClient", () => {
 
     test("reorder_gateway_rules (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = { rules: [{ rule_id: "rule_id", priority: 1 }] };
         const rawResponseBody = [
             {
@@ -816,7 +952,11 @@ describe("GatewayProfilesClient", () => {
 
     test("reorder_gateway_rules (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {
             rules: [
                 { rule_id: "rule_id", priority: 1 },
@@ -853,7 +993,11 @@ describe("GatewayProfilesClient", () => {
 
     test("reorder_gateway_rules (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {
             rules: [
                 { rule_id: "rule_id", priority: 1 },
@@ -890,7 +1034,11 @@ describe("GatewayProfilesClient", () => {
 
     test("reorder_gateway_rules (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
         const rawRequestBody = {
             rules: [
                 { rule_id: "rule_id", priority: 1 },

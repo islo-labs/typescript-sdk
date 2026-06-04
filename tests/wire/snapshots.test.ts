@@ -7,24 +7,28 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SnapshotsClient", () => {
     test("list_snapshots (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
             items: [
                 {
-                    id: "id",
-                    name: "name",
-                    status: "status",
-                    sandbox_id: "sandbox_id",
-                    size_bytes: 1,
                     checksum_sha256: "checksum_sha256",
                     created_at: "2024-01-15T09:30:00Z",
                     created_by: "created_by",
+                    id: "id",
+                    name: "name",
+                    sandbox_id: "sandbox_id",
+                    size_bytes: 1000000,
+                    status: "status",
                 },
             ],
-            total: 1,
             limit: 1,
             offset: 1,
+            total: 1000000,
         };
 
         server.mockEndpoint().get("/snapshots/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -35,7 +39,11 @@ describe("SnapshotsClient", () => {
 
     test("list_snapshots (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -46,32 +54,23 @@ describe("SnapshotsClient", () => {
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
-    test("list_snapshots (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server.mockEndpoint().get("/snapshots/").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.snapshots.listSnapshots();
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("create_snapshot (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { sandbox_name: "sandbox_name" };
         const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            sandbox_id: "sandbox_id",
-            size_bytes: 1,
             checksum_sha256: "checksum_sha256",
             created_at: "2024-01-15T09:30:00Z",
             created_by: "created_by",
+            id: "id",
+            name: "name",
+            sandbox_id: "sandbox_id",
+            size_bytes: 1000000,
+            status: "status",
         };
 
         server
@@ -84,15 +83,19 @@ describe("SnapshotsClient", () => {
             .build();
 
         const response = await client.snapshots.createSnapshot({
-            sandbox_id: "sandbox_id",
+            sandbox_name: "sandbox_name",
         });
         expect(response).toEqual(rawResponseBody);
     });
 
     test("create_snapshot (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { sandbox_name: "sandbox_name" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -106,15 +109,19 @@ describe("SnapshotsClient", () => {
 
         await expect(async () => {
             return await client.snapshots.createSnapshot({
-                sandbox_id: "sandbox_id",
+                sandbox_name: "sandbox_name",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
 
     test("create_snapshot (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { sandbox_name: "sandbox_name" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -128,15 +135,19 @@ describe("SnapshotsClient", () => {
 
         await expect(async () => {
             return await client.snapshots.createSnapshot({
-                sandbox_id: "sandbox_id",
+                sandbox_name: "sandbox_name",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
     test("create_snapshot (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { sandbox_name: "sandbox_name" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -150,37 +161,19 @@ describe("SnapshotsClient", () => {
 
         await expect(async () => {
             return await client.snapshots.createSnapshot({
-                sandbox_id: "sandbox_id",
+                sandbox_name: "sandbox_name",
             });
         }).rejects.toThrow(IsloApi.ConflictError);
     });
 
     test("create_snapshot (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/snapshots/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.snapshots.createSnapshot({
-                sandbox_id: "sandbox_id",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("create_snapshot (6)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-        const rawRequestBody = { sandbox_id: "sandbox_id" };
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { sandbox_name: "sandbox_name" };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -194,24 +187,28 @@ describe("SnapshotsClient", () => {
 
         await expect(async () => {
             return await client.snapshots.createSnapshot({
-                sandbox_id: "sandbox_id",
+                sandbox_name: "sandbox_name",
             });
         }).rejects.toThrow(IsloApi.ServiceUnavailableError);
     });
 
     test("get_snapshot (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = {
-            id: "id",
-            name: "name",
-            status: "status",
-            sandbox_id: "sandbox_id",
-            size_bytes: 1,
             checksum_sha256: "checksum_sha256",
             created_at: "2024-01-15T09:30:00Z",
             created_by: "created_by",
+            id: "id",
+            name: "name",
+            sandbox_id: "sandbox_id",
+            size_bytes: 1000000,
+            status: "status",
         };
 
         server.mockEndpoint().get("/snapshots/name").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -224,7 +221,11 @@ describe("SnapshotsClient", () => {
 
     test("get_snapshot (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -239,7 +240,11 @@ describe("SnapshotsClient", () => {
 
     test("get_snapshot (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -252,24 +257,13 @@ describe("SnapshotsClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("get_snapshot (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server.mockEndpoint().get("/snapshots/name").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.snapshots.getSnapshot({
-                name: "name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("delete_snapshot (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         server.mockEndpoint().delete("/snapshots/name").respondWith().statusCode(200).build();
 
@@ -281,7 +275,11 @@ describe("SnapshotsClient", () => {
 
     test("delete_snapshot (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -296,7 +294,11 @@ describe("SnapshotsClient", () => {
 
     test("delete_snapshot (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
 
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
@@ -307,20 +309,5 @@ describe("SnapshotsClient", () => {
                 name: "name",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("delete_snapshot (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({ maxRetries: 0, apiKey: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { key: "value" };
-
-        server.mockEndpoint().delete("/snapshots/name").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.snapshots.deleteSnapshot({
-                name: "name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 });

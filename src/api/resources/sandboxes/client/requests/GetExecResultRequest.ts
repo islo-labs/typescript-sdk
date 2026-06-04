@@ -8,6 +8,8 @@
  *     }
  */
 export interface GetExecResultRequest {
+    /** Sandbox name */
     sandbox_name: string;
+    /** Exec ID */
     exec_id: string;
 }
