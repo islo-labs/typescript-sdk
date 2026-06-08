@@ -1,9 +1,10 @@
-import type { BaseClientOptions } from "./BaseClient.js";
 import { Islo as FernIslo } from "./Client.js";
 
+type FernClientOptions = ConstructorParameters<typeof FernIslo>[0];
+
 export declare namespace IsloBearerClient {
-    export interface Options extends Omit<BaseClientOptions, "apiKey"> {
-        bearerToken: NonNullable<BaseClientOptions["apiKey"]>;
+    export interface Options extends Omit<FernClientOptions, "apiKey"> {
+        bearerToken: NonNullable<FernClientOptions["apiKey"]>;
     }
 }
 
