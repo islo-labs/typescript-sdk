@@ -72,6 +72,10 @@ export declare namespace Islo {
 
 export class Islo extends FernIslo {
     constructor(options: Islo.Options = {}) {
+        if ("bearerToken" in options) {
+            throw new Error("Islo accepts 'apiKey', not 'bearerToken'. Use IsloBearerClient for bearer tokens.");
+        }
+
         const {
             apiKey: apiKeyOption,
             baseUrl,

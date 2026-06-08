@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { Islo, IsloApiEnvironment } from "../src/index.js";
+import { Islo, IsloApiEnvironment, IsloBearerClient } from "../src/index.js";
 
 const ORIGINAL_ENV = { ...process.env };
 
@@ -88,5 +88,69 @@ describe("Islo wrapper", () => {
 
         expect(auth.headers.Authorization).toBe("Bearer session-jwt");
         expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects bearerToken when apiKey is provided", () => {
+        expect(() => {
+            new Islo({
+                apiKey: "access-key",
+                // @ts-expect-error bearerToken belongs to IsloBearerClient, not Islo.
+                bearerToken: "session-jwt",
+            });
+        }).toThrow("Islo accepts 'apiKey', not 'bearerToken'. Use IsloBearerClient for bearer tokens.");
+    });
+});
+
+describe("IsloBearerClient", () => {
+    it("requires a bearer token", () => {
+        expect(() => {
+            // @ts-expect-error Runtime callers can omit options.
+            new IsloBearerClient();
+        }).toThrow("IsloBearerClient requires 'bearerToken'.");
+    });
+
+    it("rejects apiKey when bearerToken is provided", () => {
+        expect(() => {
+            new IsloBearerClient({
+                bearerToken: "session-jwt",
+                // @ts-expect-error apiKey belongs to Islo, not IsloBearerClient.
+                apiKey: "access-key",
+                environment: {
+                    control: "https://control.customer.example.com",
+                    compute: "https://compute.customer.example.com",
+                },
+            });
+        }).toThrow("IsloBearerClient accepts 'bearerToken', not 'apiKey'.");
+    });
+
+    it("uses the supplied bearer token directly", async () => {
+        const client = new IsloBearerClient({
+            bearerToken: async () => "session-jwt",
+            environment: {
+                control: "https://control.customer.example.com",
+                compute: "https://compute.customer.example.com",
+            },
+        });
+
+        const auth = await (client as any)._options.authProvider.getAuthRequest();
+
+        expect(auth.headers.Authorization).toBe("Bearer session-jwt");
+    });
+
+    it("does not exchange bearer tokens through /auth/token", async () => {
+        const fetchMock = vi.fn<typeof fetch>();
+        const client = new IsloBearerClient({
+            bearerToken: "session-jwt",
+            environment: {
+                control: "https://control.customer.example.com",
+                compute: "https://compute.customer.example.com",
+            },
+            fetch: fetchMock,
+        });
+
+        const auth = await (client as any)._options.authProvider.getAuthRequest();
+
+        expect(auth.headers.Authorization).toBe("Bearer session-jwt");
+        expect(fetchMock).not.toHaveBeenCalled();
     });
 });
