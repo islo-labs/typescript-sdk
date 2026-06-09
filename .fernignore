@@ -6,10 +6,6 @@
 src/Islo.ts
 Islo.ts
 
-# Hand-written bearer-token wrapper around the generated IsloApiClient
-src/IsloBearerClient.ts
-IsloBearerClient.ts
-
 # Hand-written extensions (auth/token providers, etc.)
 src/custom/
 
