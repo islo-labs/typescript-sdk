@@ -2,7 +2,7 @@
  * High-level Islo client with automatic API key exchange and token refresh.
  *
  * Mirrors the Python `Islo` class: provide an `apiKey` to exchange it
- * for a session JWT, or provide an existing `bearerToken` directly.
+ * for a session JWT, or provide an existing `exchangedToken` directly.
  */
 
 import type { BaseClientOptions } from "./BaseClient.js";
@@ -45,23 +45,23 @@ function resolveEnvironment({
 
 function resolveCredential({
     apiKey,
-    bearerToken,
+    exchangedToken,
     baseUrl,
     refreshMarginSec,
     fetch,
 }: {
     apiKey?: string;
-    bearerToken?: NonNullable<BaseClientOptions["apiKey"]>;
+    exchangedToken?: NonNullable<BaseClientOptions["apiKey"]>;
     baseUrl: string;
     refreshMarginSec?: number;
     fetch?: BaseClientOptions["fetch"];
 }): BaseClientOptions["apiKey"] {
-    if (apiKey != null && bearerToken != null) {
-        throw new Error("Islo accepts either 'apiKey' or 'bearerToken', not both.");
+    if (apiKey != null && exchangedToken != null) {
+        throw new Error("Islo accepts either 'apiKey' or 'exchangedToken', not both.");
     }
 
-    if (bearerToken != null) {
-        return bearerToken;
+    if (exchangedToken != null) {
+        return exchangedToken;
     }
 
     const resolvedApiKey = apiKey ?? readEnv(ENV_API_KEY);
@@ -86,9 +86,9 @@ export declare namespace Islo {
          */
         apiKey?: string;
         /**
-         * Existing bearer token. Used directly without access-key exchange.
+         * Existing exchanged token. Used directly without access-key exchange.
          */
-        bearerToken?: NonNullable<BaseClientOptions["apiKey"]>;
+        exchangedToken?: NonNullable<BaseClientOptions["apiKey"]>;
         /**
          * Override the control-plane API base URL. Falls back to `ISLO_BASE_URL` env var
          * or `https://api.islo.dev`.
@@ -113,7 +113,7 @@ export class Islo extends FernIslo {
     constructor(options: Islo.Options = {}) {
         const {
             apiKey: apiKeyOption,
-            bearerToken,
+            exchangedToken,
             baseUrl,
             computeUrl,
             environment,
@@ -123,7 +123,7 @@ export class Islo extends FernIslo {
         const resolvedEnvironment = resolveEnvironment({ baseUrl, computeUrl, environment });
         const credential = resolveCredential({
             apiKey: apiKeyOption,
-            bearerToken,
+            exchangedToken,
             baseUrl: resolvedEnvironment.control,
             refreshMarginSec,
             fetch: options.fetch,

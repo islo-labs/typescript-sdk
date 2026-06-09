@@ -27,5 +27,5 @@
     "invokedBy": "ci",
     "requestedVersion": null,
     "ciProvider": "github",
-    "sdkVersion": "0.0.21"
+    "sdkVersion": "0.0.22"
 }
