@@ -90,18 +90,18 @@ describe("Islo wrapper", () => {
         expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects mixed apiKey and bearerToken auth", () => {
+    it("rejects mixed apiKey and exchangedToken auth", () => {
         expect(() => {
             new Islo({
                 apiKey: "access-key",
-                bearerToken: "session-jwt",
+                exchangedToken: "session-jwt",
             });
-        }).toThrow("Islo accepts either 'apiKey' or 'bearerToken', not both.");
+        }).toThrow("Islo accepts either 'apiKey' or 'exchangedToken', not both.");
     });
 
-    it("uses the supplied bearer token directly", async () => {
+    it("uses the supplied exchanged token directly", async () => {
         const client = new Islo({
-            bearerToken: async () => "session-jwt",
+            exchangedToken: async () => "session-jwt",
             environment: {
                 control: "https://control.customer.example.com",
                 compute: "https://compute.customer.example.com",
@@ -113,10 +113,10 @@ describe("Islo wrapper", () => {
         expect(auth.headers.Authorization).toBe("Bearer session-jwt");
     });
 
-    it("does not exchange bearer tokens through /auth/token", async () => {
+    it("does not exchange supplied exchanged tokens through /auth/token", async () => {
         const fetchMock = vi.fn<typeof fetch>();
         const client = new Islo({
-            bearerToken: "session-jwt",
+            exchangedToken: "session-jwt",
             environment: {
                 control: "https://control.customer.example.com",
                 compute: "https://compute.customer.example.com",
