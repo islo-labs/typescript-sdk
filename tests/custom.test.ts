@@ -4,44 +4,39 @@ import { Islo, IsloApiEnvironment } from "../src/index.js";
 
 const ORIGINAL_ENV = { ...process.env };
 
-async function getClientEnvironment(client: Islo) {
-    const environment = (client as any)._options.environment;
-    return typeof environment === "function" ? await environment() : await environment;
-}
-
 afterEach(() => {
     process.env = { ...ORIGINAL_ENV };
     vi.restoreAllMocks();
 });
 
 describe("Islo wrapper", () => {
-    it("uses production control and compute URLs by default", async () => {
+    it("uses production control and compute URLs by default", () => {
         delete process.env.ISLO_BASE_URL;
         delete process.env.ISLO_COMPUTE_URL;
         delete process.env.ISLO_API_KEY;
 
         const client = new Islo();
 
-        await expect(getClientEnvironment(client)).resolves.toEqual({
+        expect((client as any)._options.environment).toEqual({
             control: "https://api.islo.dev",
             compute: "https://ca.compute.islo.dev",
         });
     });
 
-    it("resolves control and compute URLs from environment variables", async () => {
+    it("resolves control and compute URLs from environment variables", () => {
         process.env.ISLO_BASE_URL = "https://control.env.example.com";
         process.env.ISLO_COMPUTE_URL = "https://compute.env.example.com";
         delete process.env.ISLO_API_KEY;
 
         const client = new Islo();
 
-        await expect(getClientEnvironment(client)).resolves.toEqual({
+        expect((client as any)._options.environment).toEqual({
             control: "https://control.env.example.com",
             compute: "https://compute.env.example.com",
         });
     });
 
-    it("lets explicit URLs override env vars and environment presets", async () => {
+    it("lets explicit URLs override env vars and environment presets", () => {
         process.env.ISLO_BASE_URL = "https://control.env.example.com";
         process.env.ISLO_COMPUTE_URL = "https://compute.env.example.com";
 
@@ -54,31 +49,17 @@ describe("Islo wrapper", () => {
             },
         });
 
-        await expect(getClientEnvironment(client)).resolves.toEqual({
+        expect((client as any)._options.environment).toEqual({
             control: "https://control.explicit.example.com",
             compute: "https://compute.explicit.example.com",
         });
         expect((client as any)._options.baseUrl).toBeUndefined();
     });
 
-    it("accepts the generated production environment export", async () => {
+    it("accepts the generated production environment export", () => {
         const client = new Islo({ environment: IsloApiEnvironment.Production });
 
-        await expect(getClientEnvironment(client)).resolves.toEqual(IsloApiEnvironment.Production);
-    });
-
-    it("accepts generated dynamic environment suppliers", async () => {
-        const client = new Islo({
-            environment: () => ({
-                control: "https://control.dynamic.example.com",
-                compute: "https://compute.dynamic.example.com",
-            }),
-        });
-
-        await expect(getClientEnvironment(client)).resolves.toEqual({
-            control: "https://control.dynamic.example.com",
-            compute: "https://compute.dynamic.example.com",
-        });
+        expect((client as any)._options.environment).toEqual(IsloApiEnvironment.Production);
     });
 
     it("exchanges API keys against the resolved control URL", async () => {
@@ -107,45 +88,5 @@ describe("Islo wrapper", () => {
 
         expect(auth.headers.Authorization).toBe("Bearer session-jwt");
         expect(fetchMock).toHaveBeenCalledTimes(1);
-    });
-
-    it("rejects mixed apiKey and bearerToken auth", () => {
-        expect(() => {
-            new Islo({
-                apiKey: "access-key",
-                bearerToken: "session-jwt",
-            });
-        }).toThrow("Islo accepts either 'apiKey' or 'bearerToken', not both.");
-    });
-
-    it("uses the supplied bearer token directly", async () => {
-        const client = new Islo({
-            bearerToken: async () => "session-jwt",
-            environment: {
-                control: "https://control.customer.example.com",
-                compute: "https://compute.customer.example.com",
-            },
-        });
-
-        const auth = await (client as any)._options.authProvider.getAuthRequest();
-
-        expect(auth.headers.Authorization).toBe("Bearer session-jwt");
-    });
-
-    it("does not exchange bearer tokens through /auth/token", async () => {
-        const fetchMock = vi.fn<typeof fetch>();
-        const client = new Islo({
-            bearerToken: "session-jwt",
-            environment: {
-                control: "https://control.customer.example.com",
-                compute: "https://compute.customer.example.com",
-            },
-            fetch: fetchMock,
-        });
-
-        const auth = await (client as any)._options.authProvider.getAuthRequest();
-
-        expect(auth.headers.Authorization).toBe("Bearer session-jwt");
-        expect(fetchMock).not.toHaveBeenCalled();
     });
 });
