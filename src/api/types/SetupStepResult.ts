@@ -2,7 +2,6 @@
 
 export interface SetupStepResult {
     name: string;
-    script?: (string | null) | undefined;
     status: string;
     stderr?: (string | null) | undefined;
     stdout?: (string | null) | undefined;

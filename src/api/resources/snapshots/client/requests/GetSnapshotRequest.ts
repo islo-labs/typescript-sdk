@@ -7,6 +7,6 @@
  *     }
  */
 export interface GetSnapshotRequest {
-    /** Name */
+    /** Snapshot name */
     name: string;
 }

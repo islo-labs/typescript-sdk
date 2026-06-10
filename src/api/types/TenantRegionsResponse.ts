@@ -3,5 +3,6 @@
 import type * as IsloApi from "../index.js";
 
 export interface TenantRegionsResponse {
+    /** Compute regions available to the authenticated tenant. */
     regions: IsloApi.ComputeRegionResponse[];
 }

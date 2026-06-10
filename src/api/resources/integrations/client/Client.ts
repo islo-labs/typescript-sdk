@@ -25,11 +25,7 @@ export class IntegrationsClient {
     }
 
     /**
-     * List available preset providers and their pre-provisioned Descope apps.
-     *
-     * The ``apps`` array carries every (auth_method, scope) -> app_id combo a
-     * preset supports, so the modal can resolve the right ``app_id`` locally
-     * and skip a server round-trip on the connect path.
+     * Return the integration providers available to connect from Islo, including the supported authentication methods and connection scopes.
      *
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -137,7 +133,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -209,7 +208,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -297,7 +299,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -400,7 +405,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -485,7 +493,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -582,7 +593,10 @@ export class IntegrationsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

@@ -5,6 +5,7 @@ import type * as IsloApi from "../index.js";
 export interface PaginatedSandboxResponse {
     items: IsloApi.SandboxResponse[];
     limit: number;
+    next_cursor?: (string | null) | undefined;
     offset: number;
     total: number;
 }

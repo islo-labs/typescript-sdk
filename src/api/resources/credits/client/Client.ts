@@ -22,6 +22,8 @@ export class CreditsClient {
     }
 
     /**
+     * Return the tenant's available prepaid credit balance in cents.
+     *
      * @param {CreditsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
@@ -66,7 +68,10 @@ export class CreditsClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

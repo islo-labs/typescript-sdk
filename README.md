@@ -127,10 +127,15 @@ A full reference for this library is available [here](https://github.com/islo-la
 Instantiate and use the client with the following:
 
 ```typescript
-import { Islo } from "@islo-labs/sdk";
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ apiKey: "YOUR_API_KEY" });
-await client.sandboxes.createSandbox();
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
+await client.integrations.createCustomService({
+    custom: {
+        name: "name",
+        slug: "slug"
+    }
+});
 ```
 
 ## Environments
@@ -145,15 +150,6 @@ const client = new Islo({
 });
 ```
 
-You can also override the control and compute planes independently:
-
-```typescript
-const client = new Islo({
-    baseUrl: "https://api.customer.example.com",
-    computeUrl: "https://compute.customer.example.com",
-});
-```
-
 ## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
@@ -162,7 +158,7 @@ following namespace:
 ```typescript
 import { IsloApi } from "@islo-labs/sdk";
 
-const request: IsloApi.ListExecSessionsRequest = {
+const request: IsloApi.CustomServiceCreateRequest = {
     ...
 };
 ```
@@ -176,7 +172,7 @@ will be thrown.
 import { IsloApiError } from "@islo-labs/sdk";
 
 try {
-    await client.sandboxes.createSandbox(...);
+    await client.integrations.createCustomService(...);
 } catch (err) {
     if (err instanceof IsloApiError) {
         console.log(err.statusCode);
@@ -213,7 +209,7 @@ const client = new Islo({
     }
 });
 
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.integrations.createCustomService(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -225,7 +221,7 @@ const response = await client.sandboxes.createSandbox(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.integrations.createCustomService(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -247,7 +243,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.integrations.createCustomService(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -257,7 +253,7 @@ const response = await client.sandboxes.createSandbox(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.integrations.createCustomService(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -268,7 +264,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.sandboxes.createSandbox(..., {
+const response = await client.integrations.createCustomService(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -280,7 +276,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.sandboxes.createSandbox(...).withRawResponse();
+const { data, rawResponse } = await client.integrations.createCustomService(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

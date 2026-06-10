@@ -22,10 +22,10 @@
             }
         }
     },
-    "originGitCommit": "453247e78645609fe40ab4ac6a12ce1fa34ca9e1",
+    "originGitCommit": "a99caf107fcbbbaa60d2d5813ac6d5028d862635",
     "originGitCommitIsDirty": false,
     "invokedBy": "ci",
     "requestedVersion": null,
     "ciProvider": "github",
-    "sdkVersion": "0.0.22"
+    "sdkVersion": "0.0.23"
 }

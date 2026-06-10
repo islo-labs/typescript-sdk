@@ -13,9 +13,9 @@ export interface CreateSandboxRequest {
     gateway_profile?: string | null;
     image?: string;
     init?: IsloApi.SandboxInit | null;
-    init_capabilities?: IsloApi.LegacyInitCapability[] | null;
     memory_mb?: number;
     name?: string | null;
+    request_id?: string | null;
     setup_scripts?: IsloApi.SetupScript[] | null;
     snapshot_name?: string | null;
     snapshot_url?: string | null;
