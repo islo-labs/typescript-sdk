@@ -25,6 +25,8 @@ export class SharesClient {
     }
 
     /**
+     * List active public shares for a sandbox.
+     *
      * @param {IsloApi.ListSharesRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -103,6 +105,8 @@ export class SharesClient {
     }
 
     /**
+     * Create a temporary public share for a sandbox port.
+     *
      * @param {IsloApi.CreateShareRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -191,6 +195,8 @@ export class SharesClient {
     }
 
     /**
+     * Revoke a sandbox port share.
+     *
      * @param {IsloApi.RevokeShareRequest} request
      * @param {SharesClient.RequestOptions} requestOptions - Request-specific configuration.
      *

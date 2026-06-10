@@ -13,7 +13,7 @@ describe("CreditsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { balance_cents: 1, currency: "currency" };
+        const rawResponseBody = { balance_cents: 2500, currency: "USD" };
 
         server.mockEndpoint().get("/credits/balance").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -29,7 +29,7 @@ describe("CreditsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server.mockEndpoint().get("/credits/balance").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 

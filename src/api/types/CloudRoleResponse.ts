@@ -4,7 +4,6 @@ export interface CloudRoleResponse {
     id: string;
     provider: string;
     role_arn: string;
-    external_id: string;
     session_duration_seconds: number;
     is_enabled: boolean;
     created_at?: (string | null) | undefined;

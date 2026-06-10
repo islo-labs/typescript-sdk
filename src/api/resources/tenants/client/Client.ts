@@ -25,7 +25,7 @@ export class TenantsClient {
     }
 
     /**
-     * List compute regions allowed for the current tenant.
+     * Return the compute regions the authenticated tenant may use, including the API and WebSocket base URLs for each region.
      *
      * @param {TenantsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -77,7 +77,10 @@ export class TenantsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                    throw new IsloApi.UnprocessableEntityError(
+                        _response.error.body as IsloApi.HttpValidationError,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

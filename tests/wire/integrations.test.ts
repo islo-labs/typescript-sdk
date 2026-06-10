@@ -46,7 +46,6 @@ describe("IntegrationsClient", () => {
                     connected: true,
                     level: "user",
                     auth_method: "oauth",
-                    descope_app_id: "descope_app_id",
                     preset_id: "preset_id",
                     display_name: "display_name",
                 },
@@ -84,7 +83,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server.mockEndpoint().get("/integrations").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 
@@ -101,9 +100,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {
-            services: [{ descope_app_id: "descope_app_id", name: "name", slug: "slug", auth_method: "oauth" }],
-        };
+        const rawResponseBody = { services: [{ name: "name", slug: "slug", auth_method: "oauth" }] };
 
         server
             .mockEndpoint()
@@ -148,7 +145,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -257,7 +254,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -385,7 +382,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -500,7 +497,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -624,7 +621,7 @@ describe("IntegrationsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()

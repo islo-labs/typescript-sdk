@@ -18,7 +18,6 @@ describe("CloudRolesClient", () => {
                 id: "id",
                 provider: "provider",
                 role_arn: "role_arn",
-                external_id: "external_id",
                 session_duration_seconds: 1,
                 is_enabled: true,
                 created_at: "2024-01-15T09:30:00Z",
@@ -57,7 +56,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 
@@ -78,7 +77,6 @@ describe("CloudRolesClient", () => {
             id: "id",
             provider: "provider",
             role_arn: "role_arn",
-            external_id: "external_id",
             session_duration_seconds: 1,
             is_enabled: true,
             created_at: "2024-01-15T09:30:00Z",
@@ -136,7 +134,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -167,7 +165,6 @@ describe("CloudRolesClient", () => {
             id: "id",
             provider: "provider",
             role_arn: "role_arn",
-            external_id: "external_id",
             session_duration_seconds: 1,
             is_enabled: true,
             created_at: "2024-01-15T09:30:00Z",
@@ -246,7 +243,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -337,7 +334,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()
@@ -366,7 +363,6 @@ describe("CloudRolesClient", () => {
             id: "id",
             provider: "provider",
             role_arn: "role_arn",
-            external_id: "external_id",
             session_duration_seconds: 1,
             is_enabled: true,
             created_at: "2024-01-15T09:30:00Z",
@@ -448,7 +444,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server
             .mockEndpoint()

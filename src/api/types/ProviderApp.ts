@@ -3,12 +3,7 @@
 import type * as IsloApi from "../index.js";
 
 /**
- * A single Descope outbound app backing one (auth_method, scope) combo.
- *
- * Presets pre-provision up to four Descope outbound apps, one per
- * ``auth_method`` x ``scope`` combination they support. Shipping them
- * on ``GET /integrations/providers`` lets the frontend resolve the right
- * ``app_id`` locally and skip a server round-trip on the connect path.
+ * Connection option for one authentication method and scope.
  */
 export interface ProviderApp {
     auth_method: IsloApi.AuthMethod;

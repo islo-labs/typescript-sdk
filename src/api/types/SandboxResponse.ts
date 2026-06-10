@@ -5,15 +5,12 @@ import type * as IsloApi from "../index.js";
 export interface SandboxResponse {
     created_at: string;
     created_by?: (string | null) | undefined;
-    created_by_entity?: (string | null) | undefined;
     deleted_at?: (string | null) | undefined;
     id: string;
     image: string;
     name: string;
-    owner_node_id?: (string | null) | undefined;
     setup_steps?: (IsloApi.SetupStepResult[] | null) | undefined;
     spec?: (IsloApi.SandboxSpec | null) | undefined;
     status: string;
-    vm_id?: (string | null) | undefined;
     workdir?: (string | null) | undefined;
 }

@@ -14,7 +14,15 @@ describe("TenantsClient", () => {
         });
 
         const rawResponseBody = {
-            regions: [{ key: "key", label: "label", api_url: "api_url", ws_url: "ws_url", is_default: true }],
+            regions: [
+                {
+                    key: "us-west",
+                    label: "US West",
+                    api_url: "https://ca.compute.islo.dev",
+                    ws_url: "wss://ca.compute.islo.dev",
+                    is_default: true,
+                },
+            ],
         };
 
         server.mockEndpoint().get("/tenants/regions").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -48,7 +56,7 @@ describe("TenantsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { key: "value" };
+        const rawResponseBody = {};
 
         server.mockEndpoint().get("/tenants/regions").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 

@@ -10,7 +10,6 @@ import type * as IsloApi from "../index.js";
  * in gateway rules.
  */
 export interface CustomService {
-    descope_app_id: string;
     name: string;
     slug: string;
     auth_method: IsloApi.AuthMethod;

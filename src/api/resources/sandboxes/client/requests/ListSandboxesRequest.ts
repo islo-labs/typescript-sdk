@@ -10,4 +10,5 @@ export interface ListSandboxesRequest {
     created_by?: string | null;
     limit?: number;
     offset?: number;
+    cursor?: string | null;
 }

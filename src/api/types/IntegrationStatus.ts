@@ -15,7 +15,6 @@ export interface IntegrationStatus {
     connected: boolean;
     level?: (IsloApi.IntegrationLevel | null) | undefined;
     auth_method?: (IsloApi.AuthMethod | null) | undefined;
-    descope_app_id?: (string | null) | undefined;
     preset_id?: (string | null) | undefined;
     display_name?: (string | null) | undefined;
 }

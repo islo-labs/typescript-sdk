@@ -2,9 +2,10 @@
 
 import type * as core from "../../core/index.js";
 import * as errors from "../../errors/index.js";
+import type * as IsloApi from "../index.js";
 
 export class UnprocessableEntityError extends errors.IsloApiError {
-    constructor(body?: unknown, rawResponse?: core.RawResponse) {
+    constructor(body: IsloApi.HttpValidationError, rawResponse?: core.RawResponse) {
         super({
             message: "UnprocessableEntityError",
             statusCode: 422,
