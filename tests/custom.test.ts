@@ -6,6 +6,8 @@
  * If you include example requests/responses in your fern definition,
  * you will have tests automatically generated for you.
  */
+import { Islo } from "../src/index.js";
+
 describe("test", () => {
     it("default", () => {
         expect(true).toBe(true);
