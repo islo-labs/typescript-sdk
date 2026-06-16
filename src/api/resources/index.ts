@@ -13,3 +13,5 @@ export * as shares from "./shares/index.js";
 export * from "./snapshots/client/requests/index.js";
 export * as snapshots from "./snapshots/index.js";
 export * as tenants from "./tenants/index.js";
+export * from "./webhooks/client/requests/index.js";
+export * as webhooks from "./webhooks/index.js";

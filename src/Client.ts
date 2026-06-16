@@ -8,6 +8,7 @@ import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
 import { SharesClient } from "./api/resources/shares/client/Client.js";
 import { SnapshotsClient } from "./api/resources/snapshots/client/Client.js";
 import { TenantsClient } from "./api/resources/tenants/client/Client.js";
+import { WebhooksClient } from "./api/resources/webhooks/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
@@ -28,6 +29,7 @@ export class Islo {
     protected _sandboxes: SandboxesClient | undefined;
     protected _shares: SharesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
+    protected _webhooks: WebhooksClient | undefined;
 
     constructor(options: Islo.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -63,6 +65,10 @@ export class Islo {
 
     public get snapshots(): SnapshotsClient {
         return (this._snapshots ??= new SnapshotsClient(this._options));
+    }
+
+    public get webhooks(): WebhooksClient {
+        return (this._webhooks ??= new WebhooksClient(this._options));
     }
 
     /**

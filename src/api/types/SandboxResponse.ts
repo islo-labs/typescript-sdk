@@ -8,6 +8,7 @@ export interface SandboxResponse {
     deleted_at?: (string | null) | undefined;
     id: string;
     image: string;
+    lifecycle?: (IsloApi.LifecyclePolicy | null) | undefined;
     name: string;
     setup_steps?: (IsloApi.SetupStepResult[] | null) | undefined;
     spec?: (IsloApi.SandboxSpec | null) | undefined;
