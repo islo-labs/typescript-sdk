@@ -46,8 +46,10 @@ export class SandboxesClient {
         request: IsloApi.ListSandboxesRequest = {},
         requestOptions?: SandboxesClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.PaginatedSandboxResponse>> {
-        const { status, name_prefix: namePrefix, created_by: createdBy, limit, offset, cursor } = request;
+        const { q, search, status, name_prefix: namePrefix, created_by: createdBy, limit, offset, cursor } = request;
         const _queryParams: Record<string, unknown> = {
+            q,
+            search,
             status,
             name_prefix: namePrefix,
             created_by: createdBy,

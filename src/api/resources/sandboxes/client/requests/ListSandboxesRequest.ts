@@ -5,6 +5,10 @@
  *     {}
  */
 export interface ListSandboxesRequest {
+    /** Search term for sandbox name, image, creator, or public ID. Takes precedence over `search` when both are provided. */
+    q?: string | null;
+    /** Search term for sandbox name, image, creator, or public ID. Alias for `q`. */
+    search?: string | null;
     status?: string | string[];
     name_prefix?: string | null;
     created_by?: string | null;

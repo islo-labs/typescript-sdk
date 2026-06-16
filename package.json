@@ -1,6 +1,6 @@
 {
     "name": "@islo-labs/sdk",
-    "version": "0.0.23",
+    "version": "0.0.24",
     "private": false,
     "repository": {
         "type": "git",
@@ -109,6 +109,17 @@
                 "default": "./dist/cjs/api/resources/snapshots/exports.js"
             },
             "default": "./dist/cjs/api/resources/snapshots/exports.js"
+        },
+        "./webhooks": {
+            "import": {
+                "types": "./dist/esm/api/resources/webhooks/exports.d.mts",
+                "default": "./dist/esm/api/resources/webhooks/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/webhooks/exports.d.ts",
+                "default": "./dist/cjs/api/resources/webhooks/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/webhooks/exports.js"
         },
         "./package.json": "./package.json"
     },

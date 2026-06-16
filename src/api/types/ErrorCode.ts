@@ -20,6 +20,7 @@ export const ErrorCode = {
     TenantSuspended: "TENANT_SUSPENDED",
     RateLimited: "RATE_LIMITED",
     Timeout: "TIMEOUT",
+    Gone: "GONE",
     InternalError: "INTERNAL_ERROR",
 } as const;
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
