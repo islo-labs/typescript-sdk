@@ -12,14 +12,20 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-typescript-node-sdk: 3.65.5
-current_generation: 4beb47975e5c54700da8881cca75785126c73393
+  - commit_sha: 93ce55e1f38a353fe656ab88102341178c549a01
+    tree_hash: 5ef64175f0acd976d8ce46dc2d13ca9359f491b7
+    timestamp: 2026-06-16T10:35:45.009Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-typescript-node-sdk: 3.65.5
+current_generation: 93ce55e1f38a353fe656ab88102341178c549a01
 patches:
   - id: patch-930e2504
     content_hash: sha256:0ca7e0379f0d1278d8b3db5ed46de3e3e06a2a7306bc35a2db4e09f34d889f02
     original_commit: 930e2504e5ede2db3933ff582572ef100758cd25
     original_message: "feat: add bearer-token SDK client (#29)"
     original_author: SpektorY <165672672+SpektorY@users.noreply.github.com>
-    base_generation: 4beb47975e5c54700da8881cca75785126c73393
+    base_generation: 93ce55e1f38a353fe656ab88102341178c549a01
     files:
       - tests/custom.test.ts
     patch_content: |
