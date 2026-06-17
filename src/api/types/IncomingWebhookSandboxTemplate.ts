@@ -3,11 +3,19 @@
 import type * as IsloApi from "../index.js";
 
 export interface IncomingWebhookSandboxTemplate {
+    cache_key?: (string | null) | undefined;
     disk_gb: number;
+    env?: (Record<string, string | null> | null) | undefined;
     gateway_profile?: (string | null) | undefined;
     image: string;
+    init?: (IsloApi.SandboxInit | null) | undefined;
+    init_capabilities?: (IsloApi.LegacyInitCapability[] | null) | undefined;
     lifecycle?: (IsloApi.IncomingWebhookSandboxLifecycle | null) | undefined;
     memory_mb: number;
+    setup_scripts?: (IsloApi.IncomingWebhookSetupScript[] | null) | undefined;
+    snapshot_name?: (string | null) | undefined;
+    snapshot_url?: (string | null) | undefined;
+    sources?: (IsloApi.IncomingWebhookGitSource[] | null) | undefined;
     vcpus: number;
     workdir?: (string | null) | undefined;
 }

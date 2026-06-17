@@ -4,6 +4,7 @@ export * as credits from "./credits/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";
 export * as gatewayProfiles from "./gatewayProfiles/index.js";
 export * from "./gatewayProfiles/types/index.js";
+export * as inference from "./inference/index.js";
 export * from "./integrations/client/requests/index.js";
 export * as integrations from "./integrations/index.js";
 export * from "./sandboxes/client/requests/index.js";
