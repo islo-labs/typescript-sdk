@@ -3,6 +3,7 @@
 import { CloudRolesClient } from "./api/resources/cloudRoles/client/Client.js";
 import { CreditsClient } from "./api/resources/credits/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
+import { InferenceClient } from "./api/resources/inference/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
 import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
 import { SharesClient } from "./api/resources/shares/client/Client.js";
@@ -26,6 +27,7 @@ export class Islo {
     protected _integrations: IntegrationsClient | undefined;
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
     protected _cloudRoles: CloudRolesClient | undefined;
+    protected _inference: InferenceClient | undefined;
     protected _sandboxes: SandboxesClient | undefined;
     protected _shares: SharesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
@@ -53,6 +55,10 @@ export class Islo {
 
     public get cloudRoles(): CloudRolesClient {
         return (this._cloudRoles ??= new CloudRolesClient(this._options));
+    }
+
+    public get inference(): InferenceClient {
+        return (this._inference ??= new InferenceClient(this._options));
     }
 
     public get sandboxes(): SandboxesClient {
