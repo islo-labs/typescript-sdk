@@ -1,5 +1,7 @@
 export * from "./cloudRoles/client/requests/index.js";
 export * as cloudRoles from "./cloudRoles/index.js";
+export * from "./containerRegistries/client/requests/index.js";
+export * as containerRegistries from "./containerRegistries/index.js";
 export * as credits from "./credits/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";
 export * as gatewayProfiles from "./gatewayProfiles/index.js";
