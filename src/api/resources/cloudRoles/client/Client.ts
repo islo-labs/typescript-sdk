@@ -22,6 +22,7 @@ export class CloudRolesClient {
     }
 
     /**
+     * @param {IsloApi.ListCloudRolesRequest} request
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
@@ -31,14 +32,20 @@ export class CloudRolesClient {
      *     await client.cloudRoles.listCloudRoles()
      */
     public listCloudRoles(
+        request: IsloApi.ListCloudRolesRequest = {},
         requestOptions?: CloudRolesClient.RequestOptions,
     ): core.HttpResponsePromise<IsloApi.CloudRoleResponse[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listCloudRoles(requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__listCloudRoles(request, requestOptions));
     }
 
     private async __listCloudRoles(
+        request: IsloApi.ListCloudRolesRequest = {},
         requestOptions?: CloudRolesClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.CloudRoleResponse[]>> {
+        const { type: type_ } = request;
+        const _queryParams: Record<string, unknown> = {
+            type: type_ !== undefined ? type_ : undefined,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -53,7 +60,11 @@ export class CloudRolesClient {
             ),
             method: "GET",
             headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

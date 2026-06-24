@@ -1030,7 +1030,7 @@ await client.gatewayProfiles.reorderGatewayRules({
 </details>
 
 ## CloudRoles
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">listCloudRoles</a>() -> IsloApi.CloudRoleResponse[]</code></summary>
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">listCloudRoles</a>({ ...params }) -> IsloApi.CloudRoleResponse[]</code></summary>
 <dl>
 <dd>
 
@@ -1055,6 +1055,14 @@ await client.cloudRoles.listCloudRoles();
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListCloudRolesRequest` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

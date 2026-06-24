@@ -17,4 +17,6 @@ export interface GatewayProfileUpdate {
     is_default?: boolean | null;
     /** Cloud role public ID (UUID), empty string to unset */
     cloud_role?: string | null;
+    /** Omit to leave unchanged; send {"mode": "all"} to allow all integrations */
+    integration_policy?: IsloApi.GatewayProfileUpdateIntegrationPolicy | null;
 }
