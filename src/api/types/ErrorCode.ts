@@ -21,6 +21,7 @@ export const ErrorCode = {
     RateLimited: "RATE_LIMITED",
     Timeout: "TIMEOUT",
     Gone: "GONE",
+    BadGateway: "BAD_GATEWAY",
     InternalError: "INTERNAL_ERROR",
 } as const;
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];

@@ -17,9 +17,11 @@ describe("CloudRolesClient", () => {
             {
                 id: "id",
                 provider: "provider",
+                type: "type",
                 role_arn: "role_arn",
                 session_duration_seconds: 1,
                 is_enabled: true,
+                islo_trust_role_arn: "islo_trust_role_arn",
                 created_at: "2024-01-15T09:30:00Z",
                 updated_at: "2024-01-15T09:30:00Z",
             },
@@ -76,9 +78,11 @@ describe("CloudRolesClient", () => {
         const rawResponseBody = {
             id: "id",
             provider: "provider",
+            type: "type",
             role_arn: "role_arn",
             session_duration_seconds: 1,
             is_enabled: true,
+            islo_trust_role_arn: "islo_trust_role_arn",
             created_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
         };
@@ -164,9 +168,11 @@ describe("CloudRolesClient", () => {
         const rawResponseBody = {
             id: "id",
             provider: "provider",
+            type: "type",
             role_arn: "role_arn",
             session_duration_seconds: 1,
             is_enabled: true,
+            islo_trust_role_arn: "islo_trust_role_arn",
             created_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
         };
@@ -362,9 +368,11 @@ describe("CloudRolesClient", () => {
         const rawResponseBody = {
             id: "id",
             provider: "provider",
+            type: "type",
             role_arn: "role_arn",
             session_duration_seconds: 1,
             is_enabled: true,
+            islo_trust_role_arn: "islo_trust_role_arn",
             created_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
         };

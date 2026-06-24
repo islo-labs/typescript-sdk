@@ -10,6 +10,7 @@ export interface GatewayProfileDetailResponse {
     internet_enabled: boolean;
     is_default: boolean;
     cloud_role?: (IsloApi.CloudRoleRef | null) | undefined;
+    integration_policy?: IsloApi.GatewayProfileDetailResponseIntegrationPolicy | undefined;
     rule_count?: number | undefined;
     created_at?: (string | null) | undefined;
     updated_at?: (string | null) | undefined;

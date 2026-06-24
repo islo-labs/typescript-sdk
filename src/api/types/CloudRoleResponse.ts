@@ -3,9 +3,11 @@
 export interface CloudRoleResponse {
     id: string;
     provider: string;
+    type: string;
     role_arn: string;
     session_duration_seconds: number;
     is_enabled: boolean;
+    islo_trust_role_arn: string;
     created_at?: (string | null) | undefined;
     updated_at?: (string | null) | undefined;
 }

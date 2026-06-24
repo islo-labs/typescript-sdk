@@ -11,6 +11,7 @@ import type * as IsloApi from "../../../../index.js";
  */
 export interface CloudRoleCreate {
     provider: IsloApi.CloudProvider;
+    type?: IsloApi.CloudRoleType;
     role_arn: string;
     session_duration_seconds?: number;
 }

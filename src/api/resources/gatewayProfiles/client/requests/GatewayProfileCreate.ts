@@ -16,4 +16,5 @@ export interface GatewayProfileCreate {
     is_default?: boolean;
     /** Cloud role public ID (UUID) */
     cloud_role?: string | null;
+    integration_policy?: IsloApi.GatewayProfileCreateIntegrationPolicy;
 }
