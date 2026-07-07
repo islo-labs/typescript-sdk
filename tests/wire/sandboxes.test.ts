@@ -18,6 +18,7 @@ describe("SandboxesClient", () => {
                 {
                     created_at: "created_at",
                     created_by: "created_by",
+                    creation_phase: "creation_phase",
                     deleted_at: "deleted_at",
                     id: "id",
                     image: "image",
@@ -68,6 +69,7 @@ describe("SandboxesClient", () => {
         const rawResponseBody = {
             created_at: "created_at",
             created_by: "created_by",
+            creation_phase: "creation_phase",
             deleted_at: "deleted_at",
             id: "id",
             image: "image",
@@ -199,6 +201,7 @@ describe("SandboxesClient", () => {
         const rawResponseBody = {
             created_at: "created_at",
             created_by: "created_by",
+            creation_phase: "creation_phase",
             deleted_at: "deleted_at",
             id: "id",
             image: "image",
@@ -257,7 +260,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -285,6 +288,7 @@ describe("SandboxesClient", () => {
         const rawResponseBody = {
             created_at: "created_at",
             created_by: "created_by",
+            creation_phase: "creation_phase",
             deleted_at: "deleted_at",
             id: "id",
             image: "image",
@@ -343,7 +347,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -409,7 +413,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -514,7 +518,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { command: ["command", "command"] };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -625,7 +629,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -694,7 +698,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -771,7 +775,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -840,7 +844,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -917,7 +921,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -946,6 +950,7 @@ describe("SandboxesClient", () => {
         const rawResponseBody = {
             created_at: "created_at",
             created_by: "created_by",
+            creation_phase: "creation_phase",
             deleted_at: "deleted_at",
             id: "id",
             image: "image",
@@ -1004,7 +1009,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1057,6 +1062,7 @@ describe("SandboxesClient", () => {
         const rawResponseBody = {
             created_at: "created_at",
             created_by: "created_by",
+            creation_phase: "creation_phase",
             deleted_at: "deleted_at",
             id: "id",
             image: "image",
@@ -1165,7 +1171,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1264,7 +1270,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1342,7 +1348,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "name" };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1412,7 +1418,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1479,7 +1485,7 @@ describe("SandboxesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()

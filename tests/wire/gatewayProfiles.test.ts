@@ -60,7 +60,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().get("/gateway/profiles").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 
@@ -166,7 +166,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "x" };
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -269,7 +269,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -294,7 +294,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -360,7 +360,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -410,7 +410,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -498,7 +498,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -550,7 +550,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -642,7 +642,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -669,7 +669,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -744,7 +744,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -770,7 +770,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -862,7 +862,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -889,7 +889,7 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1008,7 +1008,7 @@ describe("GatewayProfilesClient", () => {
                 { rule_id: "rule_id", priority: 1 },
             ],
         };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -1049,7 +1049,7 @@ describe("GatewayProfilesClient", () => {
                 { rule_id: "rule_id", priority: 1 },
             ],
         };
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()

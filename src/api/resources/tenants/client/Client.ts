@@ -77,10 +77,7 @@ export class TenantsClient {
                         _response.rawResponse,
                     );
                 case 422:
-                    throw new IsloApi.UnprocessableEntityError(
-                        _response.error.body as IsloApi.HttpValidationError,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

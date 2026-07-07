@@ -13,6 +13,7 @@ export interface CreateSandboxRequest {
     gateway_profile?: string | null;
     image?: string;
     init?: IsloApi.SandboxInit | null;
+    internet_enabled?: boolean;
     lifecycle?: IsloApi.LifecyclePolicy | null;
     memory_mb?: number;
     name?: string | null;

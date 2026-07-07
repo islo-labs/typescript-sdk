@@ -7,7 +7,8 @@ export type IncomingWebhookAction =
     | IsloApi.IncomingWebhookAction.ResumeSandbox
     | IsloApi.IncomingWebhookAction.PauseSandbox
     | IsloApi.IncomingWebhookAction.DeleteSandbox
-    | IsloApi.IncomingWebhookAction.DeliverToPort;
+    | IsloApi.IncomingWebhookAction.DeliverToPort
+    | IsloApi.IncomingWebhookAction.TriggerJob;
 
 export namespace IncomingWebhookAction {
     export interface EnsureSandbox {
@@ -33,5 +34,13 @@ export namespace IncomingWebhookAction {
         path?: (string | null) | undefined;
         payload?: (IsloApi.PayloadMapping | null) | undefined;
         port: number;
+    }
+
+    export interface TriggerJob {
+        action_type: "trigger_job";
+        job_name: string;
+        params?: (Record<string, IsloApi.JobParamMapping | null> | null) | undefined;
+        region?: (string | null) | undefined;
+        version_id?: (string | null) | undefined;
     }
 }

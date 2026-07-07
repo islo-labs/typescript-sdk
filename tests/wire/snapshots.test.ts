@@ -122,7 +122,7 @@ describe("SnapshotsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { sandbox_name: "sandbox_name" };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -246,7 +246,7 @@ describe("SnapshotsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().get("/snapshots/name").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
@@ -300,7 +300,7 @@ describe("SnapshotsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().delete("/snapshots/name").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 

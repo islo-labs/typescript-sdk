@@ -18,6 +18,11 @@ export namespace SandboxInit {
 
     export interface Custom {
         type: "custom";
+        /**
+         * Block until capabilities are fully ready (e.g. sshd accepts
+         * connections, dockerd responds to API calls). Defaults to false.
+         */
+        await_ready?: boolean | undefined;
         capabilities: IsloApi.InitCapability[];
     }
 }

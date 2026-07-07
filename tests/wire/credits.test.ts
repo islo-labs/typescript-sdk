@@ -29,7 +29,7 @@ describe("CreditsClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().get("/credits/balance").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 

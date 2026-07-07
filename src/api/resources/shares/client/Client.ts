@@ -83,10 +83,7 @@ export class SharesClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -173,10 +170,7 @@ export class SharesClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -254,10 +248,7 @@ export class SharesClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
