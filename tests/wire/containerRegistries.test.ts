@@ -70,7 +70,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -223,7 +223,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "ecr", registry_host: "x", cloud_role_id: "cloud_role_id", region: "x" };
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -311,7 +311,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -336,7 +336,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -402,7 +402,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -427,7 +427,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -539,7 +539,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -565,7 +565,7 @@ describe("ContainerRegistriesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()

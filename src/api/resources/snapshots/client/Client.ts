@@ -162,10 +162,7 @@ export class SnapshotsClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
                     throw new IsloApi.ConflictError(
                         _response.error.body as IsloApi.ErrorResponse,
@@ -247,10 +244,7 @@ export class SnapshotsClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,
@@ -322,10 +316,7 @@ export class SnapshotsClient {
                         _response.rawResponse,
                     );
                 case 404:
-                    throw new IsloApi.NotFoundError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

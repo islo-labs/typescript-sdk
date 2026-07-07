@@ -1,6 +1,6 @@
 {
     "name": "@islo-labs/sdk",
-    "version": "0.0.27",
+    "version": "0.0.28",
     "private": false,
     "repository": {
         "type": "git",
@@ -32,6 +32,17 @@
                 "default": "./dist/cjs/api/resources/tenants/exports.js"
             },
             "default": "./dist/cjs/api/resources/tenants/exports.js"
+        },
+        "./knowledge": {
+            "import": {
+                "types": "./dist/esm/api/resources/knowledge/exports.d.mts",
+                "default": "./dist/esm/api/resources/knowledge/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/knowledge/exports.d.ts",
+                "default": "./dist/cjs/api/resources/knowledge/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/knowledge/exports.js"
         },
         "./credits": {
             "import": {
@@ -98,6 +109,39 @@
                 "default": "./dist/cjs/api/resources/containerRegistries/exports.js"
             },
             "default": "./dist/cjs/api/resources/containerRegistries/exports.js"
+        },
+        "./jobs": {
+            "import": {
+                "types": "./dist/esm/api/resources/jobs/exports.d.mts",
+                "default": "./dist/esm/api/resources/jobs/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/jobs/exports.d.ts",
+                "default": "./dist/cjs/api/resources/jobs/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/jobs/exports.js"
+        },
+        "./jobRuns": {
+            "import": {
+                "types": "./dist/esm/api/resources/jobRuns/exports.d.mts",
+                "default": "./dist/esm/api/resources/jobRuns/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/jobRuns/exports.d.ts",
+                "default": "./dist/cjs/api/resources/jobRuns/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/jobRuns/exports.js"
+        },
+        "./computeEvents": {
+            "import": {
+                "types": "./dist/esm/api/resources/computeEvents/exports.d.mts",
+                "default": "./dist/esm/api/resources/computeEvents/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/computeEvents/exports.d.ts",
+                "default": "./dist/cjs/api/resources/computeEvents/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/computeEvents/exports.js"
         },
         "./sandboxes": {
             "import": {

@@ -5,6 +5,7 @@ import type * as IsloApi from "../index.js";
 export interface SandboxResponse {
     created_at: string;
     created_by?: (string | null) | undefined;
+    creation_phase?: (string | null) | undefined;
     deleted_at?: (string | null) | undefined;
     id: string;
     image: string;

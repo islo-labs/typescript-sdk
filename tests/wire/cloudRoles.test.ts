@@ -58,7 +58,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
 
@@ -138,7 +138,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -224,7 +224,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -249,7 +249,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -315,7 +315,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -340,7 +340,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -426,7 +426,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
@@ -452,7 +452,7 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = {};
+        const rawResponseBody = { key: "value" };
 
         server
             .mockEndpoint()
