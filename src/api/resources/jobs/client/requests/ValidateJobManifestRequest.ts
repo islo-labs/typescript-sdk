@@ -8,7 +8,15 @@ import type * as IsloApi from "../../../../index.js";
  *         name: "name",
  *         body: {
  *             manifest: {
- *                 "key": "value"
+ *                 job: {
+ *                     name: "name"
+ *                 },
+ *                 run: {
+ *                     tasks: [{
+ *                             name: "name",
+ *                             steps: [{}]
+ *                         }]
+ *                 }
  *             }
  *         }
  *     }

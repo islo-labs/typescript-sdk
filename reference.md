@@ -1849,7 +1849,15 @@ await client.jobs.validateJobManifest({
     name: "name",
     body: {
         manifest: {
-            "key": "value"
+            job: {
+                name: "name"
+            },
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
         }
     }
 });
@@ -1905,7 +1913,15 @@ await client.jobs.deployJob({
     name: "name",
     body: {
         manifest: {
-            "key": "value"
+            job: {
+                name: "name"
+            },
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
         }
     }
 });
@@ -1976,6 +1992,57 @@ await client.jobs.getJob({
 <dd>
 
 **request:** `IsloApi.GetJobRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">deleteJob</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobs.deleteJob({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteJobRequest` 
     
 </dd>
 </dl>
