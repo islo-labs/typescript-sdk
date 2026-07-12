@@ -8,5 +8,7 @@ export interface JobRunStepTimelineEntry {
     started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     error_message?: (string | null) | undefined;
+    error_code?: (string | null) | undefined;
+    error_details?: (Record<string, unknown> | null) | undefined;
     compute_command_id?: (string | null) | undefined;
 }

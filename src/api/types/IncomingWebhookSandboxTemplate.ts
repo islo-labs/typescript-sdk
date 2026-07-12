@@ -14,7 +14,6 @@ export interface IncomingWebhookSandboxTemplate {
     memory_mb: number;
     setup_scripts?: (IsloApi.IncomingWebhookSetupScript[] | null) | undefined;
     snapshot_name?: (string | null) | undefined;
-    snapshot_url?: (string | null) | undefined;
     sources?: (IsloApi.IncomingWebhookGitSource[] | null) | undefined;
     vcpus: number;
     workdir?: (string | null) | undefined;

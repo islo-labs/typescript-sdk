@@ -20,7 +20,6 @@ export interface CreateSandboxRequest {
     request_id?: string | null;
     setup_scripts?: IsloApi.SetupScript[] | null;
     snapshot_name?: string | null;
-    snapshot_url?: string | null;
     sources?: IsloApi.GitSource[] | null;
     vcpus?: number;
     workdir?: string | null;

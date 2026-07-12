@@ -26,6 +26,8 @@ describe("JobRunsClient", () => {
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 error_message: "error_message",
+                error_code: "error_code",
+                error_details: { key: "value" },
                 created_at: "2024-01-15T09:30:00Z",
             },
         ];
@@ -77,6 +79,8 @@ describe("JobRunsClient", () => {
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     error_message: "error_message",
+                    error_code: "error_code",
+                    error_details: { key: "value" },
                     compute_command_id: "compute_command_id",
                 },
             ],
@@ -84,6 +88,8 @@ describe("JobRunsClient", () => {
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
+            error_code: "error_code",
+            error_details: { key: "value" },
             created_at: "2024-01-15T09:30:00Z",
         };
 

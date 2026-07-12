@@ -18,6 +18,8 @@ describe("ComputeEventsClient", () => {
             action: "action",
             success: true,
             error_message: "error_message",
+            error_code: "error_code",
+            error_details: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             result: { type: "empty" },

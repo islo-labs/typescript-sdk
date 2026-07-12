@@ -7,6 +7,8 @@ export interface ComputeEventDetailResponse {
     action: string;
     success: boolean;
     error_message: string | null;
+    error_code?: (string | null) | undefined;
+    error_details?: (Record<string, unknown> | null) | undefined;
     started_at: string | null;
     completed_at: string | null;
     result: IsloApi.ComputeEventDetailResponseResult;
