@@ -9,6 +9,5 @@ export interface ComputeEventDetailResponse {
     error_message: string | null;
     started_at: string | null;
     completed_at: string | null;
-    agent_id: string | null;
     result: IsloApi.ComputeEventDetailResponseResult;
 }

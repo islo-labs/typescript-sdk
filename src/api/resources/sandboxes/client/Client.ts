@@ -106,7 +106,7 @@ export class SandboxesClient {
     }
 
     /**
-     * Create a new sandbox for the authenticated tenant.
+     * Create a new sandbox VM with the requested resources.
      *
      * @param {IsloApi.CreateSandboxRequest} request
      * @param {SandboxesClient.RequestOptions} requestOptions - Request-specific configuration.
