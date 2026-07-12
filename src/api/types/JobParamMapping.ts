@@ -2,6 +2,10 @@
 
 import type * as IsloApi from "../index.js";
 
-export interface JobParamMapping {
-    source: IsloApi.ValueSource;
-}
+export type JobParamMapping =
+    | {
+          source: IsloApi.ValueSource;
+      }
+    | {
+          parts: IsloApi.MappingPart[];
+      };

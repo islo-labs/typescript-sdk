@@ -1,3 +1,4 @@
+export type { DeleteJobRequest } from "./DeleteJobRequest.js";
 export type { DeleteJobScheduleRequest } from "./DeleteJobScheduleRequest.js";
 export type { DeployJobRequest } from "./DeployJobRequest.js";
 export type { GetJobRequest } from "./GetJobRequest.js";

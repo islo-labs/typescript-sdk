@@ -12,7 +12,7 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { key: "value" } };
+        const rawRequestBody = { manifest: { job: { name: "name" }, run: { tasks: [{ name: "name", steps: [{}] }] } } };
 
         server
             .mockEndpoint()
@@ -26,7 +26,17 @@ describe("JobsClient", () => {
             name: "name",
             body: {
                 manifest: {
-                    key: "value",
+                    job: {
+                        name: "name",
+                    },
+                    run: {
+                        tasks: [
+                            {
+                                name: "name",
+                                steps: [{}],
+                            },
+                        ],
+                    },
                 },
             },
         });
@@ -40,7 +50,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -57,8 +77,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -73,7 +105,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { key: "value" };
 
         server
@@ -90,8 +132,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -106,13 +160,28 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { key: "value" } };
+        const rawRequestBody = { manifest: { job: { name: "name" }, run: { tasks: [{ name: "name", steps: [{}] }] } } };
         const rawResponseBody = {
             id: "id",
             version_number: 1,
             content_hash: "content_hash",
             deployed_at: "2024-01-15T09:30:00Z",
-            manifest: { key: "value" },
+            manifest: {
+                job: { name: "name", version: "version", description: "description" },
+                run: {
+                    fail_fast: true,
+                    fanout: true,
+                    concurrency: 1,
+                    workdir: "workdir",
+                    timeout: "timeout",
+                    region: "region",
+                    teardown_on_complete: true,
+                    resume_on_start: true,
+                    tasks: [{ name: "name", steps: [{}] }],
+                },
+                schedule: { cron: "cron", timezone: "timezone", enabled: true },
+                verification: { enabled: true },
+            },
         };
 
         server
@@ -128,7 +197,17 @@ describe("JobsClient", () => {
             name: "name",
             body: {
                 manifest: {
-                    key: "value",
+                    job: {
+                        name: "name",
+                    },
+                    run: {
+                        tasks: [
+                            {
+                                name: "name",
+                                steps: [{}],
+                            },
+                        ],
+                    },
                 },
             },
         });
@@ -142,7 +221,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -159,8 +248,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -175,7 +276,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { key: "value" };
 
         server
@@ -192,8 +303,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -208,7 +331,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -225,8 +358,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -241,7 +386,17 @@ describe("JobsClient", () => {
             apiKey: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
-        const rawRequestBody = { manifest: { manifest: { key: "value" } } };
+        const rawRequestBody = {
+            manifest: {
+                job: { name: "name" },
+                run: {
+                    tasks: [
+                        { name: "name", steps: [{}, {}] },
+                        { name: "name", steps: [{}, {}] },
+                    ],
+                },
+            },
+        };
         const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
 
         server
@@ -258,8 +413,20 @@ describe("JobsClient", () => {
                 name: "name",
                 body: {
                     manifest: {
-                        manifest: {
-                            key: "value",
+                        job: {
+                            name: "name",
+                        },
+                        run: {
+                            tasks: [
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                                {
+                                    name: "name",
+                                    steps: [{}, {}],
+                                },
+                            ],
                         },
                     },
                 },
@@ -284,7 +451,11 @@ describe("JobsClient", () => {
                 version_number: 1,
                 content_hash: "content_hash",
                 deployed_at: "2024-01-15T09:30:00Z",
-                manifest: { key: "value" },
+                manifest: {
+                    job: { name: "name" },
+                    run: { tasks: [{ name: "name", steps: [{}] }] },
+                    schedule: { cron: "cron" },
+                },
             },
             params: [
                 {
@@ -322,6 +493,41 @@ describe("JobsClient", () => {
 
         await expect(async () => {
             return await client.jobs.getJob({
+                name: "name",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("delete_job (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/jobs/name").respondWith().statusCode(200).build();
+
+        const response = await client.jobs.deleteJob({
+            name: "name",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("delete_job (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().delete("/jobs/name").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.jobs.deleteJob({
                 name: "name",
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
@@ -376,7 +582,11 @@ describe("JobsClient", () => {
                 version_number: 1,
                 content_hash: "content_hash",
                 deployed_at: "2024-01-15T09:30:00Z",
-                manifest: { key: "value" },
+                manifest: {
+                    job: { name: "name" },
+                    run: { tasks: [{ name: "name", steps: [{}] }] },
+                    schedule: { cron: "cron" },
+                },
             },
         ];
 
@@ -432,7 +642,22 @@ describe("JobsClient", () => {
             version_number: 1,
             content_hash: "content_hash",
             deployed_at: "2024-01-15T09:30:00Z",
-            manifest: { key: "value" },
+            manifest: {
+                job: { name: "name", version: "version", description: "description" },
+                run: {
+                    fail_fast: true,
+                    fanout: true,
+                    concurrency: 1,
+                    workdir: "workdir",
+                    timeout: "timeout",
+                    region: "region",
+                    teardown_on_complete: true,
+                    resume_on_start: true,
+                    tasks: [{ name: "name", steps: [{}] }],
+                },
+                schedule: { cron: "cron", timezone: "timezone", enabled: true },
+                verification: { enabled: true },
+            },
         };
 
         server

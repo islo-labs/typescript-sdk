@@ -20,7 +20,6 @@ describe("ComputeEventsClient", () => {
             error_message: "error_message",
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
-            agent_id: "agent_id",
             result: { type: "empty" },
         };
 
