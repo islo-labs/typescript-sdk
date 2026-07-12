@@ -14,5 +14,7 @@ export interface JobRunResponse {
     started_at: string | null;
     completed_at: string | null;
     error_message: string | null;
+    error_code?: (string | null) | undefined;
+    error_details?: (Record<string, unknown> | null) | undefined;
     created_at: string;
 }

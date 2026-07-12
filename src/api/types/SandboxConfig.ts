@@ -13,7 +13,6 @@ export interface SandboxConfig {
     memory_mb?: number | undefined;
     disk_gb?: number | undefined;
     snapshot_name?: (string | null) | undefined;
-    snapshot_url?: (string | null) | undefined;
     gateway_profile?: (string | null) | undefined;
     init?: (IsloApi.SandboxConfigInit | null) | undefined;
     internet_enabled?: boolean | undefined;
