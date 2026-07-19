@@ -414,4 +414,170 @@ export class WebhooksClient {
             "/webhooks/incoming/{webhook_id}",
         );
     }
+
+    /**
+     * List delivery events for an incoming webhook, with optional status and date filters.
+     *
+     * @param {IsloApi.ListWebhookDeliveriesRequest} request
+     * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.webhooks.listWebhookDeliveries({
+     *         webhook_id: "webhook_id"
+     *     })
+     */
+    public listWebhookDeliveries(
+        request: IsloApi.ListWebhookDeliveriesRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.WebhookDeliverySummary[]> {
+        return core.HttpResponsePromise.fromPromise(this.__listWebhookDeliveries(request, requestOptions));
+    }
+
+    private async __listWebhookDeliveries(
+        request: IsloApi.ListWebhookDeliveriesRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.WebhookDeliverySummary[]>> {
+        const { webhook_id: webhookId, limit, offset, status, from: from_, to } = request;
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            offset,
+            status: status !== undefined ? status : undefined,
+            from: from_ !== undefined ? from_ : undefined,
+            to: to !== undefined ? to : undefined,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `webhooks/incoming/${core.url.encodePathParam(webhookId)}/deliveries`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.WebhookDeliverySummary[], rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/webhooks/incoming/{webhook_id}/deliveries",
+        );
+    }
+
+    /**
+     * Get full detail for a single webhook delivery event, including a truncated body preview and action attempts.
+     *
+     * @param {IsloApi.GetWebhookDeliveryRequest} request
+     * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     *
+     * @example
+     *     await client.webhooks.getWebhookDelivery({
+     *         webhook_id: "webhook_id",
+     *         event_id: "event_id"
+     *     })
+     */
+    public getWebhookDelivery(
+        request: IsloApi.GetWebhookDeliveryRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.WebhookDeliveryDetail> {
+        return core.HttpResponsePromise.fromPromise(this.__getWebhookDelivery(request, requestOptions));
+    }
+
+    private async __getWebhookDelivery(
+        request: IsloApi.GetWebhookDeliveryRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.WebhookDeliveryDetail>> {
+        const { webhook_id: webhookId, event_id: eventId } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).compute,
+                `webhooks/incoming/${core.url.encodePathParam(webhookId)}/deliveries/${core.url.encodePathParam(eventId)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.WebhookDeliveryDetail, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/webhooks/incoming/{webhook_id}/deliveries/{event_id}",
+        );
+    }
 }
