@@ -483,4 +483,197 @@ describe("WebhooksClient", () => {
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
+
+    test("list_webhook_deliveries (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = [
+            {
+                attempts: 1,
+                completed_at: "2024-01-15T09:30:00Z",
+                event_id: "event_id",
+                external_event_id: "external_event_id",
+                idempotency_key: "idempotency_key",
+                last_error: "last_error",
+                method: "method",
+                next_attempt_at: "2024-01-15T09:30:00Z",
+                status: "pending",
+                verified_at: "2024-01-15T09:30:00Z",
+                webhook_id: "webhook_id",
+            },
+        ];
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.webhooks.listWebhookDeliveries({
+            webhook_id: "webhook_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_webhook_deliveries (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.webhooks.listWebhookDeliveries({
+                webhook_id: "webhook_id",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("list_webhook_deliveries (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.webhooks.listWebhookDeliveries({
+                webhook_id: "webhook_id",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("get_webhook_delivery (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            action_attempts: [
+                {
+                    action_index: 1,
+                    action_key: "action_key",
+                    completed_at: "2024-01-15T09:30:00Z",
+                    error: "error",
+                    started_at: "2024-01-15T09:30:00Z",
+                    status: "pending",
+                },
+            ],
+            attempts: 1,
+            body_preview: "body_preview",
+            body_truncated: true,
+            completed_at: "2024-01-15T09:30:00Z",
+            event_id: "event_id",
+            external_event_id: "external_event_id",
+            idempotency_key: "idempotency_key",
+            last_error: "last_error",
+            method: "method",
+            next_attempt_at: "2024-01-15T09:30:00Z",
+            query: "query",
+            resolved_sandbox_id: "resolved_sandbox_id",
+            resolved_sandbox_name: "resolved_sandbox_name",
+            source_label: "source_label",
+            status: "pending",
+            verified_at: "2024-01-15T09:30:00Z",
+            webhook_id: "webhook_id",
+        };
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries/event_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.webhooks.getWebhookDelivery({
+            webhook_id: "webhook_id",
+            event_id: "event_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("get_webhook_delivery (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries/event_id")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.webhooks.getWebhookDelivery({
+                webhook_id: "webhook_id",
+                event_id: "event_id",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("get_webhook_delivery (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/webhooks/incoming/webhook_id/deliveries/event_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.webhooks.getWebhookDelivery({
+                webhook_id: "webhook_id",
+                event_id: "event_id",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
 });

@@ -2945,6 +2945,71 @@ await client.sandboxes.deleteSandbox({
 </dl>
 </details>
 
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">sandboxCreationEvents</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Server-sent events for live sandbox creation progress.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.sandboxCreationEvents({
+    sandbox_name: "sandbox_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SandboxCreationEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">execInSandbox</a>({ ...params }) -> IsloApi.ExecResponse</code></summary>
 <dl>
 <dd>
@@ -2974,7 +3039,9 @@ Start a command in a sandbox and return an exec ID for polling results.
 ```typescript
 await client.sandboxes.execInSandbox({
     sandbox_name: "sandbox_name",
-    command: ["command"]
+    body: {
+        command: ["command"]
+    }
 });
 
 ```
@@ -2991,7 +3058,75 @@ await client.sandboxes.execInSandbox({
 <dl>
 <dd>
 
-**request:** `IsloApi.ExecRequest` 
+**request:** `IsloApi.ExecInSandboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">execInSandboxStream</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream command stdout, stderr, and exit events as Server-Sent Events.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxes.execInSandboxStream({
+    sandbox_name: "sandbox_name",
+    body: {
+        command: ["command"]
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ExecInSandboxStreamRequest` 
     
 </dd>
 </dl>
@@ -3077,7 +3212,7 @@ await client.sandboxes.getExecResult({
 </dl>
 </details>
 
-<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">downloadFile</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.sandboxes.<a href="/src/api/resources/sandboxes/client/Client.ts">downloadFile</a>({ ...params }) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -3171,6 +3306,7 @@ Upload a file to a path inside a sandbox.
 
 ```typescript
 await client.sandboxes.uploadFile({
+    file: fs.createReadStream("/path/to/your/file"),
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -3303,6 +3439,7 @@ Upload and extract an archive into a sandbox directory.
 
 ```typescript
 await client.sandboxes.uploadArchive({
+    file: fs.createReadStream("/path/to/your/file"),
     sandbox_name: "sandbox_name",
     path: "path"
 });
@@ -4498,6 +4635,137 @@ await client.webhooks.updateIncomingWebhook({
 <dd>
 
 **request:** `IsloApi.IncomingWebhookUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">listWebhookDeliveries</a>({ ...params }) -> IsloApi.WebhookDeliverySummary[]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List delivery events for an incoming webhook, with optional status and date filters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.listWebhookDeliveries({
+    webhook_id: "webhook_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListWebhookDeliveriesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">getWebhookDelivery</a>({ ...params }) -> IsloApi.WebhookDeliveryDetail</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get full detail for a single webhook delivery event, including a truncated body preview and action attempts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.getWebhookDelivery({
+    webhook_id: "webhook_id",
+    event_id: "event_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetWebhookDeliveryRequest` 
     
 </dd>
 </dl>
