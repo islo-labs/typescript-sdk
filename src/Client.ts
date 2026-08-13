@@ -4,6 +4,7 @@ import { CloudRolesClient } from "./api/resources/cloudRoles/client/Client.js";
 import { ComputeEventsClient } from "./api/resources/computeEvents/client/Client.js";
 import { ContainerRegistriesClient } from "./api/resources/containerRegistries/client/Client.js";
 import { CreditsClient } from "./api/resources/credits/client/Client.js";
+import { EnvironmentsClient } from "./api/resources/environments/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { InferenceClient } from "./api/resources/inference/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
@@ -32,6 +33,7 @@ export class Islo {
     protected _credits: CreditsClient | undefined;
     protected _integrations: IntegrationsClient | undefined;
     protected _gatewayProfiles: GatewayProfilesClient | undefined;
+    protected _environments: EnvironmentsClient | undefined;
     protected _cloudRoles: CloudRolesClient | undefined;
     protected _inference: InferenceClient | undefined;
     protected _containerRegistries: ContainerRegistriesClient | undefined;
@@ -65,6 +67,10 @@ export class Islo {
 
     public get gatewayProfiles(): GatewayProfilesClient {
         return (this._gatewayProfiles ??= new GatewayProfilesClient(this._options));
+    }
+
+    public get environments(): EnvironmentsClient {
+        return (this._environments ??= new EnvironmentsClient(this._options));
     }
 
     public get cloudRoles(): CloudRolesClient {

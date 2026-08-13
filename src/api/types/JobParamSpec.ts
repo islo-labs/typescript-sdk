@@ -2,6 +2,7 @@
 
 export interface JobParamSpec {
     type: JobParamSpec.Type;
+    items?: (JobParamSpec.Items | null) | undefined;
     required?: boolean | undefined;
     default?: (unknown | null) | undefined;
     description?: (string | null) | undefined;
@@ -11,11 +12,12 @@ export interface JobParamSpec {
 }
 
 export namespace JobParamSpec {
-    export const Type = {
+    export type Type = ("string" | "integer" | "number" | "boolean") | "array";
+    export const Items = {
         String: "string",
         Integer: "integer",
         Number: "number",
         Boolean: "boolean",
     } as const;
-    export type Type = (typeof Type)[keyof typeof Type];
+    export type Items = (typeof Items)[keyof typeof Items];
 }

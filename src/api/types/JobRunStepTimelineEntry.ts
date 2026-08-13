@@ -5,6 +5,8 @@ export interface JobRunStepTimelineEntry {
     action: string;
     status: string;
     task_name: string;
+    sandbox_name?: (string | null) | undefined;
+    agent_session_id?: (string | null) | undefined;
     started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     error_message?: (string | null) | undefined;

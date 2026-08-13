@@ -9,6 +9,7 @@ export interface JobRunResponse {
     status: string;
     region: string | null;
     run_params: Record<string, unknown>;
+    result_payload: Record<string, unknown> | null;
     step_timeline: IsloApi.JobRunStepTimelineEntry[];
     artifact_refs: Record<string, unknown>[];
     started_at: string | null;

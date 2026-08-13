@@ -181,6 +181,7 @@ describe("JobsClient", () => {
                 },
                 schedule: { cron: "cron", timezone: "timezone", enabled: true },
                 verification: { enabled: true },
+                outputs: { key: { type: "string" } },
             },
         };
 
@@ -460,7 +461,8 @@ describe("JobsClient", () => {
             params: [
                 {
                     name: "name",
-                    type: "type",
+                    type: "string",
+                    items: "string",
                     required: true,
                     default: { key: "value" },
                     description: "description",
@@ -657,6 +659,7 @@ describe("JobsClient", () => {
                 },
                 schedule: { cron: "cron", timezone: "timezone", enabled: true },
                 verification: { enabled: true },
+                outputs: { key: { type: "string" } },
             },
         };
 
@@ -717,6 +720,7 @@ describe("JobsClient", () => {
                 status: "status",
                 region: "region",
                 run_params: { key: "value" },
+                result_payload: { key: "value" },
                 step_timeline: [{ name: "name", action: "action", status: "status", task_name: "task_name" }],
                 artifact_refs: [{ key: "value" }],
                 started_at: "2024-01-15T09:30:00Z",
@@ -770,12 +774,15 @@ describe("JobsClient", () => {
             status: "status",
             region: "region",
             run_params: { key: "value" },
+            result_payload: { key: "value" },
             step_timeline: [
                 {
                     name: "name",
                     action: "action",
                     status: "status",
                     task_name: "task_name",
+                    sandbox_name: "sandbox_name",
+                    agent_session_id: "agent_session_id",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     error_message: "error_message",
@@ -849,12 +856,15 @@ describe("JobsClient", () => {
             status: "status",
             region: "region",
             run_params: { key: "value" },
+            result_payload: { key: "value" },
             step_timeline: [
                 {
                     name: "name",
                     action: "action",
                     status: "status",
                     task_name: "task_name",
+                    sandbox_name: "sandbox_name",
+                    agent_session_id: "agent_session_id",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     error_message: "error_message",

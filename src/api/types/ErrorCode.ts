@@ -8,6 +8,7 @@ export const ErrorCode = {
     SandboxNotFound: "SANDBOX_NOT_FOUND",
     SandboxAlreadyExists: "SANDBOX_ALREADY_EXISTS",
     SandboxInvalidState: "SANDBOX_INVALID_STATE",
+    SandboxProvisioningFailed: "SANDBOX_PROVISIONING_FAILED",
     ResourceNotFound: "RESOURCE_NOT_FOUND",
     FileNotFound: "FILE_NOT_FOUND",
     CommandNotFound: "COMMAND_NOT_FOUND",

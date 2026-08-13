@@ -93,6 +93,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -144,6 +145,11 @@ export class GatewayProfilesClient {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
@@ -249,6 +255,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
@@ -302,6 +309,11 @@ export class GatewayProfilesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -333,6 +345,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
@@ -389,6 +402,11 @@ export class GatewayProfilesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 409:
@@ -420,6 +438,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -476,6 +495,11 @@ export class GatewayProfilesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -502,6 +526,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -555,6 +580,11 @@ export class GatewayProfilesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -581,6 +611,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -637,6 +668,11 @@ export class GatewayProfilesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -663,6 +699,7 @@ export class GatewayProfilesClient {
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -719,6 +756,11 @@ export class GatewayProfilesClient {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );

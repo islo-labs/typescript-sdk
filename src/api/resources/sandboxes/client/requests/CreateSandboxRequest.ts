@@ -10,6 +10,8 @@ export interface CreateSandboxRequest {
     cache_key?: string | null;
     disk_gb?: number;
     env?: Record<string, string | null> | null;
+    /** Environment for sandbox env and environment-owned gateway injection. */
+    environment?: string | null;
     gateway_profile?: string | null;
     image?: string;
     init?: IsloApi.SandboxInit | null;

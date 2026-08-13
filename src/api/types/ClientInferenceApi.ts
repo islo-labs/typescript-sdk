@@ -2,6 +2,7 @@
 
 export const ClientInferenceApi = {
     OpenaiChatCompletions: "openai_chat_completions",
+    OpenaiResponses: "openai_responses",
     AnthropicMessages: "anthropic_messages",
 } as const;
 export type ClientInferenceApi = (typeof ClientInferenceApi)[keyof typeof ClientInferenceApi];
