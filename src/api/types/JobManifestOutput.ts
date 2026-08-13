@@ -10,4 +10,5 @@ export interface JobManifestOutput {
     run: IsloApi.RunSectionOutput;
     schedule?: (IsloApi.ScheduleSection | null) | undefined;
     verification?: (IsloApi.VerificationSection | null) | undefined;
+    outputs?: (Record<string, IsloApi.JobOutputSpec | null> | null) | undefined;
 }

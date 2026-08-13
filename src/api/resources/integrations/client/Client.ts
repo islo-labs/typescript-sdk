@@ -73,6 +73,127 @@ export class IntegrationsClient {
     }
 
     /**
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.integrations.listIntegrationTriggers()
+     */
+    public listIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.TriggerCatalogListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listIntegrationTriggers(requestOptions));
+    }
+
+    private async __listIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogListResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "integrations/triggers",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.TriggerCatalogListResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.IsloApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/triggers");
+    }
+
+    /**
+     * @param {IsloApi.GetIntegrationTriggerRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.integrations.getIntegrationTrigger({
+     *         provider: "provider",
+     *         trigger_name: "trigger_name"
+     *     })
+     */
+    public getIntegrationTrigger(
+        request: IsloApi.GetIntegrationTriggerRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.TriggerCatalogItem> {
+        return core.HttpResponsePromise.fromPromise(this.__getIntegrationTrigger(request, requestOptions));
+    }
+
+    private async __getIntegrationTrigger(
+        request: IsloApi.GetIntegrationTriggerRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogItem>> {
+        const { provider, trigger_name: triggerName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `integrations/triggers/${core.url.encodePathParam(provider)}/${core.url.encodePathParam(triggerName)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.TriggerCatalogItem, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/integrations/triggers/{provider}/{trigger_name}",
+        );
+    }
+
+    /**
      * List the integrations the user/tenant has connected.
      *
      * Includes preset providers (from the PROVIDERS registry) and tenant-scoped
@@ -86,6 +207,7 @@ export class IntegrationsClient {
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -132,6 +254,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 422:
                     throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
@@ -158,6 +285,7 @@ export class IntegrationsClient {
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -204,6 +332,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 422:
                     throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
@@ -231,6 +364,7 @@ export class IntegrationsClient {
      *
      * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -292,6 +426,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 422:
                     throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
@@ -325,6 +464,7 @@ export class IntegrationsClient {
      *
      * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -390,6 +530,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -420,6 +565,7 @@ export class IntegrationsClient {
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -472,6 +618,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -501,6 +652,7 @@ export class IntegrationsClient {
      *
      * @throws {@link IsloApi.BadRequestError}
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -566,6 +718,11 @@ export class IntegrationsClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -580,5 +737,68 @@ export class IntegrationsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/integrations/{provider}");
+    }
+
+    /**
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.integrations.listConnectedIntegrationTriggers()
+     */
+    public listConnectedIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.TriggerCatalogListResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listConnectedIntegrationTriggers(requestOptions));
+    }
+
+    private async __listConnectedIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogListResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "integrations/triggers/connected",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.TriggerCatalogListResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/integrations/triggers/connected",
+        );
     }
 }

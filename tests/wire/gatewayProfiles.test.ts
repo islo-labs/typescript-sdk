@@ -147,6 +147,32 @@ describe("GatewayProfilesClient", () => {
             .post("/gateway/profiles")
             .jsonBody(rawRequestBody)
             .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.createGatewayProfile({
+                name: "x",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("create_gateway_profile (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { name: "x" };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles")
+            .jsonBody(rawRequestBody)
+            .respondWith()
             .statusCode(409)
             .jsonBody(rawResponseBody)
             .build();
@@ -158,7 +184,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.ConflictError);
     });
 
-    test("create_gateway_profile (4)", async () => {
+    test("create_gateway_profile (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -360,6 +386,31 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/gateway/profiles/profile_id")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.deleteGatewayProfile({
+                profile_id: "profile_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("delete_gateway_profile (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
         const rawResponseBody = { key: "value" };
 
         server
@@ -377,7 +428,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("delete_gateway_profile (4)", async () => {
+    test("delete_gateway_profile (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -402,7 +453,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.ConflictError);
     });
 
-    test("delete_gateway_profile (5)", async () => {
+    test("delete_gateway_profile (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -498,6 +549,32 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/gateway/profiles/profile_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.updateGatewayProfile({
+                profile_id: "profile_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("update_gateway_profile (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 
         server
@@ -516,7 +593,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("update_gateway_profile (4)", async () => {
+    test("update_gateway_profile (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -542,7 +619,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.ConflictError);
     });
 
-    test("update_gateway_profile (5)", async () => {
+    test("update_gateway_profile (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -642,6 +719,33 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.createGatewayRule({
+                profile_id: "profile_id",
+                host_pattern: "x",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("create_gateway_rule (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { host_pattern: "x" };
         const rawResponseBody = { key: "value" };
 
         server
@@ -661,7 +765,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("create_gateway_rule (4)", async () => {
+    test("create_gateway_rule (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -744,6 +848,32 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/gateway/profiles/profile_id/rules/rule_id")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.deleteGatewayRule({
+                profile_id: "profile_id",
+                rule_id: "rule_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("delete_gateway_rule (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
         const rawResponseBody = { key: "value" };
 
         server
@@ -762,7 +892,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("delete_gateway_rule (4)", async () => {
+    test("delete_gateway_rule (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -862,6 +992,33 @@ describe("GatewayProfilesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/gateway/profiles/profile_id/rules/rule_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.updateGatewayRule({
+                profile_id: "profile_id",
+                rule_id: "rule_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("update_gateway_rule (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 
         server
@@ -881,7 +1038,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("update_gateway_rule (4)", async () => {
+    test("update_gateway_rule (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -1008,6 +1165,47 @@ describe("GatewayProfilesClient", () => {
                 { rule_id: "rule_id", priority: 1 },
             ],
         };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.reorderGatewayRules({
+                profile_id: "profile_id",
+                rules: [
+                    {
+                        rule_id: "rule_id",
+                        priority: 1,
+                    },
+                    {
+                        rule_id: "rule_id",
+                        priority: 1,
+                    },
+                ],
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("reorder_gateway_rules (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {
+            rules: [
+                { rule_id: "rule_id", priority: 1 },
+                { rule_id: "rule_id", priority: 1 },
+            ],
+        };
         const rawResponseBody = { key: "value" };
 
         server
@@ -1036,7 +1234,7 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("reorder_gateway_rules (4)", async () => {
+    test("reorder_gateway_rules (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,

@@ -11,13 +11,13 @@ import type * as IsloApi from "../../../../index.js";
  */
 export interface GatewayRuleCreate {
     profile_id: string;
-    priority?: number;
     host_pattern: string;
     path_pattern?: string | null;
     methods?: string[] | null;
-    action?: IsloApi.GatewayAction;
     rate_limit_rpm?: number | null;
-    provider_key?: string | null;
     auth_strategy?: IsloApi.AuthStrategySchema | null;
     content_filter?: IsloApi.GatewayRuleCreateContentFilter | null;
+    priority?: number;
+    action?: IsloApi.GatewayAction;
+    provider_key?: string | null;
 }

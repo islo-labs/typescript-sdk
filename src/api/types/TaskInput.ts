@@ -5,5 +5,5 @@ import type * as IsloApi from "../index.js";
 export interface TaskInput {
     name: string;
     sandbox?: (IsloApi.SandboxConfig | null) | undefined;
-    steps: IsloApi.TaskStep[];
+    steps: IsloApi.TaskStepInput[];
 }

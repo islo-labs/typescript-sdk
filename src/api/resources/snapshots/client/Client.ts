@@ -100,7 +100,7 @@ export class SnapshotsClient {
     }
 
     /**
-     * Create a snapshot from a running sandbox.
+     * Create a snapshot from a running sandbox. By default, waits for capture and returns a ready snapshot. Send `Prefer: respond-async` to return immediately with a saving snapshot.
      *
      * @param {IsloApi.SnapshotCreate} request
      * @param {SnapshotsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -265,6 +265,7 @@ export class SnapshotsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
      *
      * @example
      *     await client.snapshots.deleteSnapshot({
@@ -317,6 +318,11 @@ export class SnapshotsClient {
                     );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.IsloApiError({
                         statusCode: _response.error.statusCode,

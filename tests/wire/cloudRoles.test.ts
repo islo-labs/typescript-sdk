@@ -58,6 +58,23 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(403).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.cloudRoles.listCloudRoles();
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("list_cloud_roles (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
         const rawResponseBody = { key: "value" };
 
         server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
@@ -131,6 +148,33 @@ describe("CloudRolesClient", () => {
     });
 
     test("create_cloud_role (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { provider: "aws", role_arn: "x" };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/cloud-roles")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.cloudRoles.createCloudRole({
+                provider: "aws",
+                role_arn: "x",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("create_cloud_role (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -224,6 +268,31 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/cloud-roles/role_id")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.cloudRoles.getCloudRole({
+                role_id: "role_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("get_cloud_role (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
         const rawResponseBody = { key: "value" };
 
         server
@@ -241,7 +310,7 @@ describe("CloudRolesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("get_cloud_role (4)", async () => {
+    test("get_cloud_role (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -315,6 +384,31 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/cloud-roles/role_id")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.cloudRoles.deleteCloudRole({
+                role_id: "role_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("delete_cloud_role (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
         const rawResponseBody = { key: "value" };
 
         server
@@ -332,7 +426,7 @@ describe("CloudRolesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("delete_cloud_role (4)", async () => {
+    test("delete_cloud_role (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
@@ -426,6 +520,32 @@ describe("CloudRolesClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/cloud-roles/role_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.cloudRoles.updateCloudRole({
+                role_id: "role_id",
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("update_cloud_role (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
 
         server
@@ -444,7 +564,7 @@ describe("CloudRolesClient", () => {
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
 
-    test("update_cloud_role (4)", async () => {
+    test("update_cloud_role (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,

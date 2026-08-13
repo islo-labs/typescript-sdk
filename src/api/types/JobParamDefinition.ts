@@ -2,12 +2,30 @@
 
 export interface JobParamDefinition {
     name: string;
-    /** string | integer | number | boolean */
-    type: string;
+    type: JobParamDefinition.Type;
+    items?: (JobParamDefinition.Items | null) | undefined;
     required?: boolean | undefined;
     default?: (unknown | null) | undefined;
     description?: (string | null) | undefined;
     pattern?: (string | null) | undefined;
     prefix?: (string | null) | undefined;
     enum?: (unknown[] | null) | undefined;
+}
+
+export namespace JobParamDefinition {
+    export const Type = {
+        String: "string",
+        Integer: "integer",
+        Number: "number",
+        Boolean: "boolean",
+        Array: "array",
+    } as const;
+    export type Type = (typeof Type)[keyof typeof Type];
+    export const Items = {
+        String: "string",
+        Integer: "integer",
+        Number: "number",
+        Boolean: "boolean",
+    } as const;
+    export type Items = (typeof Items)[keyof typeof Items];
 }

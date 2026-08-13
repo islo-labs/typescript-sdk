@@ -26,6 +26,7 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -82,6 +83,11 @@ export class CloudRolesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 422:
                     throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
@@ -101,6 +107,7 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
      * @example
@@ -155,6 +162,11 @@ export class CloudRolesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 422:
                     throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
                 default:
@@ -174,6 +186,7 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -226,6 +239,11 @@ export class CloudRolesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -247,6 +265,7 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -299,6 +318,11 @@ export class CloudRolesClient {
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
                 case 422:
@@ -320,6 +344,7 @@ export class CloudRolesClient {
      * @param {CloudRolesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
      *
@@ -372,6 +397,11 @@ export class CloudRolesClient {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
                         _response.error.body as IsloApi.ErrorResponse,
                         _response.rawResponse,
                     );

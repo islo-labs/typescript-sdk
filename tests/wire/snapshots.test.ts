@@ -19,6 +19,7 @@ describe("SnapshotsClient", () => {
                     checksum_sha256: "checksum_sha256",
                     created_at: "2024-01-15T09:30:00Z",
                     created_by: "created_by",
+                    created_by_entity: "created_by_entity",
                     id: "id",
                     name: "name",
                     sandbox_id: "sandbox_id",
@@ -66,6 +67,7 @@ describe("SnapshotsClient", () => {
             checksum_sha256: "checksum_sha256",
             created_at: "2024-01-15T09:30:00Z",
             created_by: "created_by",
+            created_by_entity: "created_by_entity",
             id: "id",
             name: "name",
             sandbox_id: "sandbox_id",
@@ -204,6 +206,7 @@ describe("SnapshotsClient", () => {
             checksum_sha256: "checksum_sha256",
             created_at: "2024-01-15T09:30:00Z",
             created_by: "created_by",
+            created_by_entity: "created_by_entity",
             id: "id",
             name: "name",
             sandbox_id: "sandbox_id",
@@ -309,5 +312,24 @@ describe("SnapshotsClient", () => {
                 name: "name",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("delete_snapshot (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server.mockEndpoint().delete("/snapshots/name").respondWith().statusCode(409).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.snapshots.deleteSnapshot({
+                name: "name",
+            });
+        }).rejects.toThrow(IsloApi.ConflictError);
     });
 });

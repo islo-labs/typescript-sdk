@@ -4,6 +4,7 @@ export interface SnapshotResponse {
     checksum_sha256?: (string | null) | undefined;
     created_at?: (string | null) | undefined;
     created_by?: (string | null) | undefined;
+    created_by_entity?: (string | null) | undefined;
     id: string;
     name: string;
     sandbox_id?: (string | null) | undefined;

@@ -5,12 +5,13 @@ import type * as IsloApi from "../index.js";
 /**
  * One compute action per step.
  */
-export interface TaskStep {
+export interface TaskStepInput {
     name?: (string | null) | undefined;
     workdir?: (string | null) | undefined;
     timeout?: (number | null) | undefined;
     user?: (string | null) | undefined;
-    exec?: (TaskStep.Exec | null) | undefined;
+    exec?: (TaskStepInput.Exec | null) | undefined;
+    run_agent?: (IsloApi.TaskStepInputRunAgent | null) | undefined;
     snapshot?: (IsloApi.SnapshotStepAction | null) | undefined;
     pause?: (boolean | null) | undefined;
     resume?: (boolean | null) | undefined;
@@ -19,6 +20,6 @@ export interface TaskStep {
     download?: (string | null) | undefined;
 }
 
-export namespace TaskStep {
+export namespace TaskStepInput {
     export type Exec = string[] | string;
 }
