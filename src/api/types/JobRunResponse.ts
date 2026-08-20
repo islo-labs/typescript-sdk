@@ -11,7 +11,7 @@ export interface JobRunResponse {
     run_params: Record<string, unknown>;
     result_payload: Record<string, unknown> | null;
     step_timeline: IsloApi.JobRunStepTimelineEntry[];
-    artifact_refs: Record<string, unknown>[];
+    artifact_refs: IsloApi.ArtifactRef[];
     started_at: string | null;
     completed_at: string | null;
     error_message: string | null;

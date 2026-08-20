@@ -3,12 +3,17 @@
 import type * as IsloApi from "../index.js";
 
 export type ComputeEventDetailResponseResult =
+    | IsloApi.ComputeEventDetailResponseResult.Agent
     | IsloApi.ComputeEventDetailResponseResult.Empty
     | IsloApi.ComputeEventDetailResponseResult.Exec
     | IsloApi.ComputeEventDetailResponseResult.Sandbox
     | IsloApi.ComputeEventDetailResponseResult.Snapshot;
 
 export namespace ComputeEventDetailResponseResult {
+    export interface Agent extends IsloApi.AgentResult {
+        type: "agent";
+    }
+
     export interface Empty extends IsloApi.EmptyResult {
         type: "empty";
     }

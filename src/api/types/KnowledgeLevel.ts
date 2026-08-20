@@ -4,5 +4,6 @@ export const KnowledgeLevel = {
     Episodic: "episodic",
     Procedural: "procedural",
     Declarative: "declarative",
+    Prompt: "prompt",
 } as const;
 export type KnowledgeLevel = (typeof KnowledgeLevel)[keyof typeof KnowledgeLevel];

@@ -18,8 +18,10 @@ export interface TaskStepOutput {
     delete?: (boolean | null) | undefined;
     upload?: (string | null) | undefined;
     download?: (string | null) | undefined;
+    outputs?: (TaskStepOutput.Outputs | null) | undefined;
 }
 
 export namespace TaskStepOutput {
     export type Exec = string[] | string;
+    export type Outputs = string[] | Record<string, IsloApi.StepOutputClaim>;
 }

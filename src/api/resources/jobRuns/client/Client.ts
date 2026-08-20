@@ -33,14 +33,14 @@ export class JobRunsClient {
     public listAllJobRuns(
         request: IsloApi.ListAllJobRunsRequest = {},
         requestOptions?: JobRunsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.JobRunResponse[]> {
+    ): core.HttpResponsePromise<IsloApi.JobRunListItem[]> {
         return core.HttpResponsePromise.fromPromise(this.__listAllJobRuns(request, requestOptions));
     }
 
     private async __listAllJobRuns(
         request: IsloApi.ListAllJobRunsRequest = {},
         requestOptions?: JobRunsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.JobRunResponse[]>> {
+    ): Promise<core.WithRawResponse<IsloApi.JobRunListItem[]>> {
         const { limit, offset, status } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -73,7 +73,7 @@ export class JobRunsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.JobRunResponse[], rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.JobRunListItem[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

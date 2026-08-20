@@ -6,6 +6,7 @@ export interface JobOutputSpec {
     required?: boolean | undefined;
     description?: (string | null) | undefined;
     enum?: (unknown[] | null) | undefined;
+    reduce?: JobOutputSpec.Reduce | undefined;
 }
 
 export namespace JobOutputSpec {
@@ -14,7 +15,6 @@ export namespace JobOutputSpec {
         Integer: "integer",
         Number: "number",
         Boolean: "boolean",
-        Object: "object",
         Array: "array",
     } as const;
     export type Type = (typeof Type)[keyof typeof Type];
@@ -25,4 +25,11 @@ export namespace JobOutputSpec {
         Boolean: "boolean",
     } as const;
     export type Items = (typeof Items)[keyof typeof Items];
+    export const Reduce = {
+        One: "one",
+        Last: "last",
+        Collect: "collect",
+        Gather: "gather",
+    } as const;
+    export type Reduce = (typeof Reduce)[keyof typeof Reduce];
 }

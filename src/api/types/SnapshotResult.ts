@@ -3,4 +3,5 @@
 export interface SnapshotResult {
     id?: (string | null) | undefined;
     name?: (string | null) | undefined;
+    status?: (string | null) | undefined;
 }

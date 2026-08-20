@@ -562,14 +562,14 @@ export class JobsClient {
     public listJobRuns(
         request: IsloApi.ListJobRunsRequest,
         requestOptions?: JobsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.JobRunResponse[]> {
+    ): core.HttpResponsePromise<IsloApi.JobRunListItem[]> {
         return core.HttpResponsePromise.fromPromise(this.__listJobRuns(request, requestOptions));
     }
 
     private async __listJobRuns(
         request: IsloApi.ListJobRunsRequest,
         requestOptions?: JobsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.JobRunResponse[]>> {
+    ): Promise<core.WithRawResponse<IsloApi.JobRunListItem[]>> {
         const { name, limit, offset } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -601,7 +601,7 @@ export class JobsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.JobRunResponse[], rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.JobRunListItem[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -750,6 +750,79 @@ export class JobsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/jobs/{name}/runs/{run_id}");
+    }
+
+    /**
+     * @param {IsloApi.JobRunStopRequest} request
+     * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.jobs.stopJobRun({
+     *         name: "name",
+     *         run_id: "run_id"
+     *     })
+     */
+    public stopJobRun(
+        request: IsloApi.JobRunStopRequest,
+        requestOptions?: JobsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.JobRunResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__stopJobRun(request, requestOptions));
+    }
+
+    private async __stopJobRun(
+        request: IsloApi.JobRunStopRequest,
+        requestOptions?: JobsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.JobRunResponse>> {
+        const { name, run_id: runId, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `jobs/${core.url.encodePathParam(name)}/runs/${core.url.encodePathParam(runId)}/stop`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.JobRunResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/jobs/{name}/runs/{run_id}/stop",
+        );
     }
 
     /**

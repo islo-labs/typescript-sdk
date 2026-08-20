@@ -14,6 +14,7 @@ export interface SandboxConfig {
     disk_gb?: number | undefined;
     snapshot_name?: (string | null) | undefined;
     gateway_profile?: (string | null) | undefined;
+    environment?: (string | null) | undefined;
     init?: (IsloApi.SandboxConfigInit | null) | undefined;
     internet_enabled?: boolean | undefined;
     workdir?: (string | null) | undefined;

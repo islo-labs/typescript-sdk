@@ -6,6 +6,7 @@ export type { GetJobRunRequest } from "./GetJobRunRequest.js";
 export type { GetJobScheduleRequest } from "./GetJobScheduleRequest.js";
 export type { GetJobVersionRequest } from "./GetJobVersionRequest.js";
 export type { JobRunCreate } from "./JobRunCreate.js";
+export type { JobRunStopRequest } from "./JobRunStopRequest.js";
 export type { ListJobRunsRequest } from "./ListJobRunsRequest.js";
 export type { ListJobsRequest } from "./ListJobsRequest.js";
 export type { ListJobVersionsRequest } from "./ListJobVersionsRequest.js";

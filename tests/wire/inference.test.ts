@@ -27,6 +27,13 @@ describe("InferenceClient", () => {
                     cached_input_cents_per_1m_tokens: "cached_input_cents_per_1m_tokens",
                     cache_write_input_cents_per_1m_tokens: "cache_write_input_cents_per_1m_tokens",
                     output_cents_per_1m_tokens: "output_cents_per_1m_tokens",
+                    pricing_tiers: [
+                        {
+                            input_cents_per_1m_tokens: "input_cents_per_1m_tokens",
+                            cached_input_cents_per_1m_tokens: "cached_input_cents_per_1m_tokens",
+                            output_cents_per_1m_tokens: "output_cents_per_1m_tokens",
+                        },
+                    ],
                 },
             ],
         };
