@@ -22,7 +22,16 @@ describe("ComputeEventsClient", () => {
             error_details: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
-            result: { type: "empty" },
+            result: {
+                type: "agent",
+                mode: "mode",
+                harness: "harness",
+                status: "status",
+                outcome: "outcome",
+                agent_session_id: "agent_session_id",
+                output_text: "output_text",
+                outputs: { key: { key: "value" } },
+            },
         };
 
         server

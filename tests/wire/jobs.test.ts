@@ -719,16 +719,11 @@ describe("JobsClient", () => {
                 job_version_id: "job_version_id",
                 status: "status",
                 region: "region",
-                run_params: { key: "value" },
-                result_payload: { key: "value" },
-                step_timeline: [{ name: "name", action: "action", status: "status", task_name: "task_name" }],
-                artifact_refs: [{ key: "value" }],
+                step_count: 1,
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
-                error_message: "error_message",
-                error_code: "error_code",
-                error_details: { key: "value" },
                 created_at: "2024-01-15T09:30:00Z",
+                error_message: "error_message",
             },
         ];
 
@@ -791,7 +786,18 @@ describe("JobsClient", () => {
                     compute_command_id: "compute_command_id",
                 },
             ],
-            artifact_refs: [{ key: "value" }],
+            artifact_refs: [
+                {
+                    type: "type",
+                    provider: "provider",
+                    operation: "operation",
+                    external_ref: { provider: "github", kind: "kind" },
+                    url: "url",
+                    title: "title",
+                    status: "status",
+                    metadata: { key: "value" },
+                },
+            ],
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
@@ -873,7 +879,18 @@ describe("JobsClient", () => {
                     compute_command_id: "compute_command_id",
                 },
             ],
-            artifact_refs: [{ key: "value" }],
+            artifact_refs: [
+                {
+                    type: "type",
+                    provider: "provider",
+                    operation: "operation",
+                    external_ref: { provider: "github", kind: "kind" },
+                    url: "url",
+                    title: "title",
+                    status: "status",
+                    metadata: { key: "value" },
+                },
+            ],
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
@@ -917,6 +934,101 @@ describe("JobsClient", () => {
 
         await expect(async () => {
             return await client.jobs.getJobRun({
+                name: "name",
+                run_id: "run_id",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("stop_job_run (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            id: "id",
+            job_name: "job_name",
+            job_version_id: "job_version_id",
+            status: "status",
+            region: "region",
+            run_params: { key: "value" },
+            result_payload: { key: "value" },
+            step_timeline: [
+                {
+                    name: "name",
+                    action: "action",
+                    status: "status",
+                    task_name: "task_name",
+                    sandbox_name: "sandbox_name",
+                    agent_session_id: "agent_session_id",
+                    started_at: "2024-01-15T09:30:00Z",
+                    completed_at: "2024-01-15T09:30:00Z",
+                    error_message: "error_message",
+                    error_code: "error_code",
+                    error_details: { key: "value" },
+                    compute_command_id: "compute_command_id",
+                },
+            ],
+            artifact_refs: [
+                {
+                    type: "type",
+                    provider: "provider",
+                    operation: "operation",
+                    external_ref: { provider: "github", kind: "kind" },
+                    url: "url",
+                    title: "title",
+                    status: "status",
+                    metadata: { key: "value" },
+                },
+            ],
+            started_at: "2024-01-15T09:30:00Z",
+            completed_at: "2024-01-15T09:30:00Z",
+            error_message: "error_message",
+            error_code: "error_code",
+            error_details: { key: "value" },
+            created_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/jobs/name/runs/run_id/stop")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.jobs.stopJobRun({
+            name: "name",
+            run_id: "run_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("stop_job_run (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/jobs/name/runs/run_id/stop")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.jobs.stopJobRun({
                 name: "name",
                 run_id: "run_id",
             });

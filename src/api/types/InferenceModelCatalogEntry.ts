@@ -14,4 +14,5 @@ export interface InferenceModelCatalogEntry {
     cached_input_cents_per_1m_tokens?: (string | null) | undefined;
     cache_write_input_cents_per_1m_tokens?: (string | null) | undefined;
     output_cents_per_1m_tokens?: (string | null) | undefined;
+    pricing_tiers?: (IsloApi.PricingTier[] | null) | undefined;
 }

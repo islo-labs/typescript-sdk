@@ -2653,7 +2653,7 @@ await client.jobs.getJobVersion({
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobRuns</a>({ ...params }) -> IsloApi.JobRunResponse[]</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobRuns</a>({ ...params }) -> IsloApi.JobRunListItem[]</code></summary>
 <dl>
 <dd>
 
@@ -2807,6 +2807,58 @@ await client.jobs.getJobRun({
 </dl>
 </details>
 
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">stopJobRun</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobs.stopJobRun({
+    name: "name",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.JobRunStopRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">getJobSchedule</a>({ ...params }) -> IsloApi.JobScheduleResponse</code></summary>
 <dl>
 <dd>
@@ -2910,7 +2962,7 @@ await client.jobs.deleteJobSchedule({
 </details>
 
 ## JobRuns
-<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> IsloApi.JobRunResponse[]</code></summary>
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> IsloApi.JobRunListItem[]</code></summary>
 <dl>
 <dd>
 

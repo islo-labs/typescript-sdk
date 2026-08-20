@@ -15,7 +15,7 @@ export declare namespace KnowledgeClient {
 }
 
 /**
- * Durable knowledge items (memories, skills, rules)
+ * Durable knowledge items (memories, skills, rules, prompts)
  */
 export class KnowledgeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<KnowledgeClient.Options>;
