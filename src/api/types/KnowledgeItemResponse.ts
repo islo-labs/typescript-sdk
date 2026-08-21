@@ -14,4 +14,6 @@ export interface KnowledgeItemResponse {
     links: IsloApi.KnowledgeLinkResponse[];
     created_at: string;
     updated_at: string;
+    version_id?: (string | null) | undefined;
+    version_number?: (number | null) | undefined;
 }
