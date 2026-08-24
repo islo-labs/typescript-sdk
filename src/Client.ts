@@ -5,6 +5,7 @@ import { ComputeEventsClient } from "./api/resources/computeEvents/client/Client
 import { ContainerRegistriesClient } from "./api/resources/containerRegistries/client/Client.js";
 import { CreditsClient } from "./api/resources/credits/client/Client.js";
 import { EnvironmentsClient } from "./api/resources/environments/client/Client.js";
+import { FactoryClient } from "./api/resources/factory/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { InferenceClient } from "./api/resources/inference/client/Client.js";
 import { IntegrationsClient } from "./api/resources/integrations/client/Client.js";
@@ -39,6 +40,7 @@ export class Islo {
     protected _containerRegistries: ContainerRegistriesClient | undefined;
     protected _jobs: JobsClient | undefined;
     protected _jobRuns: JobRunsClient | undefined;
+    protected _factory: FactoryClient | undefined;
     protected _computeEvents: ComputeEventsClient | undefined;
     protected _sandboxes: SandboxesClient | undefined;
     protected _shares: SharesClient | undefined;
@@ -91,6 +93,10 @@ export class Islo {
 
     public get jobRuns(): JobRunsClient {
         return (this._jobRuns ??= new JobRunsClient(this._options));
+    }
+
+    public get factory(): FactoryClient {
+        return (this._factory ??= new FactoryClient(this._options));
     }
 
     public get computeEvents(): ComputeEventsClient {
