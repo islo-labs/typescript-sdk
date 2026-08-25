@@ -80,6 +80,8 @@ describe("JobRunsClient", () => {
                     error_message: "error_message",
                     error_code: "error_code",
                     error_details: { key: "value" },
+                    failure_class: "failure_class",
+                    exit_code: 1,
                     compute_command_id: "compute_command_id",
                 },
             ],
@@ -100,6 +102,7 @@ describe("JobRunsClient", () => {
             error_message: "error_message",
             error_code: "error_code",
             error_details: { key: "value" },
+            failure_class: "failure_class",
             created_at: "2024-01-15T09:30:00Z",
         };
 

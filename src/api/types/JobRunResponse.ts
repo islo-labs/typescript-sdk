@@ -17,5 +17,6 @@ export interface JobRunResponse {
     error_message: string | null;
     error_code?: (string | null) | undefined;
     error_details?: (Record<string, unknown> | null) | undefined;
+    failure_class?: (string | null) | undefined;
     created_at: string;
 }

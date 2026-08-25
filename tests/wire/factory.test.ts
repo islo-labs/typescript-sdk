@@ -665,37 +665,35 @@ describe("FactoryClient", () => {
             {
                 id: "id",
                 line_name: "line_name",
+                line_version_id: "line_version_id",
                 status: "status",
-                triggered_by: "triggered_by",
-                trigger_payload: { key: "value" },
+                trigger: {
+                    source: "source",
+                    provider: "provider",
+                    event_name: "event_name",
+                    delivery_id: "delivery_id",
+                    payload: { key: "value" },
+                },
+                region: "region",
+                run_params: { key: "value" },
+                stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
+                artifact_count: 1,
+                artifacts: [{}],
+                error_message: "error_message",
+                failure: {
+                    code: "manifest_no_stages",
+                    domain: "platform",
+                    error_code: "error_code",
+                    failure_class: "failure_class",
+                    error_message: "error_message",
+                    error_details: { key: "value" },
+                    stage_name: "stage_name",
+                    stage_step: "stage_step",
+                    task_name: "task_name",
+                },
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
-                error_message: "error_message",
-                stage_history: [{ key: "value" }],
-                events: [
-                    {
-                        id: "id",
-                        event_type: "event_type",
-                        sequence: 1,
-                        stage_name: null,
-                        stage_order: null,
-                        iteration: null,
-                        status: null,
-                        triggered_by: null,
-                        manager_name: null,
-                        manager_session_id: null,
-                        input_payload: { key: "value" },
-                        result_payload: null,
-                        outcome: null,
-                        selected_transition_id: null,
-                        decision_metadata: { key: "value" },
-                        reason: null,
-                        started_at: null,
-                        completed_at: null,
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                ],
             },
         ];
 
@@ -752,8 +750,13 @@ describe("FactoryClient", () => {
             line_version_id: "line_version_id",
             workflow_run_id: "workflow_run_id",
             status: "status",
-            triggered_by: "triggered_by",
-            trigger_payload: { key: "value" },
+            trigger: {
+                source: "source",
+                provider: "provider",
+                event_name: "event_name",
+                delivery_id: "delivery_id",
+                payload: { key: "value" },
+            },
             region: "region",
             run_params: { key: "value" },
             result_payload: { key: "value" },
@@ -761,31 +764,33 @@ describe("FactoryClient", () => {
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
             retry: { stage_name: "stage_name" },
-            events: [
+            stages: [
                 {
-                    id: "id",
-                    event_type: "event_type",
-                    sequence: 1,
                     stage_name: "stage_name",
                     stage_order: 1,
                     iteration: 1,
                     status: "status",
-                    triggered_by: "triggered_by",
-                    job_version_id: "job_version_id",
-                    job_run_id: "job_run_id",
-                    manager_name: "manager_name",
-                    manager_session_id: "manager_session_id",
-                    input_payload: { key: "value" },
-                    result_payload: { key: "value" },
                     outcome: "outcome",
-                    selected_transition_id: "selected_transition_id",
-                    decision_metadata: { key: "value" },
-                    reason: "reason",
+                    job_run_id: "job_run_id",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
+                    artifact_count: 1,
+                    input_payload: { key: "value" },
+                    result_payload: { key: "value" },
+                    artifacts: [{ key: "value" }],
                 },
             ],
+            failure: {
+                code: "manifest_no_stages",
+                domain: "platform",
+                error_code: "error_code",
+                failure_class: "failure_class",
+                error_message: "error_message",
+                error_details: { key: "value" },
+                stage_name: "stage_name",
+                stage_step: "stage_step",
+                task_name: "task_name",
+            },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -844,37 +849,35 @@ describe("FactoryClient", () => {
             {
                 id: "id",
                 line_name: "line_name",
+                line_version_id: "line_version_id",
                 status: "status",
-                triggered_by: "triggered_by",
-                trigger_payload: { key: "value" },
+                trigger: {
+                    source: "source",
+                    provider: "provider",
+                    event_name: "event_name",
+                    delivery_id: "delivery_id",
+                    payload: { key: "value" },
+                },
+                region: "region",
+                run_params: { key: "value" },
+                stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
+                artifact_count: 1,
+                artifacts: [{}],
+                error_message: "error_message",
+                failure: {
+                    code: "manifest_no_stages",
+                    domain: "platform",
+                    error_code: "error_code",
+                    failure_class: "failure_class",
+                    error_message: "error_message",
+                    error_details: { key: "value" },
+                    stage_name: "stage_name",
+                    stage_step: "stage_step",
+                    task_name: "task_name",
+                },
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
-                error_message: "error_message",
-                stage_history: [{ key: "value" }],
-                events: [
-                    {
-                        id: "id",
-                        event_type: "event_type",
-                        sequence: 1,
-                        stage_name: null,
-                        stage_order: null,
-                        iteration: null,
-                        status: null,
-                        triggered_by: null,
-                        manager_name: null,
-                        manager_session_id: null,
-                        input_payload: { key: "value" },
-                        result_payload: null,
-                        outcome: null,
-                        selected_transition_id: null,
-                        decision_metadata: { key: "value" },
-                        reason: null,
-                        started_at: null,
-                        completed_at: null,
-                        created_at: "2024-01-15T09:30:00Z",
-                    },
-                ],
             },
         ];
 
@@ -915,8 +918,13 @@ describe("FactoryClient", () => {
             line_version_id: "line_version_id",
             workflow_run_id: "workflow_run_id",
             status: "status",
-            triggered_by: "triggered_by",
-            trigger_payload: { key: "value" },
+            trigger: {
+                source: "source",
+                provider: "provider",
+                event_name: "event_name",
+                delivery_id: "delivery_id",
+                payload: { key: "value" },
+            },
             region: "region",
             run_params: { key: "value" },
             result_payload: { key: "value" },
@@ -924,31 +932,33 @@ describe("FactoryClient", () => {
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
             retry: { stage_name: "stage_name" },
-            events: [
+            stages: [
                 {
-                    id: "id",
-                    event_type: "event_type",
-                    sequence: 1,
                     stage_name: "stage_name",
                     stage_order: 1,
                     iteration: 1,
                     status: "status",
-                    triggered_by: "triggered_by",
-                    job_version_id: "job_version_id",
-                    job_run_id: "job_run_id",
-                    manager_name: "manager_name",
-                    manager_session_id: "manager_session_id",
-                    input_payload: { key: "value" },
-                    result_payload: { key: "value" },
                     outcome: "outcome",
-                    selected_transition_id: "selected_transition_id",
-                    decision_metadata: { key: "value" },
-                    reason: "reason",
+                    job_run_id: "job_run_id",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
+                    artifact_count: 1,
+                    input_payload: { key: "value" },
+                    result_payload: { key: "value" },
+                    artifacts: [{ key: "value" }],
                 },
             ],
+            failure: {
+                code: "manifest_no_stages",
+                domain: "platform",
+                error_code: "error_code",
+                failure_class: "failure_class",
+                error_message: "error_message",
+                error_details: { key: "value" },
+                stage_name: "stage_name",
+                stage_step: "stage_step",
+                task_name: "task_name",
+            },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -988,6 +998,112 @@ describe("FactoryClient", () => {
 
         await expect(async () => {
             return await client.factory.getFactoryLineRun({
+                run_id: "run_id",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("get_factory_line_run_debug (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            id: "id",
+            line_name: "line_name",
+            line_version_id: "line_version_id",
+            status: "status",
+            triggered_by: "triggered_by",
+            region: "region",
+            started_at: "2024-01-15T09:30:00Z",
+            completed_at: "2024-01-15T09:30:00Z",
+            error_message: "error_message",
+            failure_summary: {
+                stage_name: "stage_name",
+                step_name: "step_name",
+                failure_class: "failure_class",
+                error_code: "error_code",
+                error_message: "error_message",
+                error_details: { key: "value" },
+                compute_command_id: "compute_command_id",
+            },
+            stages: [
+                {
+                    stage_name: "stage_name",
+                    stage_order: 1,
+                    iteration: 1,
+                    status: "status",
+                    outcome: "outcome",
+                    reason: "reason",
+                    job_run_id: "job_run_id",
+                    job_version_id: "job_version_id",
+                    steps: [{}],
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/factory/line-runs/run_id/debug")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.factory.getFactoryLineRunDebug({
+            run_id: "run_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("get_factory_line_run_debug (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/factory/line-runs/run_id/debug")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.getFactoryLineRunDebug({
+                run_id: "run_id",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("get_factory_line_run_debug (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/factory/line-runs/run_id/debug")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.getFactoryLineRunDebug({
                 run_id: "run_id",
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
