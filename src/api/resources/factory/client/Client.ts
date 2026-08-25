@@ -438,14 +438,14 @@ export class FactoryClient {
     public listFactoryLineRunsForLine(
         request: IsloApi.ListFactoryLineRunsForLineRequest,
         requestOptions?: FactoryClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.LineRunListItem[]> {
+    ): core.HttpResponsePromise<IsloApi.LineRunSummary[]> {
         return core.HttpResponsePromise.fromPromise(this.__listFactoryLineRunsForLine(request, requestOptions));
     }
 
     private async __listFactoryLineRunsForLine(
         request: IsloApi.ListFactoryLineRunsForLineRequest,
         requestOptions?: FactoryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.LineRunListItem[]>> {
+    ): Promise<core.WithRawResponse<IsloApi.LineRunSummary[]>> {
         const { name, limit, offset } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -477,7 +477,7 @@ export class FactoryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.LineRunListItem[], rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.LineRunSummary[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -510,14 +510,14 @@ export class FactoryClient {
     public triggerFactoryLineRun(
         request: IsloApi.LineRunCreate,
         requestOptions?: FactoryClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.LineRunResponse> {
+    ): core.HttpResponsePromise<IsloApi.LineRunDetail> {
         return core.HttpResponsePromise.fromPromise(this.__triggerFactoryLineRun(request, requestOptions));
     }
 
     private async __triggerFactoryLineRun(
         request: IsloApi.LineRunCreate,
         requestOptions?: FactoryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.LineRunResponse>> {
+    ): Promise<core.WithRawResponse<IsloApi.LineRunDetail>> {
         const { name, ..._body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -544,7 +544,7 @@ export class FactoryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.LineRunResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.LineRunDetail, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -575,14 +575,14 @@ export class FactoryClient {
     public listFactoryLineRuns(
         request: IsloApi.ListFactoryLineRunsRequest = {},
         requestOptions?: FactoryClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.LineRunListItem[]> {
+    ): core.HttpResponsePromise<IsloApi.LineRunSummary[]> {
         return core.HttpResponsePromise.fromPromise(this.__listFactoryLineRuns(request, requestOptions));
     }
 
     private async __listFactoryLineRuns(
         request: IsloApi.ListFactoryLineRunsRequest = {},
         requestOptions?: FactoryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.LineRunListItem[]>> {
+    ): Promise<core.WithRawResponse<IsloApi.LineRunSummary[]>> {
         const { limit, offset, status, line_name: lineName } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -616,7 +616,7 @@ export class FactoryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.LineRunListItem[], rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.LineRunSummary[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -649,14 +649,14 @@ export class FactoryClient {
     public getFactoryLineRun(
         request: IsloApi.GetFactoryLineRunRequest,
         requestOptions?: FactoryClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.LineRunResponse> {
+    ): core.HttpResponsePromise<IsloApi.LineRunDetail> {
         return core.HttpResponsePromise.fromPromise(this.__getFactoryLineRun(request, requestOptions));
     }
 
     private async __getFactoryLineRun(
         request: IsloApi.GetFactoryLineRunRequest,
         requestOptions?: FactoryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.LineRunResponse>> {
+    ): Promise<core.WithRawResponse<IsloApi.LineRunDetail>> {
         const { run_id: runId } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -680,7 +680,7 @@ export class FactoryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.LineRunResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.LineRunDetail, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -697,6 +697,80 @@ export class FactoryClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/factory/line-runs/{run_id}");
+    }
+
+    /**
+     * Per-stage and per-step diagnostics for one line run, including the last failed stage attempt's first failing step, each step's exit code and output tails, and the sandbox environment each stage ran in.
+     *
+     * @param {IsloApi.GetFactoryLineRunDebugRequest} request
+     * @param {FactoryClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.factory.getFactoryLineRunDebug({
+     *         run_id: "run_id"
+     *     })
+     */
+    public getFactoryLineRunDebug(
+        request: IsloApi.GetFactoryLineRunDebugRequest,
+        requestOptions?: FactoryClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.LineRunDebugResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getFactoryLineRunDebug(request, requestOptions));
+    }
+
+    private async __getFactoryLineRunDebug(
+        request: IsloApi.GetFactoryLineRunDebugRequest,
+        requestOptions?: FactoryClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.LineRunDebugResponse>> {
+        const { run_id: runId } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `factory/line-runs/${core.url.encodePathParam(runId)}/debug`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.LineRunDebugResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/factory/line-runs/{run_id}/debug",
+        );
     }
 
     /**

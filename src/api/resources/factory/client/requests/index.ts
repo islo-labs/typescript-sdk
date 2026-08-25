@@ -1,6 +1,7 @@
 export type { DeleteFactoryLineScheduleRequest } from "./DeleteFactoryLineScheduleRequest.js";
 export type { DeployFactoryLineRequest } from "./DeployFactoryLineRequest.js";
 export type { GetFactoryLineRequest } from "./GetFactoryLineRequest.js";
+export type { GetFactoryLineRunDebugRequest } from "./GetFactoryLineRunDebugRequest.js";
 export type { GetFactoryLineRunRequest } from "./GetFactoryLineRunRequest.js";
 export type { GetFactoryLineScheduleRequest } from "./GetFactoryLineScheduleRequest.js";
 export type { LineRunCreate } from "./LineRunCreate.js";

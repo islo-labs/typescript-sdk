@@ -3509,7 +3509,7 @@ await client.factory.listFactoryLineVersions({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunsForLine</a>({ ...params }) -> IsloApi.LineRunListItem[]</code></summary>
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunsForLine</a>({ ...params }) -> IsloApi.LineRunSummary[]</code></summary>
 <dl>
 <dd>
 
@@ -3560,7 +3560,7 @@ await client.factory.listFactoryLineRunsForLine({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">triggerFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunResponse</code></summary>
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">triggerFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
 <dl>
 <dd>
 
@@ -3611,7 +3611,7 @@ await client.factory.triggerFactoryLineRun({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> IsloApi.LineRunListItem[]</code></summary>
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> IsloApi.LineRunSummary[]</code></summary>
 <dl>
 <dd>
 
@@ -3660,7 +3660,7 @@ await client.factory.listFactoryLineRuns();
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunResponse</code></summary>
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
 <dl>
 <dd>
 
@@ -3692,6 +3692,71 @@ await client.factory.getFactoryLineRun({
 <dd>
 
 **request:** `IsloApi.GetFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRunDebug</a>({ ...params }) -> IsloApi.LineRunDebugResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Per-stage and per-step diagnostics for one line run, including the last failed stage attempt's first failing step, each step's exit code and output tails, and the sandbox environment each stage ran in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.getFactoryLineRunDebug({
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryLineRunDebugRequest` 
     
 </dd>
 </dl>

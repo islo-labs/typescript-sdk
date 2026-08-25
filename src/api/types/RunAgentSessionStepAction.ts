@@ -5,6 +5,7 @@ import type * as IsloApi from "../index.js";
 export interface RunAgentSessionStepAction {
     harness: RunAgentSessionStepAction.Harness;
     model?: (string | null) | undefined;
+    model_provider?: (RunAgentSessionStepAction.ModelProvider | null) | undefined;
     prompt?: (IsloApi.RunAgentSessionStepActionPrompt | null) | undefined;
     resume_prompt?: (IsloApi.RunAgentSessionStepActionResumePrompt | null) | undefined;
     knowledge?: (IsloApi.KnowledgeBinding[] | null) | undefined;
@@ -19,5 +20,10 @@ export namespace RunAgentSessionStepAction {
         Claude: "claude",
     } as const;
     export type Harness = (typeof Harness)[keyof typeof Harness];
+    export const ModelProvider = {
+        Islo: "islo",
+        IsloInference: "islo_inference",
+    } as const;
+    export type ModelProvider = (typeof ModelProvider)[keyof typeof ModelProvider];
     export type Command = string[] | string;
 }

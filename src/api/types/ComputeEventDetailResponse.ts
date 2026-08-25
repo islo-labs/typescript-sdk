@@ -11,5 +11,7 @@ export interface ComputeEventDetailResponse {
     error_details?: (Record<string, unknown> | null) | undefined;
     started_at: string | null;
     completed_at: string | null;
+    session_name?: (string | null) | undefined;
+    sandbox_name?: (string | null) | undefined;
     result: IsloApi.ComputeEventDetailResponseResult;
 }

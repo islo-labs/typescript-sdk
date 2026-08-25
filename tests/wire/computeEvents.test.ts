@@ -22,6 +22,8 @@ describe("ComputeEventsClient", () => {
             error_details: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
+            session_name: "session_name",
+            sandbox_name: "sandbox_name",
             result: {
                 type: "agent",
                 mode: "mode",
