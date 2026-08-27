@@ -348,6 +348,82 @@ export class FactoryClient {
     }
 
     /**
+     * @param {IsloApi.LineUpdate} request
+     * @param {FactoryClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.factory.updateFactoryLine({
+     *         name: "name"
+     *     })
+     */
+    public updateFactoryLine(
+        request: IsloApi.LineUpdate,
+        requestOptions?: FactoryClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.LineResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__updateFactoryLine(request, requestOptions));
+    }
+
+    private async __updateFactoryLine(
+        request: IsloApi.LineUpdate,
+        requestOptions?: FactoryClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.LineResponse>> {
+        const { name, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `factory/lines/${core.url.encodePathParam(name)}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: _body,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.LineResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/factory/lines/{name}");
+    }
+
+    /**
      * @param {IsloApi.ListFactoryLineVersionsRequest} request
      * @param {FactoryClient.RequestOptions} requestOptions - Request-specific configuration.
      *

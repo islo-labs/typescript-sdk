@@ -3458,6 +3458,57 @@ await client.factory.getFactoryLine({
 </dl>
 </details>
 
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">updateFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.updateFactoryLine({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.LineUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineVersions</a>({ ...params }) -> IsloApi.LineVersionResponse[]</code></summary>
 <dl>
 <dd>

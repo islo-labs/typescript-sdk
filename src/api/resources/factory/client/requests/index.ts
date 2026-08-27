@@ -6,6 +6,7 @@ export type { GetFactoryLineRunRequest } from "./GetFactoryLineRunRequest.js";
 export type { GetFactoryLineScheduleRequest } from "./GetFactoryLineScheduleRequest.js";
 export type { LineRunCreate } from "./LineRunCreate.js";
 export type { LineScheduleUpdate } from "./LineScheduleUpdate.js";
+export { LineUpdate } from "./LineUpdate.js";
 export type { ListFactoryLineRunsForLineRequest } from "./ListFactoryLineRunsForLineRequest.js";
 export type { ListFactoryLineRunsRequest } from "./ListFactoryLineRunsRequest.js";
 export type { ListFactoryLinesRequest } from "./ListFactoryLinesRequest.js";

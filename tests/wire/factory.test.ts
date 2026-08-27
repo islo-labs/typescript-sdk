@@ -226,13 +226,7 @@ describe("FactoryClient", () => {
                 },
                 stages: [{ id: "id", job: "job" }],
                 transitions: [
-                    {
-                        type: "agentic",
-                        id: "id",
-                        from: "from",
-                        instructions: { type: "knowledge", slug: "slug" },
-                        options: [{ name: "name", to: "to" }],
-                    },
+                    { type: "agentic", id: "id", from: "from", instructions: { type: "knowledge", slug: "slug" } },
                 ],
                 agent: { instructions: { type: "knowledge", slug: "slug" } },
                 limits: { max_iterations: 1, budget_usd: "budget_usd", timeout: "timeout" },
@@ -525,13 +519,7 @@ describe("FactoryClient", () => {
                     },
                     stages: [{ id: "id", job: "job" }],
                     transitions: [
-                        {
-                            type: "agentic",
-                            id: "id",
-                            from: "from",
-                            instructions: { type: "knowledge", slug: "slug" },
-                            options: [{ name: "name", to: "to" }],
-                        },
+                        { type: "agentic", id: "id", from: "from", instructions: { type: "knowledge", slug: "slug" } },
                     ],
                 },
                 input_params: [{ name: "name", type: "string" }],
@@ -577,6 +565,151 @@ describe("FactoryClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("update_factory_line (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            id: "id",
+            name: "name",
+            description: "description",
+            status: "status",
+            category: "category",
+            stage_count: 1,
+            trigger_type: "trigger_type",
+            latest_version_number: 1,
+            resolved_stages: [
+                {
+                    id: "id",
+                    job: "job",
+                    description: "description",
+                    kind: "agent",
+                    harness: "codex",
+                    agent_model: "agent_model",
+                    agent_role: "agent_role",
+                    runtime: "runtime",
+                },
+            ],
+            created_at: "2024-01-15T09:30:00Z",
+            latest_version: {
+                id: "id",
+                version_number: 1,
+                content_hash: "content_hash",
+                deployed_at: "2024-01-15T09:30:00Z",
+                manifest: {
+                    line: { name: "name" },
+                    trigger: {
+                        type: "integration_trigger",
+                        provider: "provider",
+                        name: "name",
+                        selector: { provider: "github" },
+                    },
+                    stages: [{ id: "id", job: "job" }],
+                    transitions: [
+                        { type: "agentic", id: "id", from: "from", instructions: { type: "knowledge", slug: "slug" } },
+                    ],
+                },
+                input_params: [{ name: "name", type: "string" }],
+            },
+        };
+
+        server
+            .mockEndpoint()
+            .patch("/factory/lines/name")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.factory.updateFactoryLine({
+            name: "name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("update_factory_line (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/factory/lines/name")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.updateFactoryLine({
+                name: "name",
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("update_factory_line (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/factory/lines/name")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.updateFactoryLine({
+                name: "name",
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("update_factory_line (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .patch("/factory/lines/name")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.updateFactoryLine({
+                name: "name",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("list_factory_line_versions (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
@@ -601,13 +734,7 @@ describe("FactoryClient", () => {
                     },
                     stages: [{ id: "id", job: "job" }],
                     transitions: [
-                        {
-                            type: "agentic",
-                            id: "id",
-                            from: "from",
-                            instructions: { type: "knowledge", slug: "slug" },
-                            options: [{ name: "name", to: "to" }],
-                        },
+                        { type: "agentic", id: "id", from: "from", instructions: { type: "knowledge", slug: "slug" } },
                     ],
                 },
                 input_params: [{ name: "name", type: "string" }],

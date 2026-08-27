@@ -6,6 +6,6 @@ export interface AgenticTransitionOutput {
     id: string;
     from: string;
     instructions: IsloApi.AgenticTransitionOutputInstructions;
-    options: IsloApi.AgenticTransitionOption[];
+    options?: IsloApi.AgenticTransitionOption[] | undefined;
     label?: (string | null) | undefined;
 }

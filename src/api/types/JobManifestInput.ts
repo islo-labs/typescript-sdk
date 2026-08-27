@@ -10,5 +10,6 @@ export interface JobManifestInput {
     run: IsloApi.RunSectionInput;
     schedule?: (IsloApi.ScheduleSection | null) | undefined;
     verification?: (IsloApi.VerificationSection | null) | undefined;
+    /** Public job output contract for the job and downstream lines. */
     outputs?: (Record<string, IsloApi.JobOutputSpec | null> | null) | undefined;
 }
