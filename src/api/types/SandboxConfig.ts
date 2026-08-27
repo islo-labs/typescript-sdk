@@ -7,7 +7,9 @@ import type * as IsloApi from "../index.js";
  */
 export interface SandboxConfig {
     mode?: SandboxConfig.Mode | undefined;
+    /** Required for ensure/reuse. Supports {{param}} substitution. */
     name?: (string | null) | undefined;
+    /** Required for provision/ensure. */
     image?: (string | null) | undefined;
     vcpus?: number | undefined;
     memory_mb?: number | undefined;
@@ -17,6 +19,7 @@ export interface SandboxConfig {
     environment?: (string | null) | undefined;
     init?: (IsloApi.SandboxConfigInit | null) | undefined;
     internet_enabled?: boolean | undefined;
+    /** Sandbox default working directory. Used when [run].workdir is omitted. */
     workdir?: (string | null) | undefined;
     cache_key?: (string | null) | undefined;
     env?: (Record<string, string | null> | null) | undefined;

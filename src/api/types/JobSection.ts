@@ -7,5 +7,6 @@ export interface JobSection {
     name: string;
     version?: (string | null) | undefined;
     description?: (string | null) | undefined;
+    /** Declared run parameters. Reference as {{name}} in manifest strings (substitution and undeclared-reference checks walk the whole manifest, not only step fields). Reserved: {{run_id}}. */
     params?: (Record<string, IsloApi.JobParamSpec | null> | null) | undefined;
 }

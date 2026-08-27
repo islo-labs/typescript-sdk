@@ -24,6 +24,7 @@ export namespace ResolvedStage {
         Codex: "codex",
         Cursor: "cursor",
         Claude: "claude",
+        Opencode: "opencode",
         Custom: "custom",
     } as const;
     export type Harness = (typeof Harness)[keyof typeof Harness];

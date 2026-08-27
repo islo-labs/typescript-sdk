@@ -3,6 +3,7 @@
 import type * as IsloApi from "../index.js";
 
 export interface RunAgentSessionStepAction {
+    /** Session outputs require claude, codex, cursor, or opencode. */
     harness: RunAgentSessionStepAction.Harness;
     model?: (string | null) | undefined;
     model_provider?: (RunAgentSessionStepAction.ModelProvider | null) | undefined;
@@ -14,10 +15,12 @@ export interface RunAgentSessionStepAction {
 }
 
 export namespace RunAgentSessionStepAction {
+    /** Session outputs require claude, codex, cursor, or opencode. */
     export const Harness = {
         Codex: "codex",
         Cursor: "cursor",
         Claude: "claude",
+        Opencode: "opencode",
     } as const;
     export type Harness = (typeof Harness)[keyof typeof Harness];
     export const ModelProvider = {

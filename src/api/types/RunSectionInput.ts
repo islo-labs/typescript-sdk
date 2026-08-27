@@ -6,7 +6,8 @@ export interface RunSectionInput {
     fail_fast?: boolean | undefined;
     fanout?: boolean | undefined;
     concurrency?: number | undefined;
-    workdir?: string | undefined;
+    /** Working directory for every exec and run_agent step. Defaults to ".". Falls back to run.sandbox.workdir when omitted. */
+    workdir?: (string | null) | undefined;
     timeout?: (RunSectionInput.Timeout | null) | undefined;
     region?: (string | null) | undefined;
     teardown_on_complete?: (boolean | null) | undefined;

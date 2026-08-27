@@ -2,8 +2,11 @@
 
 export interface JobParamSpec {
     type: JobParamSpec.Type;
+    /** Item type when type = array. */
     items?: (JobParamSpec.Items | null) | undefined;
+    /** Cannot combine required=true with a default. */
     required?: boolean | undefined;
+    /** Required for every param used by a scheduled run before adding [schedule]. */
     default?: (unknown | null) | undefined;
     description?: (string | null) | undefined;
     pattern?: (string | null) | undefined;

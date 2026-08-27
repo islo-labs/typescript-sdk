@@ -4,24 +4,44 @@ import type * as IsloApi from "../index.js";
 
 /**
  * One compute action per step.
+ *
+ * Define exactly one action key (exec, run_agent, snapshot, pause, resume, or
+ * delete). Task names and step names must be unique and non-blank. A job with
+ * [outputs], exactly one session run_agent step, and no step listing outputs
+ * implicitly claims every output key. More than one potential writer, or any
+ * explicit outputs list, requires every writer to claim.
  */
 export interface TaskStepInput {
+    /** Unique non-blank step name within the task. */
     name?: (string | null) | undefined;
+    /** Override [run].workdir for this step. Supports {{name}} placeholders. */
     workdir?: (string | null) | undefined;
+    /** Max wall-clock duration for this step in seconds. */
     timeout?: (number | null) | undefined;
     user?: (string | null) | undefined;
+    /** Shell command. Supports {{name}} placeholders in each argv element. Control plane sets $ISLO_OUTPUT to /dev/null when the step claims no output keys, or /tmp/islo_output.<job_run_id>.<random> when it claims keys. Write key=value lines (JSON after =, raw string fallback for type=string). Do not pre-create the file. Cap is 64 KiB. */
     exec?: (TaskStepInput.Exec | null) | undefined;
+    /** Run an agent step. Session mode publishes claimed producer keys as structured JSON. Exec mode uses $ISLO_OUTPUT like exec. */
     run_agent?: (IsloApi.TaskStepInputRunAgent | null) | undefined;
     snapshot?: (IsloApi.SnapshotStepAction | null) | undefined;
     pause?: (boolean | null) | undefined;
     resume?: (boolean | null) | undefined;
     delete?: (boolean | null) | undefined;
+    /** Not implemented yet; do not author. */
     upload?: (string | null) | undefined;
+    /** Not implemented yet; do not author. */
     download?: (string | null) | undefined;
+    /** Claim job output keys. List shortcut: outputs = ["summary"]. Table: [run.tasks.steps.outputs.summary] from = "agent_key", required = true. */
     outputs?: (TaskStepInput.Outputs | null) | undefined;
 }
 
 export namespace TaskStepInput {
+    /**
+     * Shell command. Supports {{name}} placeholders in each argv element. Control plane sets $ISLO_OUTPUT to /dev/null when the step claims no output keys, or /tmp/islo_output.<job_run_id>.<random> when it claims keys. Write key=value lines (JSON after =, raw string fallback for type=string). Do not pre-create the file. Cap is 64 KiB.
+     */
     export type Exec = string[] | string;
+    /**
+     * Claim job output keys. List shortcut: outputs = ["summary"]. Table: [run.tasks.steps.outputs.summary] from = "agent_key", required = true.
+     */
     export type Outputs = string[] | Record<string, IsloApi.StepOutputClaim>;
 }
