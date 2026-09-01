@@ -5,6 +5,7 @@ import type * as IsloApi from "../index.js";
 export interface KnowledgeVersionResponse {
     id: string;
     version_number: number;
+    type: IsloApi.KnowledgeLevel;
     level: IsloApi.KnowledgeLevel;
     format: string;
     body: string;
@@ -12,4 +13,5 @@ export interface KnowledgeVersionResponse {
     links: IsloApi.KnowledgeLinkResponse[];
     content_hash: string;
     created_at: string;
+    byte_size?: (number | null) | undefined;
 }

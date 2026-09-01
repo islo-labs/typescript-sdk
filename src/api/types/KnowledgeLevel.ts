@@ -5,5 +5,8 @@ export const KnowledgeLevel = {
     Procedural: "procedural",
     Declarative: "declarative",
     Prompt: "prompt",
+    Image: "image",
+    Video: "video",
+    Audio: "audio",
 } as const;
 export type KnowledgeLevel = (typeof KnowledgeLevel)[keyof typeof KnowledgeLevel];

@@ -1,5 +1,9 @@
+export type { BodyCreateKnowledgeMedia } from "./BodyCreateKnowledgeMedia.js";
+export type { BodyPutKnowledgeContent } from "./BodyPutKnowledgeContent.js";
 export type { DeleteKnowledgeRequest } from "./DeleteKnowledgeRequest.js";
+export type { GetKnowledgeContentRequest } from "./GetKnowledgeContentRequest.js";
 export type { GetKnowledgeRequest } from "./GetKnowledgeRequest.js";
+export type { GetKnowledgeVersionContentRequest } from "./GetKnowledgeVersionContentRequest.js";
 export type { GetKnowledgeVersionRequest } from "./GetKnowledgeVersionRequest.js";
 export type { KnowledgeItemCreate } from "./KnowledgeItemCreate.js";
 export type { KnowledgeItemUpdate } from "./KnowledgeItemUpdate.js";

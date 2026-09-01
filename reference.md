@@ -119,9 +119,7 @@ await client.knowledge.listKnowledge();
 
 ```typescript
 await client.knowledge.createKnowledge({
-    slug: "slug",
-    level: "episodic",
-    body: "body"
+    slug: "slug"
 });
 
 ```
@@ -139,6 +137,58 @@ await client.knowledge.createKnowledge({
 <dd>
 
 **request:** `IsloApi.KnowledgeItemCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.createKnowledgeMedia({
+    file: fs.createReadStream("/path/to/your/file"),
+    item: "item"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BodyCreateKnowledgeMedia` 
     
 </dd>
 </dl>
@@ -311,6 +361,109 @@ await client.knowledge.updateKnowledge({
 </dl>
 </details>
 
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.getKnowledgeContent({
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeContentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">putKnowledgeContent</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.putKnowledgeContent({
+    file: fs.createReadStream("/path/to/your/file"),
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BodyPutKnowledgeContent` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeVersions</a>({ ...params }) -> IsloApi.PaginatedKnowledgeVersionResponse</code></summary>
 <dl>
 <dd>
@@ -395,6 +548,58 @@ await client.knowledge.getKnowledgeVersion({
 <dd>
 
 **request:** `IsloApi.GetKnowledgeVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeVersionContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.getKnowledgeVersionContent({
+    identifier: "identifier",
+    version_number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeVersionContentRequest` 
     
 </dd>
 </dl>
@@ -2123,6 +2328,99 @@ await client.cloudRoles.updateCloudRole({
 <dd>
 
 **requestOptions:** `CloudRolesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## byo
+<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">getByoInferenceStatus</a>() -> IsloApi.ByoStatusResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.byo.getByoInferenceStatus();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ByoClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">startByoInferenceSetup</a>({ ...params }) -> IsloApi.ByoSetupResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.byo.startByoInferenceSetup({
+    source_kind: "databricks"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ByoSetupRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ByoClient.RequestOptions` 
     
 </dd>
 </dl>
