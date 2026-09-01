@@ -5,17 +5,16 @@ import type * as IsloApi from "../../../../index.js";
 /**
  * @example
  *     {
- *         slug: "slug",
- *         level: "episodic",
- *         body: "body"
+ *         slug: "slug"
  *     }
  */
 export interface KnowledgeItemCreate {
     /** Unique lowercase identifier (letters, digits, hyphens). Set at creation and cannot be changed. */
     slug: string;
-    level: IsloApi.KnowledgeLevel;
+    level?: IsloApi.KnowledgeLevel | null;
+    type?: IsloApi.KnowledgeLevel | null;
     format?: string;
-    body: string;
+    body?: string;
     metadata?: Record<string, unknown>;
     links?: IsloApi.KnowledgeLinkInput[];
 }

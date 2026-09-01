@@ -1,3 +1,5 @@
+export * from "./byo/client/requests/index.js";
+export * as byo from "./byo/index.js";
 export * from "./cloudRoles/client/requests/index.js";
 export * as cloudRoles from "./cloudRoles/index.js";
 export * from "./computeEvents/client/requests/index.js";

@@ -133,9 +133,7 @@ import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
 const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
 await client.knowledge.createKnowledge({
-    slug: "slug",
-    level: "episodic",
-    body: "body"
+    slug: "slug"
 });
 ```
 
@@ -194,10 +192,9 @@ import * as fs from "fs";
 import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
 const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
-await client.sandboxes.uploadFile({
+await client.knowledge.createKnowledgeMedia({
     file: fs.createReadStream("/path/to/your/file"),
-    sandbox_name: "sandbox_name",
-    path: "path"
+    item: "item"
 });
 ```
 The client accepts a variety of types for file upload parameters:

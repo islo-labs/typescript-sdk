@@ -12,6 +12,7 @@ export interface KnowledgeItemUpdate {
     /** Unique lowercase identifier (letters, digits, hyphens). Set at creation and cannot be changed. */
     identifier: string;
     level?: IsloApi.KnowledgeLevel | null;
+    type?: IsloApi.KnowledgeLevel | null;
     format?: string | null;
     body?: string | null;
     metadata?: Record<string, unknown> | null;

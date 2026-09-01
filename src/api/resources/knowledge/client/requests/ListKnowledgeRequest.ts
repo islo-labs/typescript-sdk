@@ -8,6 +8,7 @@ import type * as IsloApi from "../../../../index.js";
  */
 export interface ListKnowledgeRequest {
     level?: IsloApi.KnowledgeLevel | null;
+    type?: IsloApi.KnowledgeLevel | null;
     tag?: string | null;
     repository?: string | null;
     /** Search identifier or body text */

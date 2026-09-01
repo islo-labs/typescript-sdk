@@ -6,10 +6,12 @@ export interface KnowledgeItemListResponse {
     id: string;
     /** Unique lowercase identifier (letters, digits, hyphens). Set at creation and cannot be changed. */
     slug: string;
+    type: IsloApi.KnowledgeLevel;
     level: IsloApi.KnowledgeLevel;
     status: IsloApi.KnowledgeStatus;
     links: IsloApi.KnowledgeLinkResponse[];
     created_at: string;
     updated_at: string;
     version_number?: (number | null) | undefined;
+    byte_size?: (number | null) | undefined;
 }
