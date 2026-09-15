@@ -15,9 +15,14 @@ export interface LineRunDetail {
     error_message?: (string | null) | undefined;
     iteration_count?: number | undefined;
     budget_used_usd?: (string | null) | undefined;
+    compute_cost_cents?: number | undefined;
+    inference_cost_cents?: number | undefined;
+    total_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     retry?: (IsloApi.LineRunRetryAction | null) | undefined;
     stages?: IsloApi.LineRunStageDetail[] | undefined;
     failure?: (IsloApi.LineRunFailure | null) | undefined;
+    triggered_by_actor?: (Record<string, unknown> | null) | undefined;
     started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     created_at: string;

@@ -166,6 +166,64 @@ export class KnowledgeClient {
     }
 
     /**
+     * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     *
+     * @example
+     *     await client.knowledge.listKnowledgeTags()
+     */
+    public listKnowledgeTags(
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.KnowledgeTagsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listKnowledgeTags(requestOptions));
+    }
+
+    private async __listKnowledgeTags(
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.KnowledgeTagsResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "knowledge/tags",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.KnowledgeTagsResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/knowledge/tags");
+    }
+
+    /**
      * @param {IsloApi.BodyCreateKnowledgeMedia} request
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *

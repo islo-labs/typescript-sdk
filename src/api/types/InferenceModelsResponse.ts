@@ -4,4 +4,5 @@ import type * as IsloApi from "../index.js";
 
 export interface InferenceModelsResponse {
     models?: IsloApi.InferenceModelCatalogEntry[] | undefined;
+    effort?: IsloApi.EffortCatalog | undefined;
 }

@@ -156,6 +156,47 @@ await client.knowledge.createKnowledge({
 </dl>
 </details>
 
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeTags</a>() -> IsloApi.KnowledgeTagsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.listKnowledgeTags();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
 <dl>
 <dd>
@@ -2065,6 +2106,57 @@ await client.environments.setDefaultEnvironment({
 <dd>
 
 **request:** `IsloApi.SetDefaultEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">unsetDefaultEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.environments.unsetDefaultEnvironment({
+    environment_ref: "environment_ref"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UnsetDefaultEnvironmentRequest` 
     
 </dd>
 </dl>

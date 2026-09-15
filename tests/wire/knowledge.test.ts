@@ -120,6 +120,39 @@ describe("KnowledgeClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("listKnowledgeTags (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { tags: ["tags"] };
+
+        server.mockEndpoint().get("/knowledge/tags").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.knowledge.listKnowledgeTags();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("listKnowledgeTags (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/knowledge/tags").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.knowledge.listKnowledgeTags();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("getKnowledge (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({

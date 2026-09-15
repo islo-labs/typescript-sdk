@@ -7,6 +7,10 @@ export interface LineRunStageDetail {
     status: string;
     outcome?: (string | null) | undefined;
     job_run_id?: (string | null) | undefined;
+    compute_cost_cents?: number | undefined;
+    inference_cost_cents?: number | undefined;
+    total_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     artifact_count?: number | undefined;

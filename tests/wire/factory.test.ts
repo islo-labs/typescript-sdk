@@ -808,6 +808,10 @@ describe("FactoryClient", () => {
                 stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
                 artifact_count: 1,
                 artifacts: [{}],
+                compute_cost_cents: 1,
+                inference_cost_cents: 1,
+                total_cost_cents: 1,
+                cost_rated_at: "2024-01-15T09:30:00Z",
                 error_message: "error_message",
                 failure: {
                     code: "manifest_no_stages",
@@ -820,6 +824,8 @@ describe("FactoryClient", () => {
                     stage_step: "stage_step",
                     task_name: "task_name",
                 },
+                manager_turns: [{ workflow_run_id: "workflow_run_id", state: "state" }],
+                triggered_by_actor: { key: "value" },
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
@@ -892,6 +898,10 @@ describe("FactoryClient", () => {
             error_message: "error_message",
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             retry: { stage_name: "stage_name" },
             stages: [
                 {
@@ -901,6 +911,10 @@ describe("FactoryClient", () => {
                     status: "status",
                     outcome: "outcome",
                     job_run_id: "job_run_id",
+                    compute_cost_cents: 1,
+                    inference_cost_cents: 1,
+                    total_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     artifact_count: 1,
@@ -920,6 +934,7 @@ describe("FactoryClient", () => {
                 stage_step: "stage_step",
                 task_name: "task_name",
             },
+            triggered_by_actor: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -992,6 +1007,10 @@ describe("FactoryClient", () => {
                 stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
                 artifact_count: 1,
                 artifacts: [{}],
+                compute_cost_cents: 1,
+                inference_cost_cents: 1,
+                total_cost_cents: 1,
+                cost_rated_at: "2024-01-15T09:30:00Z",
                 error_message: "error_message",
                 failure: {
                     code: "manifest_no_stages",
@@ -1004,6 +1023,8 @@ describe("FactoryClient", () => {
                     stage_step: "stage_step",
                     task_name: "task_name",
                 },
+                manager_turns: [{ workflow_run_id: "workflow_run_id", state: "state" }],
+                triggered_by_actor: { key: "value" },
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
@@ -1060,6 +1081,10 @@ describe("FactoryClient", () => {
             error_message: "error_message",
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             retry: { stage_name: "stage_name" },
             stages: [
                 {
@@ -1069,6 +1094,10 @@ describe("FactoryClient", () => {
                     status: "status",
                     outcome: "outcome",
                     job_run_id: "job_run_id",
+                    compute_cost_cents: 1,
+                    inference_cost_cents: 1,
+                    total_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     artifact_count: 1,
@@ -1088,6 +1117,7 @@ describe("FactoryClient", () => {
                 stage_step: "stage_step",
                 task_name: "task_name",
             },
+            triggered_by_actor: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -1246,7 +1276,13 @@ describe("FactoryClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { cron: "cron", timezone: "timezone", enabled: true, schedule_generation: 1 };
+        const rawResponseBody = {
+            cron: "cron",
+            timezone: "timezone",
+            enabled: true,
+            schedule_generation: 1,
+            inputs: { key: "value" },
+        };
 
         server
             .mockEndpoint()
@@ -1295,7 +1331,13 @@ describe("FactoryClient", () => {
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { cron: "cron" };
-        const rawResponseBody = { cron: "cron", timezone: "timezone", enabled: true, schedule_generation: 1 };
+        const rawResponseBody = {
+            cron: "cron",
+            timezone: "timezone",
+            enabled: true,
+            schedule_generation: 1,
+            inputs: { key: "value" },
+        };
 
         server
             .mockEndpoint()

@@ -28,6 +28,7 @@ describe("ComputeEventsClient", () => {
                 type: "agent",
                 mode: "mode",
                 harness: "harness",
+                model: "model",
                 status: "status",
                 outcome: "outcome",
                 agent_session_id: "agent_session_id",
