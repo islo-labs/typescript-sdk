@@ -12,4 +12,5 @@ export interface LineScheduleUpdate {
     cron: string;
     timezone?: string;
     enabled?: boolean;
+    inputs?: Record<string, unknown>;
 }

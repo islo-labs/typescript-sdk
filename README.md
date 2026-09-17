@@ -19,6 +19,7 @@ The Islo TypeScript library provides convenient access to the Islo APIs from Typ
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Binary Response](#binary-response)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -52,18 +53,31 @@ const sandbox = await client.sandboxes.createSandbox({
     name: "my-sandbox",
     image: "ubuntu:22.04",
     vcpus: 2,
-    memoryMb: 4096,
+    memory_mb: 4096,
 });
 
-// Execute a command
-const result = await client.sandboxes.execInSandbox({
-    sandboxName: sandbox.name,
-    command: ["echo", "hello world"],
+const started = await client.sandboxes.execInSandbox({
+    sandbox_name: sandbox.name,
+    body: {
+        command: ["echo", "hello world"],
+    },
 });
-console.log(result.exitCode);
 
-// Clean up
-await client.sandboxes.deleteSandbox({ sandboxName: sandbox.name });
+let result;
+while (true) {
+    result = await client.sandboxes.getExecResult({
+        sandbox_name: sandbox.name,
+        exec_id: started.exec_id,
+    });
+    if (["completed", "failed", "timeout"].includes(result.status)) {
+        break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+}
+
+console.log(result.exit_code, result.stdout);
+
+await client.sandboxes.deleteSandbox({ sandbox_name: sandbox.name });
 ```
 
 ## Authentication
@@ -108,7 +122,7 @@ const client = new Islo({
 
 ```bash
 # Install typecheck deps
-npm install --no-save typescript@~5.6 @types/node@~20
+npm install --no-save typescript@~5.9 @types/node@~20
 
 # Typecheck
 npx tsc --noEmit
@@ -131,7 +145,7 @@ Instantiate and use the client with the following:
 ```typescript
 import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
 await client.knowledge.createKnowledge({
     slug: "slug"
 });
@@ -191,7 +205,7 @@ import { createReadStream } from "fs";
 import * as fs from "fs";
 import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
 await client.knowledge.createKnowledgeMedia({
     file: fs.createReadStream("/path/to/your/file"),
     item: "item"
@@ -616,6 +630,29 @@ const text = new TextDecoder().decode(bytes);
 
 </details>
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
+const pageableResponse = await client.jobRuns.listAllJobRuns();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobRuns.listAllJobRuns();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+```
+
 ## Advanced
 
 ### Subpackage Exports
@@ -667,11 +704,19 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 Use the `maxRetries` request option to configure this behavior.
 

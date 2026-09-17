@@ -13,8 +13,14 @@ export interface LineRunSummary {
     stages?: IsloApi.LineRunStageSummary[] | undefined;
     artifact_count?: number | undefined;
     artifacts?: IsloApi.ArtifactSummary[] | undefined;
+    compute_cost_cents?: number | undefined;
+    inference_cost_cents?: number | undefined;
+    total_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     error_message?: (string | null) | undefined;
     failure?: (IsloApi.LineRunFailure | null) | undefined;
+    manager_turns?: IsloApi.ManagerTurnSummary[] | undefined;
+    triggered_by_actor?: (Record<string, unknown> | null) | undefined;
     started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     created_at: string;

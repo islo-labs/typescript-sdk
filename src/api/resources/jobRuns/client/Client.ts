@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -26,38 +26,154 @@ export class JobRunsClient {
      * @param {JobRunsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobRuns.listAllJobRuns()
      */
-    public listAllJobRuns(
+    public async listAllJobRuns(
         request: IsloApi.ListAllJobRunsRequest = {},
         requestOptions?: JobRunsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.JobRunListItem[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listAllJobRuns(request, requestOptions));
+    ): Promise<core.Page<IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IsloApi.ListAllJobRunsRequest,
+            ): Promise<core.WithRawResponse<IsloApi.ListPageJobRunListItem>> => {
+                const {
+                    limit,
+                    offset,
+                    cursor,
+                    sort,
+                    include,
+                    status,
+                    job_name: jobName,
+                    created_at: createdAt,
+                    q,
+                } = request;
+                const _queryParams: Record<string, unknown> = {
+                    limit,
+                    offset,
+                    cursor,
+                    sort,
+                    include,
+                    status,
+                    job_name: jobName,
+                    created_at: createdAt,
+                    q,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    mergeOnlyDefinedHeaders({
+                        "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                    }),
+                    requestOptions?.headers,
+                );
+                const _response = await (this._options.fetcher ?? core.fetcher)({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)).control,
+                        "job-runs",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IsloApi.ListPageJobRunListItem,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 422:
+                            throw new IsloApi.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IsloApiError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/job-runs");
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.next_cursor != null &&
+                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
+            getItems: (response) => response?.items ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
+            },
+        });
     }
 
-    private async __listAllJobRuns(
-        request: IsloApi.ListAllJobRunsRequest = {},
+    /**
+     * @param {IsloApi.ListJobRunFacetsRequest} request
+     * @param {JobRunsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.jobRuns.listJobRunFacets({
+     *         fields: ["fields"]
+     *     })
+     */
+    public listJobRunFacets(
+        request: IsloApi.ListJobRunFacetsRequest = {},
         requestOptions?: JobRunsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.JobRunListItem[]>> {
-        const { limit, offset, status } = request;
+    ): core.HttpResponsePromise<IsloApi.FacetsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listJobRunFacets(request, requestOptions));
+    }
+
+    private async __listJobRunFacets(
+        request: IsloApi.ListJobRunFacetsRequest = {},
+        requestOptions?: JobRunsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.FacetsResponse>> {
+        const { fields, status, job_name: jobName, created_at: createdAt, q } = request;
         const _queryParams: Record<string, unknown> = {
-            limit,
-            offset,
-            status: status !== undefined ? status : undefined,
+            fields,
+            status,
+            job_name: jobName,
+            created_at: createdAt,
+            q,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).control,
-                "job-runs",
+                "job-runs/facets",
             ),
             method: "GET",
             headers: _headers,
@@ -73,7 +189,7 @@ export class JobRunsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.JobRunListItem[], rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.FacetsResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -89,7 +205,7 @@ export class JobRunsClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/job-runs");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/job-runs/facets");
     }
 
     /**
@@ -97,6 +213,8 @@ export class JobRunsClient {
      * @param {JobRunsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobRuns.getJobRunById({
@@ -119,6 +237,9 @@ export class JobRunsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

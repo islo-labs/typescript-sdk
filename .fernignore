@@ -9,6 +9,9 @@ Islo.ts
 # Hand-written extensions (auth/token providers, etc.)
 src/custom/
 
+# Public examples use the hand-written Islo wrapper
+README.md
+
 # Customized to re-export hand-written wrappers
 src/index.ts
 
