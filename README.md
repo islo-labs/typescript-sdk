@@ -53,18 +53,31 @@ const sandbox = await client.sandboxes.createSandbox({
     name: "my-sandbox",
     image: "ubuntu:22.04",
     vcpus: 2,
-    memoryMb: 4096,
+    memory_mb: 4096,
 });
 
-// Execute a command
-const result = await client.sandboxes.execInSandbox({
-    sandboxName: sandbox.name,
-    command: ["echo", "hello world"],
+const started = await client.sandboxes.execInSandbox({
+    sandbox_name: sandbox.name,
+    body: {
+        command: ["echo", "hello world"],
+    },
 });
-console.log(result.exitCode);
 
-// Clean up
-await client.sandboxes.deleteSandbox({ sandboxName: sandbox.name });
+let result;
+while (true) {
+    result = await client.sandboxes.getExecResult({
+        sandbox_name: sandbox.name,
+        exec_id: started.exec_id,
+    });
+    if (["completed", "failed", "timeout"].includes(result.status)) {
+        break;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+}
+
+console.log(result.exit_code, result.stdout);
+
+await client.sandboxes.deleteSandbox({ sandbox_name: sandbox.name });
 ```
 
 ## Authentication
@@ -109,7 +122,7 @@ const client = new Islo({
 
 ```bash
 # Install typecheck deps
-npm install --no-save typescript@~5.6 @types/node@~20
+npm install --no-save typescript@~5.9 @types/node@~20
 
 # Typecheck
 npx tsc --noEmit
