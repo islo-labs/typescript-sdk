@@ -1,7 +1,7 @@
 {
     "cliVersion": "5.46.1",
     "generatorName": "fernapi/fern-typescript-node-sdk",
-    "generatorVersion": "3.65.5",
+    "generatorVersion": "3.95.0",
     "generatorConfig": {
         "naming": {
             "namespace": "IsloApi",
@@ -22,10 +22,9 @@
             }
         }
     },
-    "originGitCommit": "2ef08f0015b9b6e8638661c50463d409c6d4879c",
+    "originGitCommit": "d9342837203ab55283f1c6fa7a69d9c6bb1fadb0",
     "originGitCommitIsDirty": false,
     "invokedBy": "ci",
-    "requestedVersion": null,
     "ciProvider": "github",
-    "sdkVersion": "0.0.38"
+    "sdkVersion": "0.0.39"
 }

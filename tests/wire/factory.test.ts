@@ -10,6 +10,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -65,6 +66,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -130,6 +132,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -195,6 +198,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -286,6 +290,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -351,6 +356,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -416,6 +422,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -462,6 +469,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -479,6 +487,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -546,6 +555,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -571,6 +581,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -639,6 +650,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -665,6 +677,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -691,6 +704,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -717,6 +731,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -762,6 +777,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -787,6 +803,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -808,6 +825,10 @@ describe("FactoryClient", () => {
                 stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
                 artifact_count: 1,
                 artifacts: [{}],
+                compute_cost_cents: 1,
+                inference_cost_cents: 1,
+                total_cost_cents: 1,
+                cost_rated_at: "2024-01-15T09:30:00Z",
                 error_message: "error_message",
                 failure: {
                     code: "manifest_no_stages",
@@ -820,6 +841,8 @@ describe("FactoryClient", () => {
                     stage_step: "stage_step",
                     task_name: "task_name",
                 },
+                manager_turns: [{ workflow_run_id: "workflow_run_id", state: "state" }],
+                triggered_by_actor: { key: "value" },
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
@@ -845,6 +868,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -870,6 +894,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -892,6 +917,10 @@ describe("FactoryClient", () => {
             error_message: "error_message",
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             retry: { stage_name: "stage_name" },
             stages: [
                 {
@@ -901,6 +930,10 @@ describe("FactoryClient", () => {
                     status: "status",
                     outcome: "outcome",
                     job_run_id: "job_run_id",
+                    compute_cost_cents: 1,
+                    inference_cost_cents: 1,
+                    total_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     artifact_count: 1,
@@ -920,6 +953,7 @@ describe("FactoryClient", () => {
                 stage_step: "stage_step",
                 task_name: "task_name",
             },
+            triggered_by_actor: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -945,6 +979,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -971,49 +1006,54 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = [
-            {
-                id: "id",
-                line_name: "line_name",
-                line_version_id: "line_version_id",
-                status: "status",
-                trigger: {
-                    source: "source",
-                    provider: "provider",
-                    event_name: "event_name",
-                    delivery_id: "delivery_id",
-                    payload: { key: "value" },
-                },
-                region: "region",
-                run_params: { key: "value" },
-                stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
-                artifact_count: 1,
-                artifacts: [{}],
-                error_message: "error_message",
-                failure: {
-                    code: "manifest_no_stages",
-                    domain: "platform",
-                    error_code: "error_code",
-                    failure_class: "failure_class",
+        const rawResponseBody = {
+            items: [
+                {
+                    id: "id",
+                    line_name: "line_name",
+                    line_version_id: "line_version_id",
+                    status: "status",
+                    trigger: { source: "source" },
+                    region: "region",
+                    run_params: { key: "value" },
+                    stages: [{ stage_name: "stage_name", stage_order: 1, iteration: 1, status: "status" }],
+                    artifact_count: 1,
+                    artifacts: [{}],
+                    compute_cost_cents: 1,
+                    inference_cost_cents: 1,
+                    total_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
                     error_message: "error_message",
-                    error_details: { key: "value" },
-                    stage_name: "stage_name",
-                    stage_step: "stage_step",
-                    task_name: "task_name",
+                    manager_turns: [{ workflow_run_id: "workflow_run_id", state: "state" }],
+                    triggered_by_actor: { key: "value" },
+                    started_at: "2024-01-15T09:30:00Z",
+                    completed_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
-                started_at: "2024-01-15T09:30:00Z",
-                completed_at: "2024-01-15T09:30:00Z",
-                created_at: "2024-01-15T09:30:00Z",
-            },
-        ];
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
 
-        server.mockEndpoint().get("/factory/line-runs").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint({ once: false })
+            .get("/factory/line-runs")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        const response = await client.factory.listFactoryLineRuns();
-        expect(response).toEqual(rawResponseBody);
+        const expected = rawResponseBody;
+        const page = await client.factory.listFactoryLineRuns();
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
     });
 
     test("list_factory_line_runs (2)", async () => {
@@ -1021,6 +1061,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1033,11 +1074,61 @@ describe("FactoryClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("list_factory_line_run_facets (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { facets: { key: [{ key: "value" }] } };
+
+        server
+            .mockEndpoint()
+            .get("/factory/line-runs/facets")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.factory.listFactoryLineRunFacets({
+            fields: ["fields"],
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_factory_line_run_facets (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/factory/line-runs/facets")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.factory.listFactoryLineRunFacets();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("get_factory_line_run (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1060,6 +1151,10 @@ describe("FactoryClient", () => {
             error_message: "error_message",
             iteration_count: 1,
             budget_used_usd: "budget_used_usd",
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             retry: { stage_name: "stage_name" },
             stages: [
                 {
@@ -1069,6 +1164,10 @@ describe("FactoryClient", () => {
                     status: "status",
                     outcome: "outcome",
                     job_run_id: "job_run_id",
+                    compute_cost_cents: 1,
+                    inference_cost_cents: 1,
+                    total_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
                     started_at: "2024-01-15T09:30:00Z",
                     completed_at: "2024-01-15T09:30:00Z",
                     artifact_count: 1,
@@ -1088,6 +1187,7 @@ describe("FactoryClient", () => {
                 stage_step: "stage_step",
                 task_name: "task_name",
             },
+            triggered_by_actor: { key: "value" },
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -1112,6 +1212,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1137,6 +1238,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1193,6 +1295,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1218,6 +1321,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1243,10 +1347,17 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { cron: "cron", timezone: "timezone", enabled: true, schedule_generation: 1 };
+        const rawResponseBody = {
+            cron: "cron",
+            timezone: "timezone",
+            enabled: true,
+            schedule_generation: 1,
+            inputs: { key: "value" },
+        };
 
         server
             .mockEndpoint()
@@ -1267,6 +1378,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1292,10 +1404,17 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { cron: "cron" };
-        const rawResponseBody = { cron: "cron", timezone: "timezone", enabled: true, schedule_generation: 1 };
+        const rawResponseBody = {
+            cron: "cron",
+            timezone: "timezone",
+            enabled: true,
+            schedule_generation: 1,
+            inputs: { key: "value" },
+        };
 
         server
             .mockEndpoint()
@@ -1318,6 +1437,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { cron: "cron" };
@@ -1345,6 +1465,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1361,6 +1482,7 @@ describe("FactoryClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

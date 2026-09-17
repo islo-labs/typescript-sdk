@@ -16,6 +16,6 @@ export class UnprocessableEntityError extends errors.IsloApiError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "UnprocessableEntityError";
     }
 }

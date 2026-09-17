@@ -156,6 +156,47 @@ await client.knowledge.createKnowledge({
 </dl>
 </details>
 
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeTags</a>() -> IsloApi.KnowledgeTagsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.listKnowledgeTags();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
 <dl>
 <dd>
@@ -2084,6 +2125,57 @@ await client.environments.setDefaultEnvironment({
 </dl>
 </details>
 
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">unsetDefaultEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.environments.unsetDefaultEnvironment({
+    environment_ref: "environment_ref"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UnsetDefaultEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## CloudRoles
 <details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">listCloudRoles</a>({ ...params }) -> IsloApi.CloudRoleResponse[]</code></summary>
 <dl>
@@ -3415,7 +3507,7 @@ await client.jobs.deleteJobSchedule({
 </details>
 
 ## JobRuns
-<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> IsloApi.JobRunListItem[]</code></summary>
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> core.Page&lt;IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3428,7 +3520,19 @@ await client.jobs.deleteJobSchedule({
 <dd>
 
 ```typescript
-await client.jobRuns.listAllJobRuns();
+const pageableResponse = await client.jobRuns.listAllJobRuns();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobRuns.listAllJobRuns();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -3445,6 +3549,57 @@ await client.jobRuns.listAllJobRuns();
 <dd>
 
 **request:** `IsloApi.ListAllJobRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobRunsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listJobRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobRuns.listJobRunFacets({
+    fields: ["fields"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListJobRunFacetsRequest` 
     
 </dd>
 </dl>
@@ -3960,7 +4115,7 @@ await client.factory.triggerFactoryLineRun({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> IsloApi.LineRunSummary[]</code></summary>
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> core.Page&lt;IsloApi.LineRunSummary, IsloApi.ListPageLineRunSummary&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3973,7 +4128,19 @@ await client.factory.triggerFactoryLineRun({
 <dd>
 
 ```typescript
-await client.factory.listFactoryLineRuns();
+const pageableResponse = await client.factory.listFactoryLineRuns();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLineRuns();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -3990,6 +4157,57 @@ await client.factory.listFactoryLineRuns();
 <dd>
 
 **request:** `IsloApi.ListFactoryLineRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.listFactoryLineRunFacets({
+    fields: ["fields"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunFacetsRequest` 
     
 </dd>
 </dl>
