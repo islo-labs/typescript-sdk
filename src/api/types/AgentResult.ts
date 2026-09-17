@@ -13,6 +13,7 @@ import type * as IsloApi from "../index.js";
 export interface AgentResult {
     mode?: (string | null) | undefined;
     harness?: (string | null) | undefined;
+    model?: (string | null) | undefined;
     status?: (string | null) | undefined;
     outcome?: (string | null) | undefined;
     agent_session_id?: (string | null) | undefined;

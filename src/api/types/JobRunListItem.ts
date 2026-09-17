@@ -7,6 +7,10 @@ export interface JobRunListItem {
     status: string;
     region: string | null;
     step_count: number;
+    compute_cost_cents?: number | undefined;
+    inference_cost_cents?: number | undefined;
+    total_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     started_at: string | null;
     completed_at: string | null;
     created_at: string;

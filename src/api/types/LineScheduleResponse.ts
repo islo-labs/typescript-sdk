@@ -5,4 +5,5 @@ export interface LineScheduleResponse {
     timezone: string;
     enabled: boolean;
     schedule_generation: number;
+    inputs?: Record<string, unknown> | undefined;
 }

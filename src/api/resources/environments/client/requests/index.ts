@@ -4,3 +4,4 @@ export type { EnvironmentUpdate } from "./EnvironmentUpdate.js";
 export type { GetEnvironmentRequest } from "./GetEnvironmentRequest.js";
 export type { ListEnvironmentsRequest } from "./ListEnvironmentsRequest.js";
 export type { SetDefaultEnvironmentRequest } from "./SetDefaultEnvironmentRequest.js";
+export type { UnsetDefaultEnvironmentRequest } from "./UnsetDefaultEnvironmentRequest.js";
