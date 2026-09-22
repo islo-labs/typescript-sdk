@@ -8,15 +8,16 @@
  * @param value The value to set.
  * @return Returns object.
  */
-const PROTOTYPE_KEYS = new Set(["__proto__", "constructor", "prototype"]);
-
 export function setObjectProperty<T extends object>(object: T, path: string, value: any): T {
     if (object == null) {
         return object;
     }
 
     const keys: string[] = path.split(".");
-    if (keys.length === 0 || keys.some((key) => PROTOTYPE_KEYS.has(key))) {
+    if (
+        keys.length === 0 ||
+        keys.some((key) => key === "__proto__" || key === "constructor" || key === "prototype")
+    ) {
         // Invalid path; do nothing.
         return object;
     }
