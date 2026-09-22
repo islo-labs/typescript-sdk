@@ -21,6 +21,10 @@ tsconfig.json
 # Hand-written custom tests (auth wrapper behavior)
 tests/custom.test.ts
 
+# Fern's deep-assignment helper does not guard prototype keys.
+src/core/utils/setObjectProperty.ts
+tests/unit/utils/setObjectProperty.test.ts
+
 # Hand-written release workflow that fires after a Fern PR merges:
 # builds, publishes to npm via Trusted Publishing, and pushes the
 # v<version> tag.

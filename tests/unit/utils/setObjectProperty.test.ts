@@ -73,4 +73,15 @@ describe("Test setObjectProperty", () => {
         const result = setObjectProperty(giveObject, givePath, giveValue);
         expect(result).toEqual(wantObject);
     });
+
+    test("does not modify Object.prototype", () => {
+        const prototype = Object.prototype as Record<string, unknown>;
+        delete prototype.polluted;
+        try {
+            setObjectProperty({}, "__proto__.polluted", true);
+            expect(prototype.polluted).toBeUndefined();
+        } finally {
+            delete prototype.polluted;
+        }
+    });
 });
