@@ -3,4 +3,5 @@
 export interface ScheduleTriggerSection {
     cron: string;
     timezone?: string | undefined;
+    inputs?: Record<string, unknown> | undefined;
 }

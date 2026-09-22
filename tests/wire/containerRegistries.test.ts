@@ -10,6 +10,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -44,6 +45,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -67,6 +69,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -90,6 +93,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -133,6 +137,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "ecr", registry_host: "x", cloud_role_id: "cloud_role_id", region: "x" };
@@ -162,6 +167,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "ecr", registry_host: "x", cloud_role_id: "cloud_role_id", region: "x" };
@@ -191,6 +197,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "ecr", registry_host: "x", cloud_role_id: "cloud_role_id", region: "x" };
@@ -220,6 +227,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "ecr", registry_host: "x", cloud_role_id: "cloud_role_id", region: "x" };
@@ -249,6 +257,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -283,6 +292,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -308,6 +318,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -333,6 +344,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -358,6 +370,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -374,6 +387,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -399,6 +413,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -424,6 +439,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -449,6 +465,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -484,6 +501,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -510,6 +528,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -536,6 +555,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -562,6 +582,7 @@ describe("ContainerRegistriesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};

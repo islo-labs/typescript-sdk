@@ -10,6 +10,7 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -36,6 +37,7 @@ describe("InferenceClient", () => {
                     ],
                 },
             ],
+            effort: { levels: [{ harness: "codex" }], aliases: [{ harness: "codex", id: "id", model: "model" }] },
         };
 
         server.mockEndpoint().get("/inference/models").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -49,6 +51,7 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -66,6 +69,7 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

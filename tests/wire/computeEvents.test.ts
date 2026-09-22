@@ -10,6 +10,7 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -28,6 +29,7 @@ describe("ComputeEventsClient", () => {
                 type: "agent",
                 mode: "mode",
                 harness: "harness",
+                model: "model",
                 status: "status",
                 outcome: "outcome",
                 agent_session_id: "agent_session_id",
@@ -55,6 +57,7 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -80,6 +83,7 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

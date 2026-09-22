@@ -10,6 +10,8 @@ export * as credits from "./credits/index.js";
 export * from "./environments/client/requests/index.js";
 export * as environments from "./environments/index.js";
 export * from "./environments/types/index.js";
+export * from "./factories/client/requests/index.js";
+export * as factories from "./factories/index.js";
 export * from "./factory/client/requests/index.js";
 export * as factory from "./factory/index.js";
 export * from "./gatewayProfiles/client/requests/index.js";

@@ -2,8 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -29,6 +30,9 @@ export class IntegrationsClient {
      *
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
      * @example
      *     await client.integrations.listIntegrationProviders()
      */
@@ -41,7 +45,13 @@ export class IntegrationsClient {
     private async __listIntegrationProviders(
         requestOptions?: IntegrationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.IntegrationProvidersResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,6 +85,9 @@ export class IntegrationsClient {
     /**
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
      * @example
      *     await client.integrations.listIntegrationTriggers()
      */
@@ -91,6 +104,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -128,6 +144,8 @@ export class IntegrationsClient {
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.getIntegrationTrigger({
@@ -151,6 +169,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -209,6 +230,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.listIntegrations()
@@ -226,6 +249,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -287,6 +313,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.listCustomServices()
@@ -304,6 +332,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -366,6 +397,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.createCustomService({
@@ -390,6 +423,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -403,7 +439,7 @@ export class IntegrationsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -451,13 +487,13 @@ export class IntegrationsClient {
     }
 
     /**
-     * Disconnect a custom integration by its Descope app ID.
+     * Disconnect a custom integration by its stable provider slug.
      *
-     * Authorization is by deterministic-ID prefix: only apps whose ID matches
-     * ``cust-{tenant-prefix}-`` are accepted, which scopes the operation to the
-     * caller's workspace without a DB lookup. ``scope`` selects which side's
-     * tokens to revoke (per-user vs tenant-wide); ``delete_app=true`` removes
-     * the Descope app entirely (affects every user in the workspace).
+     * The provider is resolved only within the authenticated tenant's custom
+     * service catalog, so callers cannot target another workspace. ``scope`` selects
+     * which side's tokens to revoke (per-user vs tenant-wide);
+     * ``delete_app=true`` removes the Descope app entirely (affects every user in
+     * the workspace).
      *
      * @param {IsloApi.DisconnectCustomIntegrationRequest} request
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -467,10 +503,12 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.disconnectCustomIntegration({
-     *         descope_app_id: "descope_app_id"
+     *         provider: "provider"
      *     })
      */
     public disconnectCustomIntegration(
@@ -484,7 +522,7 @@ export class IntegrationsClient {
         request: IsloApi.DisconnectCustomIntegrationRequest,
         requestOptions?: IntegrationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, unknown>>> {
-        const { descope_app_id: descopeAppId, scope, delete_app: deleteApp } = request;
+        const { provider, scope, delete_app: deleteApp } = request;
         const _queryParams: Record<string, unknown> = {
             scope: scope != null ? scope : undefined,
             delete_app: deleteApp,
@@ -493,13 +531,16 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).control,
-                `integrations/custom/${core.url.encodePathParam(descopeAppId)}`,
+                `integrations/custom/${core.url.encodePathParam(provider)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -552,7 +593,7 @@ export class IntegrationsClient {
             _response.error,
             _response.rawResponse,
             "DELETE",
-            "/integrations/custom/{descope_app_id}",
+            "/integrations/custom/{provider}",
         );
     }
 
@@ -568,6 +609,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.getIntegrationStatus({
@@ -590,6 +633,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -655,6 +701,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.disconnectIntegration({
@@ -681,6 +729,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -743,6 +794,8 @@ export class IntegrationsClient {
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.listConnectedIntegrationTriggers()
@@ -760,6 +813,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

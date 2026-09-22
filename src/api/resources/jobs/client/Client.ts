@@ -2,8 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -30,6 +31,8 @@ export class JobsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.validateJobManifest({
@@ -65,6 +68,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -78,7 +84,7 @@ export class JobsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -118,6 +124,8 @@ export class JobsClient {
      * @throws {@link IsloApi.UnprocessableEntityError}
      * @throws {@link IsloApi.BadGatewayError}
      * @throws {@link IsloApi.ServiceUnavailableError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.deployJob({
@@ -153,6 +161,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -166,7 +177,7 @@ export class JobsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -213,6 +224,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.getJob({
@@ -235,6 +248,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -277,6 +293,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.deleteJob({
@@ -299,6 +317,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -341,6 +362,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.listJobs()
@@ -365,6 +388,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -411,6 +437,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.listJobVersions({
@@ -437,6 +465,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -483,6 +514,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.getJobVersion({
@@ -506,6 +539,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -553,6 +589,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.listJobRuns({
@@ -579,6 +617,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -621,32 +662,38 @@ export class JobsClient {
     }
 
     /**
-     * @param {IsloApi.JobRunCreate} request
+     * @param {IsloApi.TriggerJobRunRequest} request
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.triggerJobRun({
-     *         name: "name"
+     *         name: "name",
+     *         body: {}
      *     })
      */
     public triggerJobRun(
-        request: IsloApi.JobRunCreate,
+        request: IsloApi.TriggerJobRunRequest,
         requestOptions?: JobsClient.RequestOptions,
     ): core.HttpResponsePromise<IsloApi.JobRunResponse> {
         return core.HttpResponsePromise.fromPromise(this.__triggerJobRun(request, requestOptions));
     }
 
     private async __triggerJobRun(
-        request: IsloApi.JobRunCreate,
+        request: IsloApi.TriggerJobRunRequest,
         requestOptions?: JobsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.JobRunResponse>> {
-        const { name, ..._body } = request;
+        const { name, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -660,7 +707,7 @@ export class JobsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -692,6 +739,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.getJobRun({
@@ -715,6 +764,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -753,33 +805,39 @@ export class JobsClient {
     }
 
     /**
-     * @param {IsloApi.JobRunStopRequest} request
+     * @param {IsloApi.StopJobRunRequest} request
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.stopJobRun({
      *         name: "name",
-     *         run_id: "run_id"
+     *         run_id: "run_id",
+     *         body: {}
      *     })
      */
     public stopJobRun(
-        request: IsloApi.JobRunStopRequest,
+        request: IsloApi.StopJobRunRequest,
         requestOptions?: JobsClient.RequestOptions,
     ): core.HttpResponsePromise<IsloApi.JobRunResponse> {
         return core.HttpResponsePromise.fromPromise(this.__stopJobRun(request, requestOptions));
     }
 
     private async __stopJobRun(
-        request: IsloApi.JobRunStopRequest,
+        request: IsloApi.StopJobRunRequest,
         requestOptions?: JobsClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.JobRunResponse>> {
-        const { name, run_id: runId, ..._body } = request;
+        const { name, run_id: runId, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -793,7 +851,7 @@ export class JobsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -830,6 +888,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.getJobSchedule({
@@ -852,6 +912,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -894,6 +957,8 @@ export class JobsClient {
      * @param {JobsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.jobs.deleteJobSchedule({
@@ -916,6 +981,9 @@ export class JobsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({

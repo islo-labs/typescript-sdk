@@ -10,6 +10,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { manifest: { job: { name: "name" }, run: { tasks: [{ name: "name", steps: [{}] }] } } };
@@ -48,6 +49,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -103,6 +105,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -158,6 +161,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { manifest: { job: { name: "name" }, run: { tasks: [{ name: "name", steps: [{}] }] } } };
@@ -220,6 +224,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -275,6 +280,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -330,6 +336,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -385,6 +392,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {
@@ -440,6 +448,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -486,6 +495,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -505,6 +515,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -521,6 +532,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -540,6 +552,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -558,6 +571,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -575,6 +589,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -611,6 +626,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -636,6 +652,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -683,6 +700,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -709,6 +727,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -720,6 +739,10 @@ describe("JobsClient", () => {
                 status: "status",
                 region: "region",
                 step_count: 1,
+                compute_cost_cents: 1,
+                inference_cost_cents: 1,
+                total_cost_cents: 1,
+                cost_rated_at: "2024-01-15T09:30:00Z",
                 started_at: "2024-01-15T09:30:00Z",
                 completed_at: "2024-01-15T09:30:00Z",
                 created_at: "2024-01-15T09:30:00Z",
@@ -740,6 +763,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -759,6 +783,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -800,6 +825,10 @@ describe("JobsClient", () => {
                     metadata: { key: "value" },
                 },
             ],
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
@@ -820,6 +849,7 @@ describe("JobsClient", () => {
 
         const response = await client.jobs.triggerJobRun({
             name: "name",
+            body: {},
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -829,6 +859,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -846,6 +877,7 @@ describe("JobsClient", () => {
         await expect(async () => {
             return await client.jobs.triggerJobRun({
                 name: "name",
+                body: {},
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
@@ -855,6 +887,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -896,6 +929,10 @@ describe("JobsClient", () => {
                     metadata: { key: "value" },
                 },
             ],
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
@@ -925,6 +962,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -951,6 +989,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -992,6 +1031,10 @@ describe("JobsClient", () => {
                     metadata: { key: "value" },
                 },
             ],
+            compute_cost_cents: 1,
+            inference_cost_cents: 1,
+            total_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
             started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
             error_message: "error_message",
@@ -1013,6 +1056,7 @@ describe("JobsClient", () => {
         const response = await client.jobs.stopJobRun({
             name: "name",
             run_id: "run_id",
+            body: {},
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -1022,6 +1066,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -1040,6 +1085,7 @@ describe("JobsClient", () => {
             return await client.jobs.stopJobRun({
                 name: "name",
                 run_id: "run_id",
+                body: {},
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
@@ -1049,6 +1095,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1073,6 +1120,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1098,6 +1146,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -1114,6 +1163,7 @@ describe("JobsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

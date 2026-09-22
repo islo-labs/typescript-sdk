@@ -10,6 +10,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -36,6 +37,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -73,6 +75,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -109,6 +112,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -135,6 +139,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -162,6 +167,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -179,6 +185,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -196,6 +203,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -213,6 +221,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -235,6 +244,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -258,6 +268,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -281,6 +292,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -304,6 +316,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -332,6 +345,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -361,6 +375,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -390,6 +405,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -419,6 +435,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -448,6 +465,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -455,14 +473,14 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.integrations.disconnectCustomIntegration({
-            descope_app_id: "descope_app_id",
+            provider: "provider",
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -472,6 +490,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -479,7 +498,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
@@ -487,7 +506,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.BadRequestError);
     });
@@ -497,6 +516,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -504,7 +524,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
@@ -512,7 +532,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
@@ -522,6 +542,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -529,7 +550,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(403)
             .jsonBody(rawResponseBody)
@@ -537,7 +558,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.ForbiddenError);
     });
@@ -547,6 +568,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -554,7 +576,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
@@ -562,7 +584,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
@@ -572,6 +594,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -579,7 +602,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(422)
             .jsonBody(rawResponseBody)
@@ -587,7 +610,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
@@ -597,6 +620,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -637,6 +661,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -662,6 +687,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -687,6 +713,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -712,6 +739,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -737,6 +765,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -761,6 +790,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -786,6 +816,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -811,6 +842,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -836,6 +868,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -861,6 +894,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -886,6 +920,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -923,6 +958,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

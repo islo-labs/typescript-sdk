@@ -21,6 +21,7 @@ export namespace JudgeContentFilter {
     export const ProviderKey = {
         Anthropic: "anthropic",
         Openai: "openai",
+        Typesafe: "typesafe",
     } as const;
     export type ProviderKey = (typeof ProviderKey)[keyof typeof ProviderKey];
     export const Fallback = {

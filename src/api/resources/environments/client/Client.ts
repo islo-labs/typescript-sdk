@@ -2,8 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -27,6 +28,8 @@ export class EnvironmentsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.listEnvironments()
@@ -51,6 +54,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -105,6 +111,8 @@ export class EnvironmentsClient {
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.createEnvironment({
@@ -126,6 +134,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -139,7 +150,7 @@ export class EnvironmentsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -185,6 +196,8 @@ export class EnvironmentsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.getEnvironment({
@@ -207,6 +220,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -263,6 +279,8 @@ export class EnvironmentsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.deleteEnvironment({
@@ -285,6 +303,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -342,6 +363,8 @@ export class EnvironmentsClient {
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.updateEnvironment({
@@ -364,6 +387,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -377,7 +403,7 @@ export class EnvironmentsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -428,6 +454,8 @@ export class EnvironmentsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.environments.setDefaultEnvironment({
@@ -450,6 +478,9 @@ export class EnvironmentsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -495,6 +526,95 @@ export class EnvironmentsClient {
             _response.error,
             _response.rawResponse,
             "POST",
+            "/environments/{environment_ref}/default",
+        );
+    }
+
+    /**
+     * @param {IsloApi.UnsetDefaultEnvironmentRequest} request
+     * @param {EnvironmentsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.ConflictError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.environments.unsetDefaultEnvironment({
+     *         environment_ref: "environment_ref"
+     *     })
+     */
+    public unsetDefaultEnvironment(
+        request: IsloApi.UnsetDefaultEnvironmentRequest,
+        requestOptions?: EnvironmentsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.EnvironmentResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__unsetDefaultEnvironment(request, requestOptions));
+    }
+
+    private async __unsetDefaultEnvironment(
+        request: IsloApi.UnsetDefaultEnvironmentRequest,
+        requestOptions?: EnvironmentsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.EnvironmentResponse>> {
+        const { environment_ref: environmentRef } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `environments/${core.url.encodePathParam(environmentRef)}/default`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.EnvironmentResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 409:
+                    throw new IsloApi.ConflictError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
             "/environments/{environment_ref}/default",
         );
     }

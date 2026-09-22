@@ -12,6 +12,10 @@ export interface JobRunResponse {
     result_payload: Record<string, unknown> | null;
     step_timeline: IsloApi.JobRunStepTimelineEntry[];
     artifact_refs: IsloApi.ArtifactRef[];
+    compute_cost_cents?: number | undefined;
+    inference_cost_cents?: number | undefined;
+    total_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     started_at: string | null;
     completed_at: string | null;
     error_message: string | null;

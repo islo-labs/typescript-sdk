@@ -3,6 +3,8 @@
 export interface KnowledgeBinding {
     type: KnowledgeBinding.Type;
     slug: string;
+    /** Immutable knowledge version UUID. Omit to resolve the latest active version when the binding is consumed. */
+    version?: (string | null) | undefined;
 }
 
 export namespace KnowledgeBinding {
