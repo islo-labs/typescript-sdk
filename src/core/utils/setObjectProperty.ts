@@ -1,12 +1,13 @@
 /**
- * Sets the value at path of object. If a portion of path doesn’t exist it’s created. This is
- * inspired by Lodash's set function, but is simplified to accommodate our use case.
+ * Returns a copy of object with the value at path set. If a portion of path doesn’t exist it’s
+ * created. The input object is left unchanged. This is inspired by Lodash's set function, but is
+ * simplified to accommodate our use case.
  * For more details, see https://lodash.com/docs/4.17.15#set.
  *
- * @param object The object to modify.
+ * @param object The object to copy.
  * @param path The path of the property to set.
  * @param value The value to set.
- * @return Returns object.
+ * @return Returns the copy.
  */
 export function setObjectProperty<T extends object>(object: T, path: string, value: any): T {
     if (object == null) {
@@ -19,22 +20,22 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
         return object;
     }
 
-    let current: Record<string, any> = object;
+    const root = copyRecord(object);
+    let current: Record<string, any> = root;
     for (let i = 0; i < keys.length - 1; i++) {
         const key = keys[i];
         if (key == null) {
             // Unreachable.
             continue;
         }
-        if (key === "__proto__" || key === "constructor" || key === "prototype") {
+        if (isPrototypeKey(key)) {
             return object;
         }
-        if (
-            !Object.prototype.hasOwnProperty.call(current, key) ||
-            !current[key] ||
-            typeof current[key] !== "object"
-        ) {
+        const existing = Object.hasOwn(current, key) ? current[key] : undefined;
+        if (!existing || typeof existing !== "object") {
             current[key] = {};
+        } else {
+            current[key] = copyRecord(existing);
         }
         current = current[key] as Record<string, any>;
     }
@@ -44,10 +45,21 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
         // Unreachable.
         return object;
     }
-    if (lastKey === "__proto__" || lastKey === "constructor" || lastKey === "prototype") {
+    if (isPrototypeKey(lastKey)) {
         return object;
     }
 
     current[lastKey] = value;
-    return object;
+    return root as T;
+}
+
+function isPrototypeKey(key: string): boolean {
+    return key === "__proto__" || key === "constructor" || key === "prototype";
+}
+
+function copyRecord(value: object): Record<string, any> {
+    if (Array.isArray(value)) {
+        return value.slice();
+    }
+    return { ...value };
 }

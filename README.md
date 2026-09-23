@@ -69,7 +69,7 @@ while (true) {
         sandbox_name: sandbox.name,
         exec_id: started.exec_id,
     });
-    if (["completed", "failed", "timeout"].includes(result.status)) {
+    if (["completed", "failed", "timeout", "cancelled"].includes(result.status)) {
         break;
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -100,7 +100,9 @@ const client = new Islo({ apiKey: "your-api-key" });
 
 ## Compatibility
 
-Pre-1.0. Requests that omit `X-Islo-Api-Version` still get server behavior `2026-02-23`. This SDK sends `2026-09-15` by default. Pass `apiVersion: "2026-02-23"` to keep the previous server behavior.
+Pre-1.0. Requests that omit `X-Islo-Api-Version` still get server behavior `2026-02-23`. This SDK sends `2026-09-15` by default. Pass `apiVersion` to pin a different version. A value in `headers` cannot override it.
+
+`jobRuns.listAllJobRuns` and `factory.listFactoryLineRuns` only understand the `2026-09-15` page envelope (`items` and `next_cursor`). Pinning `2026-02-23` makes those two methods yield no items, because the server returns a bare array. Leave the default version for those calls.
 
 Client breaks in this release:
 

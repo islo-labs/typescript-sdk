@@ -70,8 +70,11 @@ describe("Test setObjectProperty", () => {
         },
     ];
     test.each(testCases)("$description", ({ giveObject, givePath, giveValue, wantObject }) => {
+        const original = structuredClone(giveObject);
         const result = setObjectProperty(giveObject, givePath, giveValue);
         expect(result).toEqual(wantObject);
+        expect(giveObject).toEqual(original);
+        expect(result).not.toBe(giveObject);
     });
 
     test("does not modify Object.prototype", () => {
