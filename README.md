@@ -98,6 +98,17 @@ const client = new Islo(); // Picks up ISLO_API_KEY automatically
 const client = new Islo({ apiKey: "your-api-key" });
 ```
 
+## Compatibility
+
+Pre-1.0. Requests that omit `X-Islo-Api-Version` still get server behavior `2026-02-23`. This SDK sends `2026-09-15` by default. Pass `apiVersion: "2026-02-23"` to keep the previous server behavior.
+
+Client breaks in this release:
+
+- `jobRuns.listAllJobRuns` and `factory.listFactoryLineRuns` return cursor pages instead of arrays.
+- `integrations.disconnectCustomIntegration` takes `{ provider }` instead of `descope_app_id`.
+- `JobRunStatus` is removed. Status filters are plain strings.
+- Path fields and bodies share one request object. `jobs.triggerJobRun` takes `{ name, body }`, not a bare job-run body.
+
 ### Custom URLs
 
 ```typescript
