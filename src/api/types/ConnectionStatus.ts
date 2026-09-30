@@ -6,7 +6,7 @@
 export interface ConnectionStatus {
     connected: boolean;
     connected_at?: (string | null) | undefined;
-    username?: (string | null) | undefined;
     email?: (string | null) | undefined;
     scopes?: (string[] | null) | undefined;
+    username?: (string | null) | undefined;
 }

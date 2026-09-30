@@ -2,8 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -29,23 +30,28 @@ export class GatewayProfilesClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.listGatewayProfiles()
      */
     public listGatewayProfiles(
         requestOptions?: GatewayProfilesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.GatewayProfileResponse[]> {
+    ): core.HttpResponsePromise<IsloApi.ListPageGatewayProfileResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listGatewayProfiles(requestOptions));
     }
 
     private async __listGatewayProfiles(
         requestOptions?: GatewayProfilesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.GatewayProfileResponse[]>> {
+    ): Promise<core.WithRawResponse<IsloApi.ListPageGatewayProfileResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -64,7 +70,10 @@ export class GatewayProfilesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.GatewayProfileResponse[], rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as IsloApi.ListPageGatewayProfileResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -96,6 +105,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.createGatewayProfile({
@@ -117,6 +128,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -130,7 +144,7 @@ export class GatewayProfilesClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -179,6 +193,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.getGatewayProfile({
@@ -201,6 +217,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -259,6 +278,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.deleteGatewayProfile({
@@ -281,6 +302,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -349,6 +373,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.ConflictError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.updateGatewayProfile({
@@ -371,6 +397,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -384,7 +413,7 @@ export class GatewayProfilesClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -441,6 +470,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.createGatewayRule({
@@ -464,6 +495,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -477,7 +511,7 @@ export class GatewayProfilesClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -522,6 +556,102 @@ export class GatewayProfilesClient {
     }
 
     /**
+     * @param {IsloApi.RuleReorderRequest} request
+     * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnauthorizedError}
+     * @throws {@link IsloApi.ForbiddenError}
+     * @throws {@link IsloApi.NotFoundError}
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.gatewayProfiles.reorderGatewayRules({
+     *         profile_id: "profile_id",
+     *         rules: [{
+     *                 priority: 1,
+     *                 rule_id: "rule_id"
+     *             }]
+     *     })
+     */
+    public reorderGatewayRules(
+        request: IsloApi.RuleReorderRequest,
+        requestOptions?: GatewayProfilesClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.GatewayRuleResponse[]> {
+        return core.HttpResponsePromise.fromPromise(this.__reorderGatewayRules(request, requestOptions));
+    }
+
+    private async __reorderGatewayRules(
+        request: IsloApi.RuleReorderRequest,
+        requestOptions?: GatewayProfilesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.GatewayRuleResponse[]>> {
+        const { profile_id: profileId, ..._body } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `gateway/profiles/${core.url.encodePathParam(profileId)}/rules/reorder`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.GatewayRuleResponse[], rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 401:
+                    throw new IsloApi.UnauthorizedError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new IsloApi.ForbiddenError(
+                        _response.error.body as IsloApi.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/gateway/profiles/{profile_id}/rules/reorder",
+        );
+    }
+
+    /**
      * @param {IsloApi.DeleteGatewayRuleRequest} request
      * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -529,6 +659,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.deleteGatewayRule({
@@ -552,6 +684,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -614,6 +749,8 @@ export class GatewayProfilesClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.gatewayProfiles.updateGatewayRule({
@@ -637,6 +774,9 @@ export class GatewayProfilesClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -650,7 +790,7 @@ export class GatewayProfilesClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -691,97 +831,6 @@ export class GatewayProfilesClient {
             _response.rawResponse,
             "PATCH",
             "/gateway/profiles/{profile_id}/rules/{rule_id}",
-        );
-    }
-
-    /**
-     * @param {IsloApi.RuleReorderRequest} request
-     * @param {GatewayProfilesClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnauthorizedError}
-     * @throws {@link IsloApi.ForbiddenError}
-     * @throws {@link IsloApi.NotFoundError}
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.gatewayProfiles.reorderGatewayRules({
-     *         profile_id: "profile_id",
-     *         rules: [{
-     *                 rule_id: "rule_id",
-     *                 priority: 1
-     *             }]
-     *     })
-     */
-    public reorderGatewayRules(
-        request: IsloApi.RuleReorderRequest,
-        requestOptions?: GatewayProfilesClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.GatewayRuleResponse[]> {
-        return core.HttpResponsePromise.fromPromise(this.__reorderGatewayRules(request, requestOptions));
-    }
-
-    private async __reorderGatewayRules(
-        request: IsloApi.RuleReorderRequest,
-        requestOptions?: GatewayProfilesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.GatewayRuleResponse[]>> {
-        const { profile_id: profileId, ..._body } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                `gateway/profiles/${core.url.encodePathParam(profileId)}/rules/reorder`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.GatewayRuleResponse[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new IsloApi.UnauthorizedError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 403:
-                    throw new IsloApi.ForbiddenError(
-                        _response.error.body as IsloApi.ErrorResponse,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new IsloApi.NotFoundError(_response.error.body as unknown, _response.rawResponse);
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/gateway/profiles/{profile_id}/rules/reorder",
         );
     }
 }

@@ -3,6 +3,6 @@
 export interface ScheduleSection {
     /** Cron expression; validated at deploy time. Every param the schedule uses must have a default before you add [schedule]. */
     cron: string;
-    timezone?: string | undefined;
     enabled?: boolean | undefined;
+    timezone?: string | undefined;
 }

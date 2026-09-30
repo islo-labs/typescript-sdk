@@ -2,7 +2,8 @@
 
 export interface LineScheduleResponse {
     cron: string;
-    timezone: string;
     enabled: boolean;
+    inputs?: Record<string, unknown> | undefined;
     schedule_generation: number;
+    timezone: string;
 }

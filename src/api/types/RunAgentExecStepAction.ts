@@ -4,12 +4,13 @@
  * Exec-mode agent step. Uses the $ISLO_OUTPUT side channel like exec.
  */
 export interface RunAgentExecStepAction {
-    harness: RunAgentExecStepAction.Harness;
     command: RunAgentExecStepAction.Command;
+    harness: RunAgentExecStepAction.Harness;
     model?: (string | null) | undefined;
 }
 
 export namespace RunAgentExecStepAction {
+    export type Command = string[] | string;
     export const Harness = {
         Codex: "codex",
         Cursor: "cursor",
@@ -18,5 +19,4 @@ export namespace RunAgentExecStepAction {
         Custom: "custom",
     } as const;
     export type Harness = (typeof Harness)[keyof typeof Harness];
-    export type Command = string[] | string;
 }

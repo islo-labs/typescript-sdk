@@ -3,14 +3,14 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineRunDebugStage {
-    stage_name?: (string | null) | undefined;
-    stage_order?: (number | null) | undefined;
+    environment?: IsloApi.LineRunDebugEnvironment | undefined;
     iteration?: (number | null) | undefined;
-    status?: (string | null) | undefined;
-    outcome?: (string | null) | undefined;
-    reason?: (string | null) | undefined;
     job_run_id?: (string | null) | undefined;
     job_version_id?: (string | null) | undefined;
+    outcome?: (string | null) | undefined;
+    reason?: (string | null) | undefined;
+    stage_name?: (string | null) | undefined;
+    stage_order?: (number | null) | undefined;
+    status?: (string | null) | undefined;
     steps?: IsloApi.LineRunDebugStep[] | undefined;
-    environment?: IsloApi.LineRunDebugEnvironment | undefined;
 }

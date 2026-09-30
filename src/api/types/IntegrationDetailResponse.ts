@@ -7,6 +7,6 @@ import type * as IsloApi from "../index.js";
  */
 export interface IntegrationDetailResponse {
     provider: string;
-    user: IsloApi.ConnectionStatus;
     tenant: IsloApi.ConnectionStatus;
+    user: IsloApi.ConnectionStatus;
 }

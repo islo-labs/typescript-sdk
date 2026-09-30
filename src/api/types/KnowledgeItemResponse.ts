@@ -3,19 +3,19 @@
 import type * as IsloApi from "../index.js";
 
 export interface KnowledgeItemResponse {
+    body: string;
+    byte_size?: (number | null) | undefined;
+    created_at: string;
+    format: string;
     id: string;
+    level: IsloApi.KnowledgeLevel;
+    links: IsloApi.KnowledgeLinkResponse[];
+    metadata: Record<string, unknown>;
     /** Unique lowercase identifier (letters, digits, hyphens). Set at creation and cannot be changed. */
     slug: string;
-    type: IsloApi.KnowledgeLevel;
-    level: IsloApi.KnowledgeLevel;
-    format: string;
-    body: string;
-    metadata: Record<string, unknown>;
     status: IsloApi.KnowledgeStatus;
-    links: IsloApi.KnowledgeLinkResponse[];
-    created_at: string;
+    type: IsloApi.KnowledgeLevel;
     updated_at: string;
     version_id?: (string | null) | undefined;
     version_number?: (number | null) | undefined;
-    byte_size?: (number | null) | undefined;
 }

@@ -9,5 +9,5 @@
 export interface ListFactoryLineRunsForLineRequest {
     name: string;
     limit?: number;
-    offset?: number;
+    cursor?: string | null;
 }

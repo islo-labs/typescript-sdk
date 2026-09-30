@@ -10,8 +10,8 @@ import type * as core from "../../../../../core/index.js";
  *     }
  */
 export interface BodyCreateKnowledgeMedia {
+    /** Media file */
+    file: core.file.Uploadable;
     /** JSON metadata for the knowledge item */
     item: string;
-    /** Media file (max 10 MiB) */
-    file: core.file.Uploadable;
 }

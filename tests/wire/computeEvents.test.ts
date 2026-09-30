@@ -10,30 +10,32 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            command_id: "command_id",
             action: "action",
-            success: true,
-            error_message: "error_message",
+            command_id: "command_id",
+            completed_at: "2024-01-15T09:30:00Z",
             error_code: "error_code",
             error_details: { key: "value" },
-            started_at: "2024-01-15T09:30:00Z",
-            completed_at: "2024-01-15T09:30:00Z",
-            session_name: "session_name",
-            sandbox_name: "sandbox_name",
+            error_message: "error_message",
             result: {
                 type: "agent",
-                mode: "mode",
-                harness: "harness",
-                status: "status",
-                outcome: "outcome",
                 agent_session_id: "agent_session_id",
+                harness: "harness",
+                mode: "mode",
+                model: "model",
+                outcome: "outcome",
                 output_text: "output_text",
                 outputs: { key: { key: "value" } },
+                status: "status",
             },
+            sandbox_name: "sandbox_name",
+            session_name: "session_name",
+            started_at: "2024-01-15T09:30:00Z",
+            success: true,
         };
 
         server
@@ -55,6 +57,7 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -80,6 +83,7 @@ describe("ComputeEventsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

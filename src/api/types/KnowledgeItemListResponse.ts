@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface KnowledgeItemListResponse {
+    byte_size?: (number | null) | undefined;
+    created_at: string;
     id: string;
+    level: IsloApi.KnowledgeLevel;
+    links: IsloApi.KnowledgeLinkResponse[];
     /** Unique lowercase identifier (letters, digits, hyphens). Set at creation and cannot be changed. */
     slug: string;
-    type: IsloApi.KnowledgeLevel;
-    level: IsloApi.KnowledgeLevel;
     status: IsloApi.KnowledgeStatus;
-    links: IsloApi.KnowledgeLinkResponse[];
-    created_at: string;
+    type: IsloApi.KnowledgeLevel;
     updated_at: string;
     version_number?: (number | null) | undefined;
-    byte_size?: (number | null) | undefined;
 }

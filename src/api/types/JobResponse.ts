@@ -3,11 +3,11 @@
 import type * as IsloApi from "../index.js";
 
 export interface JobResponse {
-    id: string;
-    name: string;
+    created_at: string;
     description: string | null;
+    id: string;
     latest_version: IsloApi.JobVersionResponse | null;
+    name: string;
     /** Typed run-parameter schema from the latest deployed manifest */
     params?: IsloApi.JobParamDefinition[] | undefined;
-    created_at: string;
 }

@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface GatewayProfileResponse {
-    id: string;
-    name: string;
-    description?: (string | null) | undefined;
+    cloud_role?: (IsloApi.CloudRoleRef | null) | undefined;
+    created_at?: (string | null) | undefined;
     default_action: string;
+    description?: (string | null) | undefined;
+    id: string;
+    integration_policy?: IsloApi.GatewayProfileResponseIntegrationPolicy | undefined;
     internet_enabled: boolean;
     is_default: boolean;
-    cloud_role?: (IsloApi.CloudRoleRef | null) | undefined;
-    integration_policy?: IsloApi.GatewayProfileResponseIntegrationPolicy | undefined;
+    name: string;
     rule_count?: number | undefined;
-    created_at?: (string | null) | undefined;
     updated_at?: (string | null) | undefined;
 }

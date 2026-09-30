@@ -11,10 +11,10 @@ import type * as IsloApi from "../index.js";
  * via the frontend's preset catalog so this stays None for them.
  */
 export interface IntegrationStatus {
-    provider: string;
-    connected: boolean;
-    level?: (IsloApi.IntegrationLevel | null) | undefined;
     auth_method?: (IsloApi.AuthMethod | null) | undefined;
-    preset_id?: (string | null) | undefined;
+    connected: boolean;
     display_name?: (string | null) | undefined;
+    level?: (IsloApi.IntegrationLevel | null) | undefined;
+    preset_id?: (string | null) | undefined;
+    provider: string;
 }

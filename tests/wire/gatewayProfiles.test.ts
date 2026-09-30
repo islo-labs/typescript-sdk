@@ -10,24 +10,29 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = [
-            {
-                id: "id",
-                name: "name",
-                description: "description",
-                default_action: "default_action",
-                internet_enabled: true,
-                is_default: true,
-                cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
-                integration_policy: { mode: "all" },
-                rule_count: 1,
-                created_at: "2024-01-15T09:30:00Z",
-                updated_at: "2024-01-15T09:30:00Z",
-            },
-        ];
+        const rawResponseBody = {
+            items: [
+                {
+                    cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
+                    created_at: "2024-01-15T09:30:00Z",
+                    default_action: "default_action",
+                    description: "description",
+                    id: "id",
+                    integration_policy: { mode: "all" },
+                    internet_enabled: true,
+                    is_default: true,
+                    name: "name",
+                    rule_count: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
 
         server.mockEndpoint().get("/gateway/profiles").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -40,6 +45,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -57,6 +63,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -74,20 +81,21 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = {
-            id: "id",
-            name: "name",
-            description: "description",
+            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
+            created_at: "2024-01-15T09:30:00Z",
             default_action: "default_action",
+            description: "description",
+            id: "id",
+            integration_policy: { mode: "all" },
             internet_enabled: true,
             is_default: true,
-            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
-            integration_policy: { mode: "all" },
+            name: "name",
             rule_count: 1,
-            created_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -111,6 +119,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "x" };
@@ -137,6 +146,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "x" };
@@ -163,6 +173,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "x" };
@@ -189,6 +200,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { name: "x" };
@@ -215,37 +227,38 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            id: "id",
-            name: "name",
-            description: "description",
+            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
+            created_at: "2024-01-15T09:30:00Z",
             default_action: "default_action",
+            description: "description",
+            id: "id",
+            integration_policy: { mode: "all" },
             internet_enabled: true,
             is_default: true,
-            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
-            integration_policy: { mode: "all" },
+            name: "name",
             rule_count: 1,
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
             rules: [
                 {
-                    id: "id",
-                    priority: 1,
-                    host_pattern: "host_pattern",
-                    path_pattern: "path_pattern",
-                    methods: ["methods"],
                     action: "action",
-                    rate_limit_rpm: 1,
-                    provider_key: "provider_key",
                     auth_strategy: { key: "value" },
                     content_filter: { key: "value" },
                     created_at: "2024-01-15T09:30:00Z",
+                    host_pattern: "host_pattern",
+                    id: "id",
+                    methods: ["methods"],
+                    path_pattern: "path_pattern",
+                    priority: 1,
+                    provider_key: "provider_key",
+                    rate_limit_rpm: 1,
                     updated_at: "2024-01-15T09:30:00Z",
                 },
             ],
+            updated_at: "2024-01-15T09:30:00Z",
         };
 
         server
@@ -267,6 +280,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -292,6 +306,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -317,6 +332,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -342,6 +358,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -358,6 +375,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -383,6 +401,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -408,6 +427,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -433,6 +453,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -458,6 +479,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -483,20 +505,21 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
         const rawResponseBody = {
-            id: "id",
-            name: "name",
-            description: "description",
+            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
+            created_at: "2024-01-15T09:30:00Z",
             default_action: "default_action",
+            description: "description",
+            id: "id",
+            integration_policy: { mode: "all" },
             internet_enabled: true,
             is_default: true,
-            cloud_role: { id: "id", provider: "provider", role_arn: "role_arn" },
-            integration_policy: { mode: "all" },
+            name: "name",
             rule_count: 1,
-            created_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -520,6 +543,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -546,6 +570,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -572,6 +597,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -598,6 +624,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -624,6 +651,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -650,21 +678,22 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "host_pattern" };
         const rawResponseBody = {
-            id: "id",
-            priority: 1,
-            host_pattern: "host_pattern",
-            path_pattern: "path_pattern",
-            methods: ["methods"],
             action: "action",
-            rate_limit_rpm: 1,
-            provider_key: "provider_key",
             auth_strategy: { key: "value" },
             content_filter: { key: "value" },
             created_at: "2024-01-15T09:30:00Z",
+            host_pattern: "host_pattern",
+            id: "id",
+            methods: ["methods"],
+            path_pattern: "path_pattern",
+            priority: 1,
+            provider_key: "provider_key",
+            rate_limit_rpm: 1,
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -689,6 +718,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
@@ -716,6 +746,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
@@ -743,6 +774,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
@@ -770,6 +802,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { host_pattern: "x" };
@@ -792,11 +825,227 @@ describe("GatewayProfilesClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("reorder_gateway_rules (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { rules: [{ priority: 1, rule_id: "rule_id" }] };
+        const rawResponseBody = [
+            {
+                action: "action",
+                auth_strategy: { key: "value" },
+                content_filter: { key: "value" },
+                created_at: "2024-01-15T09:30:00Z",
+                host_pattern: "host_pattern",
+                id: "id",
+                methods: ["methods"],
+                path_pattern: "path_pattern",
+                priority: 1,
+                provider_key: "provider_key",
+                rate_limit_rpm: 1,
+                updated_at: "2024-01-15T09:30:00Z",
+            },
+        ];
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.gatewayProfiles.reorderGatewayRules({
+            profile_id: "profile_id",
+            rules: [
+                {
+                    priority: 1,
+                    rule_id: "rule_id",
+                },
+            ],
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("reorder_gateway_rules (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {
+            rules: [
+                { priority: 1, rule_id: "rule_id" },
+                { priority: 1, rule_id: "rule_id" },
+            ],
+        };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.reorderGatewayRules({
+                profile_id: "profile_id",
+                rules: [
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                ],
+            });
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("reorder_gateway_rules (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {
+            rules: [
+                { priority: 1, rule_id: "rule_id" },
+                { priority: 1, rule_id: "rule_id" },
+            ],
+        };
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.reorderGatewayRules({
+                profile_id: "profile_id",
+                rules: [
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                ],
+            });
+        }).rejects.toThrow(IsloApi.ForbiddenError);
+    });
+
+    test("reorder_gateway_rules (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {
+            rules: [
+                { priority: 1, rule_id: "rule_id" },
+                { priority: 1, rule_id: "rule_id" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.reorderGatewayRules({
+                profile_id: "profile_id",
+                rules: [
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                ],
+            });
+        }).rejects.toThrow(IsloApi.NotFoundError);
+    });
+
+    test("reorder_gateway_rules (5)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = {
+            rules: [
+                { priority: 1, rule_id: "rule_id" },
+                { priority: 1, rule_id: "rule_id" },
+            ],
+        };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/gateway/profiles/profile_id/rules/reorder")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.gatewayProfiles.reorderGatewayRules({
+                profile_id: "profile_id",
+                rules: [
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                    {
+                        priority: 1,
+                        rule_id: "rule_id",
+                    },
+                ],
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("delete_gateway_rule (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -819,6 +1068,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -845,6 +1095,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -871,6 +1122,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -897,6 +1149,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -923,21 +1176,22 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
         const rawResponseBody = {
-            id: "id",
-            priority: 1,
-            host_pattern: "host_pattern",
-            path_pattern: "path_pattern",
-            methods: ["methods"],
             action: "action",
-            rate_limit_rpm: 1,
-            provider_key: "provider_key",
             auth_strategy: { key: "value" },
             content_filter: { key: "value" },
             created_at: "2024-01-15T09:30:00Z",
+            host_pattern: "host_pattern",
+            id: "id",
+            methods: ["methods"],
+            path_pattern: "path_pattern",
+            priority: 1,
+            provider_key: "provider_key",
+            rate_limit_rpm: 1,
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -962,6 +1216,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -989,6 +1244,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -1016,6 +1272,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -1043,6 +1300,7 @@ describe("GatewayProfilesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -1061,216 +1319,6 @@ describe("GatewayProfilesClient", () => {
             return await client.gatewayProfiles.updateGatewayRule({
                 profile_id: "profile_id",
                 rule_id: "rule_id",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("reorder_gateway_rules (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = { rules: [{ rule_id: "rule_id", priority: 1 }] };
-        const rawResponseBody = [
-            {
-                id: "id",
-                priority: 1,
-                host_pattern: "host_pattern",
-                path_pattern: "path_pattern",
-                methods: ["methods"],
-                action: "action",
-                rate_limit_rpm: 1,
-                provider_key: "provider_key",
-                auth_strategy: { key: "value" },
-                content_filter: { key: "value" },
-                created_at: "2024-01-15T09:30:00Z",
-                updated_at: "2024-01-15T09:30:00Z",
-            },
-        ];
-
-        server
-            .mockEndpoint()
-            .post("/gateway/profiles/profile_id/rules/reorder")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.gatewayProfiles.reorderGatewayRules({
-            profile_id: "profile_id",
-            rules: [
-                {
-                    rule_id: "rule_id",
-                    priority: 1,
-                },
-            ],
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("reorder_gateway_rules (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = {
-            rules: [
-                { rule_id: "rule_id", priority: 1 },
-                { rule_id: "rule_id", priority: 1 },
-            ],
-        };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/gateway/profiles/profile_id/rules/reorder")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.gatewayProfiles.reorderGatewayRules({
-                profile_id: "profile_id",
-                rules: [
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                ],
-            });
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("reorder_gateway_rules (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = {
-            rules: [
-                { rule_id: "rule_id", priority: 1 },
-                { rule_id: "rule_id", priority: 1 },
-            ],
-        };
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .post("/gateway/profiles/profile_id/rules/reorder")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(403)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.gatewayProfiles.reorderGatewayRules({
-                profile_id: "profile_id",
-                rules: [
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                ],
-            });
-        }).rejects.toThrow(IsloApi.ForbiddenError);
-    });
-
-    test("reorder_gateway_rules (4)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = {
-            rules: [
-                { rule_id: "rule_id", priority: 1 },
-                { rule_id: "rule_id", priority: 1 },
-            ],
-        };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/gateway/profiles/profile_id/rules/reorder")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.gatewayProfiles.reorderGatewayRules({
-                profile_id: "profile_id",
-                rules: [
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                ],
-            });
-        }).rejects.toThrow(IsloApi.NotFoundError);
-    });
-
-    test("reorder_gateway_rules (5)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = {
-            rules: [
-                { rule_id: "rule_id", priority: 1 },
-                { rule_id: "rule_id", priority: 1 },
-            ],
-        };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/gateway/profiles/profile_id/rules/reorder")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.gatewayProfiles.reorderGatewayRules({
-                profile_id: "profile_id",
-                rules: [
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                    {
-                        rule_id: "rule_id",
-                        priority: 1,
-                    },
-                ],
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });

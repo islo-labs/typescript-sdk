@@ -3,17 +3,17 @@
 import type * as IsloApi from "../index.js";
 
 export interface RunSectionOutput {
+    concurrency?: number | undefined;
     fail_fast?: boolean | undefined;
     fanout?: boolean | undefined;
-    concurrency?: number | undefined;
-    /** Working directory for every exec and run_agent step. Defaults to ".". Falls back to run.sandbox.workdir when omitted. */
-    workdir?: (string | null) | undefined;
-    timeout?: (RunSectionOutput.Timeout | null) | undefined;
     region?: (string | null) | undefined;
-    teardown_on_complete?: (boolean | null) | undefined;
     resume_on_start?: (boolean | null) | undefined;
     sandbox?: (IsloApi.SandboxConfig | null) | undefined;
     tasks: IsloApi.TaskOutput[];
+    teardown_on_complete?: (boolean | null) | undefined;
+    timeout?: (RunSectionOutput.Timeout | null) | undefined;
+    /** Working directory for every exec and run_agent step. Defaults to ".". Falls back to run.sandbox.workdir when omitted. */
+    workdir?: (string | null) | undefined;
 }
 
 export namespace RunSectionOutput {

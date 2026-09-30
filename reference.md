@@ -1,62 +1,6 @@
 # Reference
-## tenants
-<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">listTenantComputeRegions</a>() -> IsloApi.TenantRegionsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Return the compute regions the authenticated tenant may use, including the API and WebSocket base URLs for each region.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.tenants.listTenantComputeRegions();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `TenantsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## knowledge
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledge</a>({ ...params }) -> IsloApi.PaginatedKnowledgeResponse</code></summary>
+## byo
+<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">startByoInferenceSetup</a>({ ...params }) -> IsloApi.ByoSetupResponse</code></summary>
 <dl>
 <dd>
 
@@ -69,57 +13,8 @@ await client.tenants.listTenantComputeRegions();
 <dd>
 
 ```typescript
-await client.knowledge.listKnowledge();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListKnowledgeRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `KnowledgeClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.knowledge.createKnowledge({
-    slug: "slug"
+await client.byo.startByoInferenceSetup({
+    source_kind: "databricks"
 });
 
 ```
@@ -136,7 +31,7 @@ await client.knowledge.createKnowledge({
 <dl>
 <dd>
 
-**request:** `IsloApi.KnowledgeItemCreate` 
+**request:** `IsloApi.ByoSetupRequest` 
     
 </dd>
 </dl>
@@ -144,7 +39,7 @@ await client.knowledge.createKnowledge({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ByoClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -156,7 +51,7 @@ await client.knowledge.createKnowledge({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">getByoInferenceStatus</a>() -> IsloApi.ByoStatusResponse</code></summary>
 <dl>
 <dd>
 
@@ -169,9 +64,100 @@ await client.knowledge.createKnowledge({
 <dd>
 
 ```typescript
-await client.knowledge.createKnowledgeMedia({
-    file: fs.createReadStream("/path/to/your/file"),
-    item: "item"
+await client.byo.getByoInferenceStatus();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ByoClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## CloudRoles
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">listCloudRoles</a>({ ...params }) -> IsloApi.ListPageCloudRoleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.cloudRoles.listCloudRoles();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListCloudRolesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CloudRolesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">createCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.cloudRoles.createCloudRole({
+    provider: "aws",
+    role_arn: "role_arn"
 });
 
 ```
@@ -188,7 +174,7 @@ await client.knowledge.createKnowledgeMedia({
 <dl>
 <dd>
 
-**request:** `IsloApi.BodyCreateKnowledgeMedia` 
+**request:** `IsloApi.CloudRoleCreate` 
     
 </dd>
 </dl>
@@ -196,7 +182,7 @@ await client.knowledge.createKnowledgeMedia({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `CloudRolesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -208,7 +194,7 @@ await client.knowledge.createKnowledgeMedia({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">getCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
 <dl>
 <dd>
 
@@ -221,8 +207,8 @@ await client.knowledge.createKnowledgeMedia({
 <dd>
 
 ```typescript
-await client.knowledge.getKnowledge({
-    identifier: "identifier"
+await client.cloudRoles.getCloudRole({
+    role_id: "role_id"
 });
 
 ```
@@ -239,7 +225,7 @@ await client.knowledge.getKnowledge({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetKnowledgeRequest` 
+**request:** `IsloApi.GetCloudRoleRequest` 
     
 </dd>
 </dl>
@@ -247,7 +233,7 @@ await client.knowledge.getKnowledge({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `CloudRolesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -259,7 +245,7 @@ await client.knowledge.getKnowledge({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">deleteKnowledge</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">deleteCloudRole</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -272,8 +258,8 @@ await client.knowledge.getKnowledge({
 <dd>
 
 ```typescript
-await client.knowledge.deleteKnowledge({
-    identifier: "identifier"
+await client.cloudRoles.deleteCloudRole({
+    role_id: "role_id"
 });
 
 ```
@@ -290,7 +276,7 @@ await client.knowledge.deleteKnowledge({
 <dl>
 <dd>
 
-**request:** `IsloApi.DeleteKnowledgeRequest` 
+**request:** `IsloApi.DeleteCloudRoleRequest` 
     
 </dd>
 </dl>
@@ -298,7 +284,7 @@ await client.knowledge.deleteKnowledge({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `CloudRolesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -310,7 +296,7 @@ await client.knowledge.deleteKnowledge({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">updateKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">updateCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
 <dl>
 <dd>
 
@@ -323,8 +309,8 @@ await client.knowledge.deleteKnowledge({
 <dd>
 
 ```typescript
-await client.knowledge.updateKnowledge({
-    identifier: "identifier"
+await client.cloudRoles.updateCloudRole({
+    role_id: "role_id"
 });
 
 ```
@@ -341,7 +327,7 @@ await client.knowledge.updateKnowledge({
 <dl>
 <dd>
 
-**request:** `IsloApi.KnowledgeItemUpdate` 
+**request:** `IsloApi.CloudRoleUpdate` 
     
 </dd>
 </dl>
@@ -349,7 +335,7 @@ await client.knowledge.updateKnowledge({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `CloudRolesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -361,7 +347,8 @@ await client.knowledge.updateKnowledge({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeContent</a>({ ...params }) -> unknown</code></summary>
+## ComputeEvents
+<details><summary><code>client.computeEvents.<a href="/src/api/resources/computeEvents/client/Client.ts">getComputeEvent</a>({ ...params }) -> IsloApi.ComputeEventDetailResponse</code></summary>
 <dl>
 <dd>
 
@@ -374,8 +361,8 @@ await client.knowledge.updateKnowledge({
 <dd>
 
 ```typescript
-await client.knowledge.getKnowledgeContent({
-    identifier: "identifier"
+await client.computeEvents.getComputeEvent({
+    command_id: "command_id"
 });
 
 ```
@@ -392,7 +379,7 @@ await client.knowledge.getKnowledgeContent({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetKnowledgeContentRequest` 
+**request:** `IsloApi.GetComputeEventRequest` 
     
 </dd>
 </dl>
@@ -400,7 +387,7 @@ await client.knowledge.getKnowledgeContent({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ComputeEventsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -412,7 +399,8 @@ await client.knowledge.getKnowledgeContent({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">putKnowledgeContent</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+## ContainerRegistries
+<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">listContainerRegistries</a>() -> IsloApi.ListPageContainerRegistryResponse</code></summary>
 <dl>
 <dd>
 
@@ -425,9 +413,52 @@ await client.knowledge.getKnowledgeContent({
 <dd>
 
 ```typescript
-await client.knowledge.putKnowledgeContent({
-    file: fs.createReadStream("/path/to/your/file"),
-    identifier: "identifier"
+await client.containerRegistries.listContainerRegistries();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">createContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.containerRegistries.createContainerRegistry({
+    cloud_role_id: "cloud_role_id",
+    provider: "ecr",
+    region: "region",
+    registry_host: "registry_host"
 });
 
 ```
@@ -444,7 +475,7 @@ await client.knowledge.putKnowledgeContent({
 <dl>
 <dd>
 
-**request:** `IsloApi.BodyPutKnowledgeContent` 
+**request:** `IsloApi.ContainerRegistryCreate` 
     
 </dd>
 </dl>
@@ -452,7 +483,7 @@ await client.knowledge.putKnowledgeContent({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -464,7 +495,7 @@ await client.knowledge.putKnowledgeContent({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeVersions</a>({ ...params }) -> IsloApi.PaginatedKnowledgeVersionResponse</code></summary>
+<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">getContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
 <dl>
 <dd>
 
@@ -477,8 +508,8 @@ await client.knowledge.putKnowledgeContent({
 <dd>
 
 ```typescript
-await client.knowledge.listKnowledgeVersions({
-    identifier: "identifier"
+await client.containerRegistries.getContainerRegistry({
+    id: "id"
 });
 
 ```
@@ -495,7 +526,7 @@ await client.knowledge.listKnowledgeVersions({
 <dl>
 <dd>
 
-**request:** `IsloApi.ListKnowledgeVersionsRequest` 
+**request:** `IsloApi.GetContainerRegistryRequest` 
     
 </dd>
 </dl>
@@ -503,7 +534,7 @@ await client.knowledge.listKnowledgeVersions({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -515,7 +546,7 @@ await client.knowledge.listKnowledgeVersions({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeVersionResponse</code></summary>
+<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">deleteContainerRegistry</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -528,9 +559,8 @@ await client.knowledge.listKnowledgeVersions({
 <dd>
 
 ```typescript
-await client.knowledge.getKnowledgeVersion({
-    identifier: "identifier",
-    version_number: 1
+await client.containerRegistries.deleteContainerRegistry({
+    id: "id"
 });
 
 ```
@@ -547,7 +577,7 @@ await client.knowledge.getKnowledgeVersion({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetKnowledgeVersionRequest` 
+**request:** `IsloApi.DeleteContainerRegistryRequest` 
     
 </dd>
 </dl>
@@ -555,7 +585,7 @@ await client.knowledge.getKnowledgeVersion({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -567,7 +597,7 @@ await client.knowledge.getKnowledgeVersion({
 </dl>
 </details>
 
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeVersionContent</a>({ ...params }) -> unknown</code></summary>
+<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">updateContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
 <dl>
 <dd>
 
@@ -580,9 +610,8 @@ await client.knowledge.getKnowledgeVersion({
 <dd>
 
 ```typescript
-await client.knowledge.getKnowledgeVersionContent({
-    identifier: "identifier",
-    version_number: 1
+await client.containerRegistries.updateContainerRegistry({
+    id: "id"
 });
 
 ```
@@ -599,7 +628,7 @@ await client.knowledge.getKnowledgeVersionContent({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetKnowledgeVersionContentRequest` 
+**request:** `IsloApi.ContainerRegistryUpdate` 
     
 </dd>
 </dl>
@@ -607,59 +636,7 @@ await client.knowledge.getKnowledgeVersionContent({
 <dl>
 <dd>
 
-**requestOptions:** `KnowledgeClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">restoreKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.knowledge.restoreKnowledgeVersion({
-    identifier: "identifier",
-    version_number: 1
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.KnowledgeRestoreRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `KnowledgeClient.RequestOptions` 
+**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -727,24 +704,10 @@ await client.credits.getCreditBalance();
 </dl>
 </details>
 
-## integrations
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationProviders</a>() -> IsloApi.IntegrationProvidersResponse</code></summary>
+## Environments
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">listEnvironments</a>({ ...params }) -> core.Page&lt;IsloApi.EnvironmentListItem, IsloApi.ListPageEnvironmentListItem&gt;</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Return the integration providers available to connect from Islo, including the supported authentication methods and connection scopes.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -755,7 +718,19 @@ Return the integration providers available to connect from Islo, including the s
 <dd>
 
 ```typescript
-await client.integrations.listIntegrationProviders();
+const pageableResponse = await client.environments.listEnvironments();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.environments.listEnvironments();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -771,7 +746,15 @@ await client.integrations.listIntegrationProviders();
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**request:** `IsloApi.ListEnvironmentsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -783,7 +766,7 @@ await client.integrations.listIntegrationProviders();
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationTriggers</a>() -> IsloApi.TriggerCatalogListResponse</code></summary>
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">createEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -796,50 +779,8 @@ await client.integrations.listIntegrationProviders();
 <dd>
 
 ```typescript
-await client.integrations.listIntegrationTriggers();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `IntegrationsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">getIntegrationTrigger</a>({ ...params }) -> IsloApi.TriggerCatalogItem</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.integrations.getIntegrationTrigger({
-    provider: "provider",
-    trigger_name: "trigger_name"
+await client.environments.createEnvironment({
+    name: "name"
 });
 
 ```
@@ -856,7 +797,7 @@ await client.integrations.getIntegrationTrigger({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetIntegrationTriggerRequest` 
+**request:** `IsloApi.EnvironmentCreate` 
     
 </dd>
 </dl>
@@ -864,7 +805,7 @@ await client.integrations.getIntegrationTrigger({
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -876,31 +817,9 @@ await client.integrations.getIntegrationTrigger({
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrations</a>() -> IsloApi.IntegrationListResponse</code></summary>
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">getEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List the integrations the user/tenant has connected.
-
-Includes preset providers (from the PROVIDERS registry) and tenant-scoped
-custom outbound apps (filtered out of Descope's load_all_applications).
-Returns one entry per connected (provider, scope, auth_type) slot, so a
-provider with both a personal api_key and a personal oauth token will
-appear twice. Disconnected slots are not emitted; clients that need a
-list of available-but-not-connected providers should call
-``GET /integrations/providers`` instead.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -911,7 +830,9 @@ list of available-but-not-connected providers should call
 <dd>
 
 ```typescript
-await client.integrations.listIntegrations();
+await client.environments.getEnvironment({
+    environment_ref: "environment_ref"
+});
 
 ```
 </dd>
@@ -927,7 +848,15 @@ await client.integrations.listIntegrations();
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**request:** `IsloApi.GetEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -939,29 +868,9 @@ await client.integrations.listIntegrations();
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listCustomServices</a>() -> IsloApi.CustomServicesResponse</code></summary>
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">deleteEnvironment</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List custom service definitions in the current tenant (catalog view).
-
-Returns every custom Descope app belonging to the tenant regardless of
-connection status, so the Add Integration picker can surface them for
-any tenant member to connect to. Connection state (per-user/per-workspace
-tokens) lives on ``GET /integrations``; this endpoint is purely the
-service catalog.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -972,7 +881,9 @@ service catalog.
 <dd>
 
 ```typescript
-await client.integrations.listCustomServices();
+await client.environments.deleteEnvironment({
+    environment_ref: "environment_ref"
+});
 
 ```
 </dd>
@@ -988,7 +899,15 @@ await client.integrations.listCustomServices();
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**request:** `IsloApi.DeleteEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1000,28 +919,9 @@ await client.integrations.listCustomServices();
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">createCustomService</a>({ ...params }) -> IsloApi.CustomServiceCreateResponse</code></summary>
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">updateEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a tenant-scoped custom Descope outbound app.
-
-Returns the ``app_id`` so the frontend can immediately kick off the
-connect flow (OAuth) or surface the API key form. Presets do not pass
-through this endpoint -- their app ids come straight from
-``GET /integrations/providers``.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1032,9 +932,1641 @@ through this endpoint -- their app ids come straight from
 <dd>
 
 ```typescript
-await client.integrations.createCustomService({
-    custom: {
-        name: "name",
+await client.environments.updateEnvironment({
+    environment_ref: "environment_ref"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.EnvironmentUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">setDefaultEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.environments.setDefaultEnvironment({
+    environment_ref: "environment_ref"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SetDefaultEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">unsetDefaultEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.environments.unsetDefaultEnvironment({
+    environment_ref: "environment_ref"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UnsetDefaultEnvironmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EnvironmentsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Factories
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactories</a>() -> IsloApi.ListPageFactoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.listFactories();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">createFactory</a>({ ...params }) -> IsloApi.FactoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.createFactory({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.FactoryCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoriesOverview</a>() -> IsloApi.FactoryOverview</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoriesOverview();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactory</a>({ ...params }) -> IsloApi.FactoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactory({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">updateFactory</a>({ ...params }) -> IsloApi.FactoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.updateFactory({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.FactoryUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">activateFactory</a>({ ...params }) -> IsloApi.FactoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.activateFactory({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ActivateFactoryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryAgentSessions</a>({ ...params }) -> core.Page&lt;IsloApi.AgentSessionListItemResponse, IsloApi.ListPageAgentSessionListItemResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listFactoryAgentSessions({
+    factory_id: "factory_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listFactoryAgentSessions({
+    factory_id: "factory_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryAgentSessionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryAgentSession</a>({ ...params }) -> IsloApi.AgentSessionListItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryAgentSession({
+    factory_id: "factory_id",
+    session_name: "session_name",
+    sandbox_id: "sandbox_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryAgentSessionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryAgentSessionEvents</a>({ ...params }) -> IsloApi.ListPageAgentSessionEventResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryAgentSessionEvents({
+    factory_id: "factory_id",
+    session_name: "session_name",
+    sandbox_id: "sandbox_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryAgentSessionEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryAgentTurn</a>({ ...params }) -> IsloApi.FactoryAgentTurnResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryAgentTurn({
+    factory_id: "factory_id",
+    turn_id: "turn_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryAgentTurnRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryJobRuns</a>({ ...params }) -> IsloApi.ListPageJobRunListItem</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.listFactoryJobRuns({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryJobRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryJobRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.listFactoryJobRunFacets({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryJobRunFacetsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryJobRunById</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryJobRunById({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryJobRunByIdRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryResourceJobs</a>({ ...params }) -> core.Page&lt;IsloApi.JobListItem, IsloApi.ListPageJobListItem&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listFactoryResourceJobs({
+    factory_id: "factory_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listFactoryResourceJobs({
+    factory_id: "factory_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryResourceJobsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryJob</a>({ ...params }) -> IsloApi.JobResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryJob({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryJobRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deleteScopedFactoryJob</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deleteScopedFactoryJob({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteScopedFactoryJobRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deployScopedFactoryJob</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deployScopedFactoryJob({
+    factory_id: "factory_id",
+    name: "name",
+    body: {
+        manifest: {
+            job: {
+                name: "name"
+            },
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeployScopedFactoryJobRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listScopedFactoryJobRuns</a>({ ...params }) -> core.Page&lt;IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listScopedFactoryJobRuns({
+    factory_id: "factory_id",
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listScopedFactoryJobRuns({
+    factory_id: "factory_id",
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListScopedFactoryJobRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">triggerScopedFactoryJobRun</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.triggerScopedFactoryJobRun({
+    factory_id: "factory_id",
+    name: "name",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.TriggerScopedFactoryJobRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryJobRun</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryJobRun({
+    factory_id: "factory_id",
+    name: "name",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryJobRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">stopScopedFactoryJobRun</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.stopScopedFactoryJobRun({
+    factory_id: "factory_id",
+    name: "name",
+    run_id: "run_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.StopScopedFactoryJobRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryJobSchedule</a>({ ...params }) -> IsloApi.JobScheduleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryJobSchedule({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryJobScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deleteScopedFactoryJobSchedule</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deleteScopedFactoryJobSchedule({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteScopedFactoryJobScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">validateScopedFactoryJobManifest</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.validateScopedFactoryJobManifest({
+    factory_id: "factory_id",
+    name: "name",
+    body: {
+        manifest: {
+            job: {
+                name: "name"
+            },
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ValidateScopedFactoryJobManifestRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listScopedFactoryJobVersions</a>({ ...params }) -> core.Page&lt;IsloApi.JobVersionResponse, IsloApi.ListPageJobVersionResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listScopedFactoryJobVersions({
+    factory_id: "factory_id",
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listScopedFactoryJobVersions({
+    factory_id: "factory_id",
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListScopedFactoryJobVersionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryJobVersion</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryJobVersion({
+    factory_id: "factory_id",
+    name: "name",
+    version_id: "version_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryJobVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryKnowledge</a>({ ...params }) -> core.Page&lt;IsloApi.KnowledgeItemListResponse, IsloApi.ListPageKnowledgeItemListResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listFactoryKnowledge({
+    factory_id: "factory_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listFactoryKnowledge({
+    factory_id: "factory_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">createFactoryKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.createFactoryKnowledge({
+    factory_id: "factory_id",
+    body: {
         slug: "slug"
     }
 });
@@ -1053,7 +2585,7 @@ await client.integrations.createCustomService({
 <dl>
 <dd>
 
-**request:** `IsloApi.CustomServiceCreateRequest` 
+**request:** `IsloApi.CreateFactoryKnowledgeRequest` 
     
 </dd>
 </dl>
@@ -1061,7 +2593,7 @@ await client.integrations.createCustomService({
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**requestOptions:** `FactoriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1073,29 +2605,9 @@ await client.integrations.createCustomService({
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">disconnectCustomIntegration</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryKnowledgeFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Disconnect a custom integration by its Descope app ID.
-
-Authorization is by deterministic-ID prefix: only apps whose ID matches
-``cust-{tenant-prefix}-`` are accepted, which scopes the operation to the
-caller's workspace without a DB lookup. ``scope`` selects which side's
-tokens to revoke (per-user vs tenant-wide); ``delete_app=true`` removes
-the Descope app entirely (affects every user in the workspace).
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1106,8 +2618,9 @@ the Descope app entirely (affects every user in the workspace).
 <dd>
 
 ```typescript
-await client.integrations.disconnectCustomIntegration({
-    descope_app_id: "descope_app_id"
+await client.factories.listFactoryKnowledgeFacets({
+    factory_id: "factory_id",
+    fields: ["fields"]
 });
 
 ```
@@ -1124,7 +2637,7 @@ await client.integrations.disconnectCustomIntegration({
 <dl>
 <dd>
 
-**request:** `IsloApi.DisconnectCustomIntegrationRequest` 
+**request:** `IsloApi.ListFactoryKnowledgeFacetsRequest` 
     
 </dd>
 </dl>
@@ -1132,7 +2645,7 @@ await client.integrations.disconnectCustomIntegration({
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**requestOptions:** `FactoriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1144,25 +2657,9 @@ await client.integrations.disconnectCustomIntegration({
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">getIntegrationStatus</a>({ ...params }) -> IsloApi.IntegrationDetailResponse</code></summary>
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryKnowledgeTags</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the detailed status of a specific integration.
-
-Returns both user-level and tenant-level connection status independently.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1173,8 +2670,8 @@ Returns both user-level and tenant-level connection status independently.
 <dd>
 
 ```typescript
-await client.integrations.getIntegrationStatus({
-    provider: "provider"
+await client.factories.listFactoryKnowledgeTags({
+    factory_id: "factory_id"
 });
 
 ```
@@ -1191,7 +2688,7 @@ await client.integrations.getIntegrationStatus({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetIntegrationStatusRequest` 
+**request:** `IsloApi.ListFactoryKnowledgeTagsRequest` 
     
 </dd>
 </dl>
@@ -1199,7 +2696,7 @@ await client.integrations.getIntegrationStatus({
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**requestOptions:** `FactoriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1211,28 +2708,9 @@ await client.integrations.getIntegrationStatus({
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">disconnectIntegration</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">createFactoryKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Disconnect/revoke an integration.
-
-Args:
-    provider: Provider name
-    level: Which level to disconnect (USER or TENANT)
-    auth_type: Optional. Defaults to provider's primary type.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 
@@ -1243,8 +2721,10 @@ Args:
 <dd>
 
 ```typescript
-await client.integrations.disconnectIntegration({
-    provider: "provider"
+await client.factories.createFactoryKnowledgeMedia({
+    file: fs.createReadStream("/path/to/your/file"),
+    factory_id: "factory_id",
+    item: "item"
 });
 
 ```
@@ -1261,7 +2741,7 @@ await client.integrations.disconnectIntegration({
 <dl>
 <dd>
 
-**request:** `IsloApi.DisconnectIntegrationRequest` 
+**request:** `IsloApi.BodyCreateFactoryKnowledgeMedia` 
     
 </dd>
 </dl>
@@ -1269,7 +2749,7 @@ await client.integrations.disconnectIntegration({
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**requestOptions:** `FactoriesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1281,7 +2761,7 @@ await client.integrations.disconnectIntegration({
 </dl>
 </details>
 
-<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listConnectedIntegrationTriggers</a>() -> IsloApi.TriggerCatalogListResponse</code></summary>
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1294,7 +2774,10 @@ await client.integrations.disconnectIntegration({
 <dd>
 
 ```typescript
-await client.integrations.listConnectedIntegrationTriggers();
+await client.factories.getFactoryKnowledge({
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
 
 ```
 </dd>
@@ -1310,7 +2793,3280 @@ await client.integrations.listConnectedIntegrationTriggers();
 <dl>
 <dd>
 
-**requestOptions:** `IntegrationsClient.RequestOptions` 
+**request:** `IsloApi.GetFactoryKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deleteFactoryKnowledge</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deleteFactoryKnowledge({
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteFactoryKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">updateFactoryKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.updateFactoryKnowledge({
+    factory_id: "factory_id",
+    identifier: "identifier",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpdateFactoryKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryKnowledgeContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryKnowledgeContent({
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryKnowledgeContentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">putFactoryKnowledgeContent</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.putFactoryKnowledgeContent({
+    file: fs.createReadStream("/path/to/your/file"),
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BodyPutFactoryKnowledgeContent` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">restoreFactoryKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.restoreFactoryKnowledgeVersion({
+    factory_id: "factory_id",
+    identifier: "identifier",
+    body: {
+        version_number: 1
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.RestoreFactoryKnowledgeVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryKnowledgeVersions</a>({ ...params }) -> core.Page&lt;IsloApi.KnowledgeVersionListResponse, IsloApi.ListPageKnowledgeVersionListResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listFactoryKnowledgeVersions({
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listFactoryKnowledgeVersions({
+    factory_id: "factory_id",
+    identifier: "identifier"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryKnowledgeVersionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryKnowledgeVersion({
+    factory_id: "factory_id",
+    identifier: "identifier",
+    version_number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryKnowledgeVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getFactoryKnowledgeVersionContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getFactoryKnowledgeVersionContent({
+    factory_id: "factory_id",
+    identifier: "identifier",
+    version_number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryKnowledgeVersionContentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryLineRunsAcrossLines</a>({ ...params }) -> IsloApi.ListPageLineRunSummary</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.listFactoryLineRunsAcrossLines({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunsAcrossLinesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryResourceLineRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.listFactoryResourceLineRunFacets({
+    factory_id: "factory_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryResourceLineRunFacetsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">askScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.askScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id",
+    body: {
+        message: "message"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.AskScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">cancelScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.cancelScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CancelScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryLineRunDebug</a>({ ...params }) -> IsloApi.LineRunDebugResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryLineRunDebug({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryLineRunDebugRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listScopedFactoryLineRunEvents</a>({ ...params }) -> core.Page&lt;IsloApi.LineEventResponse, IsloApi.ListPageLineEventResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listScopedFactoryLineRunEvents({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listScopedFactoryLineRunEvents({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListScopedFactoryLineRunEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">retryScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.retryScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.RetryScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">steerScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.steerScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id",
+    body: {
+        stage_name: "stage_name"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SteerScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">stopScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.stopScopedFactoryLineRun({
+    factory_id: "factory_id",
+    run_id: "run_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.StopScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listFactoryResourceLines</a>({ ...params }) -> core.Page&lt;IsloApi.LineResponse, IsloApi.ListPageLineResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listFactoryResourceLines({
+    factory_id: "factory_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listFactoryResourceLines({
+    factory_id: "factory_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryResourceLinesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryLine({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deleteScopedFactoryLine</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deleteScopedFactoryLine({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteScopedFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">updateScopedFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.updateScopedFactoryLine({
+    factory_id: "factory_id",
+    name: "name",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpdateScopedFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deployScopedFactoryLine</a>({ ...params }) -> IsloApi.LineVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deployScopedFactoryLine({
+    factory_id: "factory_id",
+    name: "name",
+    body: {
+        manifest: {
+            line: {
+                name: "name"
+            },
+            stages: [{
+                    id: "id",
+                    job: "job"
+                }],
+            trigger: {
+                type: "integration_trigger",
+                name: "name",
+                provider: "provider",
+                selector: {
+                    provider: "github"
+                }
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeployScopedFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listScopedFactoryLineRuns</a>({ ...params }) -> core.Page&lt;IsloApi.LineRunSummary, IsloApi.ListPageLineRunSummary&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listScopedFactoryLineRuns({
+    factory_id: "factory_id",
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listScopedFactoryLineRuns({
+    factory_id: "factory_id",
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListScopedFactoryLineRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">triggerScopedFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.triggerScopedFactoryLineRun({
+    factory_id: "factory_id",
+    name: "name",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.TriggerScopedFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">getScopedFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.getScopedFactoryLineSchedule({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetScopedFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">upsertScopedFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.upsertScopedFactoryLineSchedule({
+    factory_id: "factory_id",
+    name: "name",
+    body: {
+        cron: "cron"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpsertScopedFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">deleteScopedFactoryLineSchedule</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.deleteScopedFactoryLineSchedule({
+    factory_id: "factory_id",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteScopedFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">validateScopedFactoryLineManifest</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factories.validateScopedFactoryLineManifest({
+    factory_id: "factory_id",
+    name: "name",
+    body: {
+        manifest: {
+            line: {
+                name: "name"
+            },
+            stages: [{
+                    id: "id",
+                    job: "job"
+                }],
+            trigger: {
+                type: "integration_trigger",
+                name: "name",
+                provider: "provider",
+                selector: {
+                    provider: "github"
+                }
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ValidateScopedFactoryLineManifestRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factories.<a href="/src/api/resources/factories/client/Client.ts">listScopedFactoryLineVersions</a>({ ...params }) -> core.Page&lt;IsloApi.LineVersionResponse, IsloApi.ListPageLineVersionResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factories.listScopedFactoryLineVersions({
+    factory_id: "factory_id",
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factories.listScopedFactoryLineVersions({
+    factory_id: "factory_id",
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListScopedFactoryLineVersionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoriesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Machines
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">listFactoryMachines</a>({ ...params }) -> core.Page&lt;IsloApi.MachineResponse, IsloApi.ListPageMachineResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.machines.listFactoryMachines({
+    factory: "factory"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.machines.listFactoryMachines({
+    factory: "factory"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryMachinesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">createFactoryMachine</a>({ ...params }) -> IsloApi.MachineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.machines.createFactoryMachine({
+    factory: "factory",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.MachineCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">getFactoryMachine</a>({ ...params }) -> IsloApi.MachineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.machines.getFactoryMachine({
+    factory: "factory",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryMachineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">deleteFactoryMachine</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.machines.deleteFactoryMachine({
+    factory: "factory",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteFactoryMachineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">updateFactoryMachine</a>({ ...params }) -> IsloApi.MachineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.machines.updateFactoryMachine({
+    factory: "factory",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.MachineUpdate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.machines.<a href="/src/api/resources/machines/client/Client.ts">buildFactoryMachine</a>({ ...params }) -> IsloApi.MachineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.machines.buildFactoryMachine({
+    factory: "factory",
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BuildFactoryMachineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MachinesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## factory
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> core.Page&lt;IsloApi.LineRunSummary, IsloApi.ListPageLineRunSummary&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factory.listFactoryLineRuns();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLineRuns();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.listFactoryLineRunFacets({
+    fields: ["fields"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunFacetsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.getFactoryLineRun({
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">askFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.askFactoryLineRun({
+    run_id: "run_id",
+    body: {
+        message: "message"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.AskFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">cancelFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.cancelFactoryLineRun({
+    run_id: "run_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.CancelFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRunDebug</a>({ ...params }) -> IsloApi.LineRunDebugResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Per-stage and per-step diagnostics for one line run, including the last failed stage attempt's first failing step, each step's exit code and output tails, and the sandbox environment each stage ran in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.getFactoryLineRunDebug({
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryLineRunDebugRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunEvents</a>({ ...params }) -> core.Page&lt;IsloApi.LineEventResponse, IsloApi.ListPageLineEventResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factory.listFactoryLineRunEvents({
+    run_id: "run_id"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLineRunEvents({
+    run_id: "run_id"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">retryFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.retryFactoryLineRun({
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.RetryFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">steerFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.steerFactoryLineRun({
+    run_id: "run_id",
+    body: {
+        stage_name: "stage_name"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.SteerFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">stopFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.stopFactoryLineRun({
+    run_id: "run_id",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.StopFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLines</a>({ ...params }) -> core.Page&lt;IsloApi.LineResponse, IsloApi.ListPageLineResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factory.listFactoryLines();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLines();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLinesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.getFactoryLine({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">deleteFactoryLine</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.deleteFactoryLine({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">updateFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.updateFactoryLine({
+    name: "name",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpdateFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">deployFactoryLine</a>({ ...params }) -> IsloApi.LineVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.deployFactoryLine({
+    name: "name",
+    body: {
+        manifest: {
+            line: {
+                name: "name"
+            },
+            stages: [{
+                    id: "id",
+                    job: "job"
+                }],
+            trigger: {
+                type: "integration_trigger",
+                name: "name",
+                provider: "provider",
+                selector: {
+                    provider: "github"
+                }
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeployFactoryLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunsForLine</a>({ ...params }) -> core.Page&lt;IsloApi.LineRunSummary, IsloApi.ListPageLineRunSummary&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factory.listFactoryLineRunsForLine({
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLineRunsForLine({
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineRunsForLineRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">triggerFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.triggerFactoryLineRun({
+    name: "name",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.TriggerFactoryLineRunRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.getFactoryLineSchedule({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">upsertFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.upsertFactoryLineSchedule({
+    name: "name",
+    body: {
+        cron: "cron"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpsertFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">deleteFactoryLineSchedule</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.deleteFactoryLineSchedule({
+    name: "name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteFactoryLineScheduleRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">validateFactoryLineManifest</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.factory.validateFactoryLineManifest({
+    name: "name",
+    body: {
+        manifest: {
+            line: {
+                name: "name"
+            },
+            stages: [{
+                    id: "id",
+                    job: "job"
+                }],
+            trigger: {
+                type: "integration_trigger",
+                name: "name",
+                provider: "provider",
+                selector: {
+                    provider: "github"
+                }
+            }
+        }
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ValidateFactoryLineManifestRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineVersions</a>({ ...params }) -> core.Page&lt;IsloApi.LineVersionResponse, IsloApi.ListPageLineVersionResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.factory.listFactoryLineVersions({
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.factory.listFactoryLineVersions({
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListFactoryLineVersionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FactoryClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1323,7 +6079,7 @@ await client.integrations.listConnectedIntegrationTriggers();
 </details>
 
 ## gateway-profiles
-<details><summary><code>client.gatewayProfiles.<a href="/src/api/resources/gatewayProfiles/client/Client.ts">listGatewayProfiles</a>() -> IsloApi.GatewayProfileResponse[]</code></summary>
+<details><summary><code>client.gatewayProfiles.<a href="/src/api/resources/gatewayProfiles/client/Client.ts">listGatewayProfiles</a>() -> IsloApi.ListPageGatewayProfileResponse</code></summary>
 <dl>
 <dd>
 
@@ -1620,6 +6376,61 @@ await client.gatewayProfiles.createGatewayRule({
 </dl>
 </details>
 
+<details><summary><code>client.gatewayProfiles.<a href="/src/api/resources/gatewayProfiles/client/Client.ts">reorderGatewayRules</a>({ ...params }) -> IsloApi.GatewayRuleResponse[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.gatewayProfiles.reorderGatewayRules({
+    profile_id: "profile_id",
+    rules: [{
+            priority: 1,
+            rule_id: "rule_id"
+        }]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.RuleReorderRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `GatewayProfilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.gatewayProfiles.<a href="/src/api/resources/gatewayProfiles/client/Client.ts">deleteGatewayRule</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -1724,714 +6535,6 @@ await client.gatewayProfiles.updateGatewayRule({
 </dl>
 </details>
 
-<details><summary><code>client.gatewayProfiles.<a href="/src/api/resources/gatewayProfiles/client/Client.ts">reorderGatewayRules</a>({ ...params }) -> IsloApi.GatewayRuleResponse[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.gatewayProfiles.reorderGatewayRules({
-    profile_id: "profile_id",
-    rules: [{
-            rule_id: "rule_id",
-            priority: 1
-        }]
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.RuleReorderRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `GatewayProfilesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Environments
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">listEnvironments</a>({ ...params }) -> IsloApi.EnvironmentListItem[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.listEnvironments();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListEnvironmentsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">createEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.createEnvironment({
-    name: "name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.EnvironmentCreate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">getEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.getEnvironment({
-    environment_ref: "environment_ref"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetEnvironmentRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">deleteEnvironment</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.deleteEnvironment({
-    environment_ref: "environment_ref"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.DeleteEnvironmentRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">updateEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.updateEnvironment({
-    environment_ref: "environment_ref"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.EnvironmentUpdate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.environments.<a href="/src/api/resources/environments/client/Client.ts">setDefaultEnvironment</a>({ ...params }) -> IsloApi.EnvironmentResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.environments.setDefaultEnvironment({
-    environment_ref: "environment_ref"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.SetDefaultEnvironmentRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `EnvironmentsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## CloudRoles
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">listCloudRoles</a>({ ...params }) -> IsloApi.CloudRoleResponse[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.cloudRoles.listCloudRoles();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListCloudRolesRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CloudRolesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">createCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.cloudRoles.createCloudRole({
-    provider: "aws",
-    role_arn: "role_arn"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.CloudRoleCreate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CloudRolesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">getCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.cloudRoles.getCloudRole({
-    role_id: "role_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetCloudRoleRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CloudRolesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">deleteCloudRole</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.cloudRoles.deleteCloudRole({
-    role_id: "role_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.DeleteCloudRoleRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CloudRolesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.cloudRoles.<a href="/src/api/resources/cloudRoles/client/Client.ts">updateCloudRole</a>({ ...params }) -> IsloApi.CloudRoleResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.cloudRoles.updateCloudRole({
-    role_id: "role_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.CloudRoleUpdate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `CloudRolesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## byo
-<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">getByoInferenceStatus</a>() -> IsloApi.ByoStatusResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.byo.getByoInferenceStatus();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**requestOptions:** `ByoClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.byo.<a href="/src/api/resources/byo/client/Client.ts">startByoInferenceSetup</a>({ ...params }) -> IsloApi.ByoSetupResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.byo.startByoInferenceSetup({
-    source_kind: "databricks"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ByoSetupRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ByoClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## inference
 <details><summary><code>client.inference.<a href="/src/api/resources/inference/client/Client.ts">listInferenceModels</a>() -> IsloApi.InferenceModelsResponse</code></summary>
 <dl>
@@ -2474,10 +6577,32 @@ await client.inference.listInferenceModels();
 </dl>
 </details>
 
-## ContainerRegistries
-<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">listContainerRegistries</a>() -> IsloApi.ContainerRegistryResponse[]</code></summary>
+## integrations
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrations</a>() -> IsloApi.ListPageIntegrationStatus</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the integrations the user/tenant has connected.
+
+Includes preset providers (from the PROVIDERS registry) and tenant-scoped
+custom outbound apps (filtered out of Descope's load_all_applications).
+Returns one entry per connected (provider, scope, auth_type) slot, so a
+provider with both a personal api_key and a personal oauth token will
+appear twice. Disconnected slots are not emitted; clients that need a
+list of available-but-not-connected providers should call
+``GET /integrations/providers`` instead.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2488,7 +6613,7 @@ await client.inference.listInferenceModels();
 <dd>
 
 ```typescript
-await client.containerRegistries.listContainerRegistries();
+await client.integrations.listIntegrations();
 
 ```
 </dd>
@@ -2504,7 +6629,7 @@ await client.containerRegistries.listContainerRegistries();
 <dl>
 <dd>
 
-**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+**requestOptions:** `IntegrationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2516,9 +6641,29 @@ await client.containerRegistries.listContainerRegistries();
 </dl>
 </details>
 
-<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">createContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listCustomServices</a>() -> IsloApi.ListPageCustomService</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List custom service definitions in the current tenant (catalog view).
+
+Returns every custom Descope app belonging to the tenant regardless of
+connection status, so the Add Integration picker can surface them for
+any tenant member to connect to. Connection state (per-user/per-workspace
+tokens) lives on ``GET /integrations``; this endpoint is purely the
+service catalog.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2529,11 +6674,71 @@ await client.containerRegistries.listContainerRegistries();
 <dd>
 
 ```typescript
-await client.containerRegistries.createContainerRegistry({
-    provider: "ecr",
-    registry_host: "registry_host",
-    cloud_role_id: "cloud_role_id",
-    region: "region"
+await client.integrations.listCustomServices();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">createCustomService</a>({ ...params }) -> IsloApi.CustomServiceCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a tenant-scoped custom Descope outbound app.
+
+Returns the ``app_id`` so the frontend can immediately kick off the
+connect flow (OAuth) or surface the API key form. Presets do not pass
+through this endpoint -- their app ids come straight from
+``GET /integrations/providers``.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.createCustomService({
+    custom: {
+        name: "name",
+        slug: "slug"
+    }
 });
 
 ```
@@ -2550,7 +6755,7 @@ await client.containerRegistries.createContainerRegistry({
 <dl>
 <dd>
 
-**request:** `IsloApi.ContainerRegistryCreate` 
+**request:** `IsloApi.CustomServiceCreateRequest` 
     
 </dd>
 </dl>
@@ -2558,7 +6763,7 @@ await client.containerRegistries.createContainerRegistry({
 <dl>
 <dd>
 
-**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+**requestOptions:** `IntegrationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2570,9 +6775,29 @@ await client.containerRegistries.createContainerRegistry({
 </dl>
 </details>
 
-<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">getContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">disconnectCustomIntegration</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disconnect a custom integration by its stable provider slug.
+
+The provider is resolved only within the authenticated tenant's custom
+service catalog, so callers cannot target another workspace. ``scope`` selects
+which side's tokens to revoke (per-user vs tenant-wide);
+``delete_app=true`` removes the Descope app entirely (affects every user in
+the workspace).
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2583,8 +6808,8 @@ await client.containerRegistries.createContainerRegistry({
 <dd>
 
 ```typescript
-await client.containerRegistries.getContainerRegistry({
-    id: "id"
+await client.integrations.disconnectCustomIntegration({
+    provider: "provider"
 });
 
 ```
@@ -2601,7 +6826,7 @@ await client.containerRegistries.getContainerRegistry({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetContainerRegistryRequest` 
+**request:** `IsloApi.DisconnectCustomIntegrationRequest` 
     
 </dd>
 </dl>
@@ -2609,7 +6834,7 @@ await client.containerRegistries.getContainerRegistry({
 <dl>
 <dd>
 
-**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+**requestOptions:** `IntegrationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2621,7 +6846,62 @@ await client.containerRegistries.getContainerRegistry({
 </dl>
 </details>
 
-<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">deleteContainerRegistry</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationProviders</a>() -> IsloApi.ListPageIntegrationProvider</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return the integration providers available to connect from Islo, including the supported authentication methods and connection scopes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.listIntegrationProviders();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationTriggerEvents</a>({ ...params }) -> core.Page&lt;IsloApi.TriggerEventSummary, IsloApi.TriggerEventPage&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2634,8 +6914,69 @@ await client.containerRegistries.getContainerRegistry({
 <dd>
 
 ```typescript
-await client.containerRegistries.deleteContainerRegistry({
-    id: "id"
+const pageableResponse = await client.integrations.listIntegrationTriggerEvents();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.integrations.listIntegrationTriggerEvents();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListIntegrationTriggerEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">getIntegrationTriggerEvent</a>({ ...params }) -> IsloApi.TriggerEventDetail</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.getIntegrationTriggerEvent({
+    event_id: "event_id"
 });
 
 ```
@@ -2652,7 +6993,7 @@ await client.containerRegistries.deleteContainerRegistry({
 <dl>
 <dd>
 
-**request:** `IsloApi.DeleteContainerRegistryRequest` 
+**request:** `IsloApi.GetIntegrationTriggerEventRequest` 
     
 </dd>
 </dl>
@@ -2660,7 +7001,7 @@ await client.containerRegistries.deleteContainerRegistry({
 <dl>
 <dd>
 
-**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+**requestOptions:** `IntegrationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2672,7 +7013,7 @@ await client.containerRegistries.deleteContainerRegistry({
 </dl>
 </details>
 
-<details><summary><code>client.containerRegistries.<a href="/src/api/resources/containerRegistries/client/Client.ts">updateContainerRegistry</a>({ ...params }) -> IsloApi.ContainerRegistryResponse</code></summary>
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listIntegrationTriggers</a>() -> IsloApi.ListPageTriggerCatalogItem</code></summary>
 <dl>
 <dd>
 
@@ -2685,8 +7026,91 @@ await client.containerRegistries.deleteContainerRegistry({
 <dd>
 
 ```typescript
-await client.containerRegistries.updateContainerRegistry({
-    id: "id"
+await client.integrations.listIntegrationTriggers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">listConnectedIntegrationTriggers</a>() -> IsloApi.ListPageTriggerCatalogItem</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.listConnectedIntegrationTriggers();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">getIntegrationTrigger</a>({ ...params }) -> IsloApi.TriggerCatalogItem</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.getIntegrationTrigger({
+    provider: "provider",
+    trigger_name: "trigger_name"
 });
 
 ```
@@ -2703,7 +7127,7 @@ await client.containerRegistries.updateContainerRegistry({
 <dl>
 <dd>
 
-**request:** `IsloApi.ContainerRegistryUpdate` 
+**request:** `IsloApi.GetIntegrationTriggerRequest` 
     
 </dd>
 </dl>
@@ -2711,7 +7135,308 @@ await client.containerRegistries.updateContainerRegistry({
 <dl>
 <dd>
 
-**requestOptions:** `ContainerRegistriesClient.RequestOptions` 
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">getIntegrationStatus</a>({ ...params }) -> IsloApi.IntegrationDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the detailed status of a specific integration.
+
+Returns both user-level and tenant-level connection status independently.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.getIntegrationStatus({
+    provider: "provider"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetIntegrationStatusRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.integrations.<a href="/src/api/resources/integrations/client/Client.ts">disconnectIntegration</a>({ ...params }) -> Record&lt;string, unknown&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disconnect/revoke an integration.
+
+Args:
+    provider: Provider name
+    level: Which level to disconnect (USER or TENANT)
+    auth_type: Optional. Defaults to provider's primary type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.integrations.disconnectIntegration({
+    provider: "provider"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DisconnectIntegrationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `IntegrationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## JobRuns
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> core.Page&lt;IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.jobRuns.listAllJobRuns();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobRuns.listAllJobRuns();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListAllJobRunsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobRunsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listJobRunFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobRuns.listJobRunFacets({
+    fields: ["fields"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListJobRunFacetsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobRunsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">getJobRunById</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobRuns.getJobRunById({
+    run_id: "run_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetJobRunByIdRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobRunsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2724,7 +7449,7 @@ await client.containerRegistries.updateContainerRegistry({
 </details>
 
 ## jobs
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">validateJobManifest</a>({ ...params }) -> void</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobs</a>({ ...params }) -> core.Page&lt;IsloApi.JobListItem, IsloApi.ListPageJobListItem&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2737,22 +7462,19 @@ await client.containerRegistries.updateContainerRegistry({
 <dd>
 
 ```typescript
-await client.jobs.validateJobManifest({
-    name: "name",
-    body: {
-        manifest: {
-            job: {
-                name: "name"
-            },
-            run: {
-                tasks: [{
-                        name: "name",
-                        steps: [{}]
-                    }]
-            }
-        }
-    }
-});
+const pageableResponse = await client.jobs.listJobs();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobs.listJobs();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -2768,71 +7490,7 @@ await client.jobs.validateJobManifest({
 <dl>
 <dd>
 
-**request:** `IsloApi.ValidateJobManifestRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JobsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">deployJob</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.jobs.deployJob({
-    name: "name",
-    body: {
-        manifest: {
-            job: {
-                name: "name"
-            },
-            run: {
-                tasks: [{
-                        name: "name",
-                        steps: [{}]
-                    }]
-            }
-        }
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.DeployJobRequest` 
+**request:** `IsloApi.ListJobsRequest` 
     
 </dd>
 </dl>
@@ -2954,7 +7612,7 @@ await client.jobs.deleteJob({
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobs</a>({ ...params }) -> IsloApi.JobListItem[]</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">deployJob</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
 <dl>
 <dd>
 
@@ -2967,109 +7625,21 @@ await client.jobs.deleteJob({
 <dd>
 
 ```typescript
-await client.jobs.listJobs();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListJobsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JobsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobVersions</a>({ ...params }) -> IsloApi.JobVersionResponse[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.jobs.listJobVersions({
-    name: "name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListJobVersionsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JobsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">getJobVersion</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.jobs.getJobVersion({
+await client.jobs.deployJob({
     name: "name",
-    version_id: "version_id"
+    body: {
+        manifest: {
+            job: {
+                name: "name"
+            },
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
+        }
+    }
 });
 
 ```
@@ -3086,7 +7656,7 @@ await client.jobs.getJobVersion({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetJobVersionRequest` 
+**request:** `IsloApi.DeployJobRequest` 
     
 </dd>
 </dl>
@@ -3106,7 +7676,7 @@ await client.jobs.getJobVersion({
 </dl>
 </details>
 
-<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobRuns</a>({ ...params }) -> IsloApi.JobRunListItem[]</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobRuns</a>({ ...params }) -> core.Page&lt;IsloApi.JobRunListItem, IsloApi.ListPageJobRunListItem&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3119,9 +7689,23 @@ await client.jobs.getJobVersion({
 <dd>
 
 ```typescript
-await client.jobs.listJobRuns({
+const pageableResponse = await client.jobs.listJobRuns({
     name: "name"
 });
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobs.listJobRuns({
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -3171,7 +7755,8 @@ await client.jobs.listJobRuns({
 
 ```typescript
 await client.jobs.triggerJobRun({
-    name: "name"
+    name: "name",
+    body: {}
 });
 
 ```
@@ -3188,7 +7773,7 @@ await client.jobs.triggerJobRun({
 <dl>
 <dd>
 
-**request:** `IsloApi.JobRunCreate` 
+**request:** `IsloApi.TriggerJobRunRequest` 
     
 </dd>
 </dl>
@@ -3275,7 +7860,8 @@ await client.jobs.getJobRun({
 ```typescript
 await client.jobs.stopJobRun({
     name: "name",
-    run_id: "run_id"
+    run_id: "run_id",
+    body: {}
 });
 
 ```
@@ -3292,7 +7878,7 @@ await client.jobs.stopJobRun({
 <dl>
 <dd>
 
-**request:** `IsloApi.JobRunStopRequest` 
+**request:** `IsloApi.StopJobRunRequest` 
     
 </dd>
 </dl>
@@ -3414,8 +8000,7 @@ await client.jobs.deleteJobSchedule({
 </dl>
 </details>
 
-## JobRuns
-<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">listAllJobRuns</a>({ ...params }) -> IsloApi.JobRunListItem[]</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">validateJobManifest</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -3428,126 +8013,19 @@ await client.jobs.deleteJobSchedule({
 <dd>
 
 ```typescript
-await client.jobRuns.listAllJobRuns();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListAllJobRunsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JobRunsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.jobRuns.<a href="/src/api/resources/jobRuns/client/Client.ts">getJobRunById</a>({ ...params }) -> IsloApi.JobRunResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.jobRuns.getJobRunById({
-    run_id: "run_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetJobRunByIdRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `JobRunsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## factory
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">validateFactoryLineManifest</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.validateFactoryLineManifest({
+await client.jobs.validateJobManifest({
     name: "name",
     body: {
         manifest: {
-            line: {
+            job: {
                 name: "name"
             },
-            trigger: {
-                type: "integration_trigger",
-                provider: "provider",
-                name: "name",
-                selector: {
-                    provider: "github"
-                }
-            },
-            stages: [{
-                    id: "id",
-                    job: "job"
-                }]
+            run: {
+                tasks: [{
+                        name: "name",
+                        steps: [{}]
+                    }]
+            }
         }
     }
 });
@@ -3566,7 +8044,7 @@ await client.factory.validateFactoryLineManifest({
 <dl>
 <dd>
 
-**request:** `IsloApi.ValidateFactoryLineManifestRequest` 
+**request:** `IsloApi.ValidateJobManifestRequest` 
     
 </dd>
 </dl>
@@ -3574,7 +8052,7 @@ await client.factory.validateFactoryLineManifest({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `JobsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3586,7 +8064,7 @@ await client.factory.validateFactoryLineManifest({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">deployFactoryLine</a>({ ...params }) -> IsloApi.LineVersionResponse</code></summary>
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">listJobVersions</a>({ ...params }) -> core.Page&lt;IsloApi.JobVersionResponse, IsloApi.ListPageJobVersionResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3599,26 +8077,641 @@ await client.factory.validateFactoryLineManifest({
 <dd>
 
 ```typescript
-await client.factory.deployFactoryLine({
+const pageableResponse = await client.jobs.listJobVersions({
+    name: "name"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.jobs.listJobVersions({
+    name: "name"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListJobVersionsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.jobs.<a href="/src/api/resources/jobs/client/Client.ts">getJobVersion</a>({ ...params }) -> IsloApi.JobVersionResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.jobs.getJobVersion({
     name: "name",
+    version_id: "version_id"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetJobVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `JobsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## knowledge
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledge</a>({ ...params }) -> core.Page&lt;IsloApi.KnowledgeItemListResponse, IsloApi.ListPageKnowledgeItemListResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.knowledge.listKnowledge();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.knowledge.listKnowledge();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.createKnowledge({
+    slug: "slug"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.KnowledgeItemCreate` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeFacets</a>({ ...params }) -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.listKnowledgeFacets({
+    fields: ["fields"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListKnowledgeFacetsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeTags</a>() -> IsloApi.FacetsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.listKnowledgeTags();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">createKnowledgeMedia</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.createKnowledgeMedia({
+    file: fs.createReadStream("/path/to/your/file"),
+    item: "item"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BodyCreateKnowledgeMedia` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.getKnowledge({
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">deleteKnowledge</a>({ ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.deleteKnowledge({
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.DeleteKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">updateKnowledge</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.updateKnowledge({
+    identifier: "identifier",
+    body: {}
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.UpdateKnowledgeRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.getKnowledgeContent({
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeContentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">putKnowledgeContent</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.putKnowledgeContent({
+    file: fs.createReadStream("/path/to/your/file"),
+    identifier: "identifier"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.BodyPutKnowledgeContent` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">restoreKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeItemResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.restoreKnowledgeVersion({
+    identifier: "identifier",
     body: {
-        manifest: {
-            line: {
-                name: "name"
-            },
-            trigger: {
-                type: "integration_trigger",
-                provider: "provider",
-                name: "name",
-                selector: {
-                    provider: "github"
-                }
-            },
-            stages: [{
-                    id: "id",
-                    job: "job"
-                }]
-        }
+        version_number: 1
     }
 });
 
@@ -3636,7 +8729,7 @@ await client.factory.deployFactoryLine({
 <dl>
 <dd>
 
-**request:** `IsloApi.DeployFactoryLineRequest` 
+**request:** `IsloApi.RestoreKnowledgeVersionRequest` 
     
 </dd>
 </dl>
@@ -3644,7 +8737,7 @@ await client.factory.deployFactoryLine({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `KnowledgeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3656,7 +8749,7 @@ await client.factory.deployFactoryLine({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLines</a>({ ...params }) -> IsloApi.LineResponse[]</code></summary>
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">listKnowledgeVersions</a>({ ...params }) -> core.Page&lt;IsloApi.KnowledgeVersionListResponse, IsloApi.ListPageKnowledgeVersionListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -3669,7 +8762,23 @@ await client.factory.deployFactoryLine({
 <dd>
 
 ```typescript
-await client.factory.listFactoryLines();
+const pageableResponse = await client.knowledge.listKnowledgeVersions({
+    identifier: "identifier"
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.knowledge.listKnowledgeVersions({
+    identifier: "identifier"
+});
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -3685,7 +8794,7 @@ await client.factory.listFactoryLines();
 <dl>
 <dd>
 
-**request:** `IsloApi.ListFactoryLinesRequest` 
+**request:** `IsloApi.ListKnowledgeVersionsRequest` 
     
 </dd>
 </dl>
@@ -3693,7 +8802,7 @@ await client.factory.listFactoryLines();
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `KnowledgeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3705,7 +8814,7 @@ await client.factory.listFactoryLines();
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeVersion</a>({ ...params }) -> IsloApi.KnowledgeVersionResponse</code></summary>
 <dl>
 <dd>
 
@@ -3718,7 +8827,161 @@ await client.factory.listFactoryLines();
 <dd>
 
 ```typescript
-await client.factory.getFactoryLine({
+await client.knowledge.getKnowledgeVersion({
+    identifier: "identifier",
+    version_number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeVersionRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.knowledge.<a href="/src/api/resources/knowledge/client/Client.ts">getKnowledgeVersionContent</a>({ ...params }) -> unknown</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.knowledge.getKnowledgeVersionContent({
+    identifier: "identifier",
+    version_number: 1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.GetKnowledgeVersionContentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `KnowledgeClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SandboxTemplates
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">listSandboxTemplates</a>({ ...params }) -> IsloApi.ListPageTemplateListItem</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxTemplates.listSandboxTemplates();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `IsloApi.ListSandboxTemplatesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">createSandboxTemplate</a>({ ...params }) -> IsloApi.TemplateResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.sandboxTemplates.createSandboxTemplate({
     name: "name"
 });
 
@@ -3736,7 +8999,7 @@ await client.factory.getFactoryLine({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetFactoryLineRequest` 
+**request:** `IsloApi.TemplateCreate` 
     
 </dd>
 </dl>
@@ -3744,7 +9007,7 @@ await client.factory.getFactoryLine({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3756,7 +9019,7 @@ await client.factory.getFactoryLine({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">updateFactoryLine</a>({ ...params }) -> IsloApi.LineResponse</code></summary>
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">getSandboxTemplate</a>({ ...params }) -> IsloApi.TemplateResponse</code></summary>
 <dl>
 <dd>
 
@@ -3769,7 +9032,7 @@ await client.factory.getFactoryLine({
 <dd>
 
 ```typescript
-await client.factory.updateFactoryLine({
+await client.sandboxTemplates.getSandboxTemplate({
     name: "name"
 });
 
@@ -3787,7 +9050,7 @@ await client.factory.updateFactoryLine({
 <dl>
 <dd>
 
-**request:** `IsloApi.LineUpdate` 
+**request:** `IsloApi.GetSandboxTemplateRequest` 
     
 </dd>
 </dl>
@@ -3795,7 +9058,7 @@ await client.factory.updateFactoryLine({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3807,7 +9070,7 @@ await client.factory.updateFactoryLine({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineVersions</a>({ ...params }) -> IsloApi.LineVersionResponse[]</code></summary>
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">deleteSandboxTemplate</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -3820,7 +9083,7 @@ await client.factory.updateFactoryLine({
 <dd>
 
 ```typescript
-await client.factory.listFactoryLineVersions({
+await client.sandboxTemplates.deleteSandboxTemplate({
     name: "name"
 });
 
@@ -3838,7 +9101,7 @@ await client.factory.listFactoryLineVersions({
 <dl>
 <dd>
 
-**request:** `IsloApi.ListFactoryLineVersionsRequest` 
+**request:** `IsloApi.DeleteSandboxTemplateRequest` 
     
 </dd>
 </dl>
@@ -3846,7 +9109,7 @@ await client.factory.listFactoryLineVersions({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3858,7 +9121,7 @@ await client.factory.listFactoryLineVersions({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRunsForLine</a>({ ...params }) -> IsloApi.LineRunSummary[]</code></summary>
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">updateSandboxTemplate</a>({ ...params }) -> IsloApi.TemplateResponse</code></summary>
 <dl>
 <dd>
 
@@ -3871,7 +9134,7 @@ await client.factory.listFactoryLineVersions({
 <dd>
 
 ```typescript
-await client.factory.listFactoryLineRunsForLine({
+await client.sandboxTemplates.updateSandboxTemplate({
     name: "name"
 });
 
@@ -3889,7 +9152,7 @@ await client.factory.listFactoryLineRunsForLine({
 <dl>
 <dd>
 
-**request:** `IsloApi.ListFactoryLineRunsForLineRequest` 
+**request:** `IsloApi.TemplateUpdate` 
     
 </dd>
 </dl>
@@ -3897,7 +9160,7 @@ await client.factory.listFactoryLineRunsForLine({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3909,7 +9172,7 @@ await client.factory.listFactoryLineRunsForLine({
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">triggerFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
+<details><summary><code>client.sandboxTemplates.<a href="/src/api/resources/sandboxTemplates/client/Client.ts">getSandboxTemplateVersion</a>({ ...params }) -> IsloApi.TemplateResponse</code></summary>
 <dl>
 <dd>
 
@@ -3922,8 +9185,9 @@ await client.factory.listFactoryLineRunsForLine({
 <dd>
 
 ```typescript
-await client.factory.triggerFactoryLineRun({
-    name: "name"
+await client.sandboxTemplates.getSandboxTemplateVersion({
+    name: "name",
+    version_number: 1
 });
 
 ```
@@ -3940,7 +9204,7 @@ await client.factory.triggerFactoryLineRun({
 <dl>
 <dd>
 
-**request:** `IsloApi.LineRunCreate` 
+**request:** `IsloApi.GetSandboxTemplateVersionRequest` 
     
 </dd>
 </dl>
@@ -3948,56 +9212,7 @@ await client.factory.triggerFactoryLineRun({
 <dl>
 <dd>
 
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">listFactoryLineRuns</a>({ ...params }) -> IsloApi.LineRunSummary[]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.listFactoryLineRuns();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.ListFactoryLineRunsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
+**requestOptions:** `SandboxTemplatesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -4009,58 +9224,8 @@ await client.factory.listFactoryLineRuns();
 </dl>
 </details>
 
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRun</a>({ ...params }) -> IsloApi.LineRunDetail</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.getFactoryLineRun({
-    run_id: "run_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetFactoryLineRunRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineRunDebug</a>({ ...params }) -> IsloApi.LineRunDebugResponse</code></summary>
+## tenants
+<details><summary><code>client.tenants.<a href="/src/api/resources/tenants/client/Client.ts">listTenantComputeRegions</a>() -> IsloApi.ListPageComputeRegionResponse</code></summary>
 <dl>
 <dd>
 
@@ -4072,7 +9237,7 @@ await client.factory.getFactoryLineRun({
 <dl>
 <dd>
 
-Per-stage and per-step diagnostics for one line run, including the last failed stage attempt's first failing step, each step's exit code and output tails, and the sandbox environment each stage ran in.
+Return the compute regions the authenticated tenant may use, including the API and WebSocket base URLs for each region.
 </dd>
 </dl>
 </dd>
@@ -4087,9 +9252,7 @@ Per-stage and per-step diagnostics for one line run, including the last failed s
 <dd>
 
 ```typescript
-await client.factory.getFactoryLineRunDebug({
-    run_id: "run_id"
-});
+await client.tenants.listTenantComputeRegions();
 
 ```
 </dd>
@@ -4105,221 +9268,7 @@ await client.factory.getFactoryLineRunDebug({
 <dl>
 <dd>
 
-**request:** `IsloApi.GetFactoryLineRunDebugRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">getFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.getFactoryLineSchedule({
-    name: "name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetFactoryLineScheduleRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">upsertFactoryLineSchedule</a>({ ...params }) -> IsloApi.LineScheduleResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.upsertFactoryLineSchedule({
-    name: "name",
-    cron: "cron"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.LineScheduleUpdate` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.factory.<a href="/src/api/resources/factory/client/Client.ts">deleteFactoryLineSchedule</a>({ ...params }) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.factory.deleteFactoryLineSchedule({
-    name: "name"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.DeleteFactoryLineScheduleRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `FactoryClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ComputeEvents
-<details><summary><code>client.computeEvents.<a href="/src/api/resources/computeEvents/client/Client.ts">getComputeEvent</a>({ ...params }) -> IsloApi.ComputeEventDetailResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.computeEvents.getComputeEvent({
-    command_id: "command_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `IsloApi.GetComputeEventRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ComputeEventsClient.RequestOptions` 
+**requestOptions:** `TenantsClient.RequestOptions` 
     
 </dd>
 </dl>

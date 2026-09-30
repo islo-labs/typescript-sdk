@@ -23,9 +23,9 @@ export interface LineRunFailure {
     code?: (IsloApi.FactoryFailureCode | null) | undefined;
     domain?: IsloApi.FactoryFailureDomain | undefined;
     error_code?: (string | null) | undefined;
-    failure_class?: (string | null) | undefined;
-    error_message?: (string | null) | undefined;
     error_details?: (Record<string, unknown> | null) | undefined;
+    error_message?: (string | null) | undefined;
+    failure_class?: (string | null) | undefined;
     stage_name?: (string | null) | undefined;
     stage_step?: (string | null) | undefined;
     task_name?: (string | null) | undefined;

@@ -10,7 +10,7 @@ import type * as IsloApi from "../../../../index.js";
  */
 export interface EnvironmentUpdate {
     environment_ref: string;
-    name?: string | null;
-    is_default?: boolean | null;
     entries?: IsloApi.EnvironmentUpdateEntriesItem[] | null;
+    is_default?: boolean | null;
+    name?: string | null;
 }

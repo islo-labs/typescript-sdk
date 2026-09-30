@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineRunDebugResponse {
-    id: string;
-    line_name: string;
-    line_version_id?: (string | null) | undefined;
-    status: string;
-    triggered_by: string;
-    region?: (string | null) | undefined;
-    started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
     error_message?: (string | null) | undefined;
     failure_summary?: (IsloApi.LineRunFailureSummary | null) | undefined;
+    id: string;
+    line_name: string;
+    line_version_id?: (string | null) | undefined;
+    region?: (string | null) | undefined;
     stages?: IsloApi.LineRunDebugStage[] | undefined;
+    started_at?: (string | null) | undefined;
+    status: string;
+    triggered_by: string;
 }

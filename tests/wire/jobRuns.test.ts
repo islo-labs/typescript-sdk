@@ -10,28 +10,48 @@ describe("JobRunsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = [
-            {
-                id: "id",
-                job_name: "job_name",
-                job_version_id: "job_version_id",
-                status: "status",
-                region: "region",
-                step_count: 1,
-                started_at: "2024-01-15T09:30:00Z",
-                completed_at: "2024-01-15T09:30:00Z",
-                created_at: "2024-01-15T09:30:00Z",
-                error_message: "error_message",
-            },
-        ];
+        const rawResponseBody = {
+            items: [
+                {
+                    completed_at: "2024-01-15T09:30:00Z",
+                    compute_cost_cents: 1,
+                    cost_rated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    error_message: "error_message",
+                    id: "id",
+                    inference_cost_cents: 1,
+                    job_name: "job_name",
+                    job_version_id: "job_version_id",
+                    region: "region",
+                    started_at: "2024-01-15T09:30:00Z",
+                    status: "status",
+                    step_count: 1,
+                    total_cost_cents: 1,
+                },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
 
-        server.mockEndpoint().get("/job-runs").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint({ once: false })
+            .get("/job-runs")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        const response = await client.jobRuns.listAllJobRuns();
-        expect(response).toEqual(rawResponseBody);
+        const expected = rawResponseBody;
+        const page = await client.jobRuns.listAllJobRuns();
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
     });
 
     test("list_all_job_runs (2)", async () => {
@@ -39,6 +59,7 @@ describe("JobRunsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -51,59 +72,102 @@ describe("JobRunsClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("list_job_run_facets (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { facets: { key: [{ key: "value" }] } };
+
+        server.mockEndpoint().get("/job-runs/facets").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.jobRuns.listJobRunFacets({
+            fields: ["fields"],
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_job_run_facets (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/job-runs/facets").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.jobRuns.listJobRunFacets();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("get_job_run_by_id (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            id: "id",
-            job_name: "job_name",
-            job_version_id: "job_version_id",
-            status: "status",
-            region: "region",
-            run_params: { key: "value" },
-            result_payload: { key: "value" },
-            step_timeline: [
-                {
-                    name: "name",
-                    action: "action",
-                    status: "status",
-                    task_name: "task_name",
-                    sandbox_name: "sandbox_name",
-                    agent_session_id: "agent_session_id",
-                    started_at: "2024-01-15T09:30:00Z",
-                    completed_at: "2024-01-15T09:30:00Z",
-                    error_message: "error_message",
-                    error_code: "error_code",
-                    error_details: { key: "value" },
-                    failure_class: "failure_class",
-                    exit_code: 1,
-                    compute_command_id: "compute_command_id",
-                },
-            ],
             artifact_refs: [
                 {
-                    type: "type",
-                    provider: "provider",
-                    operation: "operation",
                     external_ref: { provider: "github", kind: "kind" },
-                    url: "url",
-                    title: "title",
-                    status: "status",
                     metadata: { key: "value" },
+                    operation: "operation",
+                    provider: "provider",
+                    status: "status",
+                    title: "title",
+                    type: "type",
+                    url: "url",
                 },
             ],
-            started_at: "2024-01-15T09:30:00Z",
             completed_at: "2024-01-15T09:30:00Z",
-            error_message: "error_message",
+            compute_cost_cents: 1,
+            cost_rated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
             error_code: "error_code",
             error_details: { key: "value" },
+            error_message: "error_message",
             failure_class: "failure_class",
-            created_at: "2024-01-15T09:30:00Z",
+            id: "id",
+            inference_cost_cents: 1,
+            job_name: "job_name",
+            job_version_id: "job_version_id",
+            manifest: { key: "value" },
+            region: "region",
+            result_payload: { key: "value" },
+            run_params: { key: "value" },
+            started_at: "2024-01-15T09:30:00Z",
+            status: "status",
+            step_timeline: [
+                {
+                    action: "action",
+                    agent_session_id: "agent_session_id",
+                    completed_at: "2024-01-15T09:30:00Z",
+                    compute_command_id: "compute_command_id",
+                    error_code: "error_code",
+                    error_details: { key: "value" },
+                    error_message: "error_message",
+                    exit_code: 1,
+                    failure_class: "failure_class",
+                    name: "name",
+                    sandbox_name: "sandbox_name",
+                    started_at: "2024-01-15T09:30:00Z",
+                    status: "status",
+                    task_name: "task_name",
+                },
+            ],
+            total_cost_cents: 1,
         };
 
         server.mockEndpoint().get("/job-runs/run_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -119,6 +183,7 @@ describe("JobRunsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

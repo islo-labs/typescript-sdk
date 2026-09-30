@@ -3,13 +3,13 @@
 import type * as IsloApi from "../index.js";
 
 export interface EnvironmentEntryResponse {
+    created_at: string;
+    has_value?: boolean | undefined;
     id: string;
     key: string;
     kind: IsloApi.EnvironmentEntryKind;
     placement: IsloApi.EnvironmentEntryPlacement;
-    value: string | null;
-    has_value?: boolean | undefined;
     rule?: (IsloApi.EnvironmentGatewayRuleResponse | null) | undefined;
-    created_at: string;
     updated_at: string;
+    value: string | null;
 }

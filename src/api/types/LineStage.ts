@@ -4,9 +4,9 @@
  * A node in the line graph that runs one job per visit.
  */
 export interface LineStage {
+    description?: (string | null) | undefined;
     id: string;
     job: string;
     job_version_id?: (string | null) | undefined;
-    description?: (string | null) | undefined;
     max_attempts?: (number | null) | undefined;
 }

@@ -2,13 +2,13 @@
 
 export interface JudgeContentFilter {
     direction: JudgeContentFilter.Direction;
-    name: string;
-    provider_key: JudgeContentFilter.ProviderKey;
-    model: string;
-    prompt: string;
     fallback?: JudgeContentFilter.Fallback | undefined;
-    timeout_seconds?: number | undefined;
     max_tokens?: number | undefined;
+    model: string;
+    name: string;
+    prompt: string;
+    provider_key: JudgeContentFilter.ProviderKey;
+    timeout_seconds?: number | undefined;
 }
 
 export namespace JudgeContentFilter {
@@ -18,14 +18,15 @@ export namespace JudgeContentFilter {
         Both: "both",
     } as const;
     export type Direction = (typeof Direction)[keyof typeof Direction];
-    export const ProviderKey = {
-        Anthropic: "anthropic",
-        Openai: "openai",
-    } as const;
-    export type ProviderKey = (typeof ProviderKey)[keyof typeof ProviderKey];
     export const Fallback = {
         Deny: "deny",
         Skip: "skip",
     } as const;
     export type Fallback = (typeof Fallback)[keyof typeof Fallback];
+    export const ProviderKey = {
+        Anthropic: "anthropic",
+        Openai: "openai",
+        Typesafe: "typesafe",
+    } as const;
+    export type ProviderKey = (typeof ProviderKey)[keyof typeof ProviderKey];
 }

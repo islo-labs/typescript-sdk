@@ -9,12 +9,12 @@ import type * as IsloApi from "../../../../index.js";
  *     }
  */
 export interface GatewayProfileCreate {
-    name: string;
-    description?: string | null;
-    default_action?: IsloApi.GatewayAction;
-    internet_enabled?: boolean;
-    is_default?: boolean;
     /** Cloud role public ID (UUID) */
     cloud_role?: string | null;
+    default_action?: IsloApi.GatewayAction;
+    description?: string | null;
     integration_policy?: IsloApi.GatewayProfileCreateIntegrationPolicy;
+    internet_enabled?: boolean;
+    is_default?: boolean;
+    name: string;
 }

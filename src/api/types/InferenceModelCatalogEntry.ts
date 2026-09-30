@@ -3,16 +3,16 @@
 import type * as IsloApi from "../index.js";
 
 export interface InferenceModelCatalogEntry {
-    id: string;
-    upstream_provider?: IsloApi.InferenceProvider | undefined;
-    upstream_model_id: string;
-    display_name?: (string | null) | undefined;
     aliases?: string[] | undefined;
-    client_apis?: IsloApi.ClientInferenceApi[] | undefined;
-    enabled?: boolean | undefined;
-    input_cents_per_1m_tokens?: (string | null) | undefined;
-    cached_input_cents_per_1m_tokens?: (string | null) | undefined;
     cache_write_input_cents_per_1m_tokens?: (string | null) | undefined;
+    cached_input_cents_per_1m_tokens?: (string | null) | undefined;
+    client_apis?: IsloApi.ClientInferenceApi[] | undefined;
+    display_name?: (string | null) | undefined;
+    enabled?: boolean | undefined;
+    id: string;
+    input_cents_per_1m_tokens?: (string | null) | undefined;
     output_cents_per_1m_tokens?: (string | null) | undefined;
     pricing_tiers?: (IsloApi.PricingTier[] | null) | undefined;
+    upstream_model_id: string;
+    upstream_provider?: IsloApi.InferenceProvider | undefined;
 }

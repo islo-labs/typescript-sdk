@@ -2,9 +2,9 @@
 
 export interface ExecResult {
     exec_id?: (string | null) | undefined;
-    status?: (string | null) | undefined;
     exit_code?: (number | null) | undefined;
-    stdout?: (string | null) | undefined;
+    status?: (string | null) | undefined;
     stderr?: (string | null) | undefined;
+    stdout?: (string | null) | undefined;
     truncated?: (boolean | null) | undefined;
 }

@@ -3,20 +3,25 @@
 import type * as IsloApi from "../index.js";
 
 export interface JobRunResponse {
-    id: string;
-    job_name: string;
-    job_version_id: string;
-    status: string;
-    region: string | null;
-    run_params: Record<string, unknown>;
-    result_payload: Record<string, unknown> | null;
-    step_timeline: IsloApi.JobRunStepTimelineEntry[];
     artifact_refs: IsloApi.ArtifactRef[];
-    started_at: string | null;
     completed_at: string | null;
-    error_message: string | null;
+    compute_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
+    created_at: string;
     error_code?: (string | null) | undefined;
     error_details?: (Record<string, unknown> | null) | undefined;
+    error_message: string | null;
     failure_class?: (string | null) | undefined;
-    created_at: string;
+    id: string;
+    inference_cost_cents?: number | undefined;
+    job_name: string;
+    job_version_id: string;
+    manifest: Record<string, unknown>;
+    region: string | null;
+    result_payload: Record<string, unknown> | null;
+    run_params: Record<string, unknown>;
+    started_at: string | null;
+    status: string;
+    step_timeline: IsloApi.JobRunStepTimelineEntry[];
+    total_cost_cents?: number | undefined;
 }

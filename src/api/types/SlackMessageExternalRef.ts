@@ -4,8 +4,8 @@
  * Slack message identity within a channel.
  */
 export interface SlackMessageExternalRef {
-    kind?: SlackMessageExternalRef.Kind | undefined;
     channel: string;
+    kind?: SlackMessageExternalRef.Kind | undefined;
     ts: string;
 }
 

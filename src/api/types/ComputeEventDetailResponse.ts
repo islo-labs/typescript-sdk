@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface ComputeEventDetailResponse {
-    command_id: string;
     action: string;
-    success: boolean;
-    error_message: string | null;
+    command_id: string;
+    completed_at: string | null;
     error_code?: (string | null) | undefined;
     error_details?: (Record<string, unknown> | null) | undefined;
-    started_at: string | null;
-    completed_at: string | null;
-    session_name?: (string | null) | undefined;
-    sandbox_name?: (string | null) | undefined;
+    error_message: string | null;
     result: IsloApi.ComputeEventDetailResponseResult;
+    sandbox_name?: (string | null) | undefined;
+    session_name?: (string | null) | undefined;
+    started_at: string | null;
+    success: boolean;
 }

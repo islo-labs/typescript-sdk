@@ -19,6 +19,7 @@ The Islo TypeScript library provides convenient access to the Islo APIs from Typ
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Binary Response](#binary-response)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
   - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
@@ -131,9 +132,9 @@ Instantiate and use the client with the following:
 ```typescript
 import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
-await client.knowledge.createKnowledge({
-    slug: "slug"
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
+await client.byo.startByoInferenceSetup({
+    source_kind: "databricks"
 });
 ```
 
@@ -157,7 +158,7 @@ following namespace:
 ```typescript
 import { IsloApi } from "@islo-labs/sdk";
 
-const request: IsloApi.ListKnowledgeRequest = {
+const request: IsloApi.ByoSetupRequest = {
     ...
 };
 ```
@@ -171,7 +172,7 @@ will be thrown.
 import { IsloApiError } from "@islo-labs/sdk";
 
 try {
-    await client.knowledge.createKnowledge(...);
+    await client.byo.startByoInferenceSetup(...);
 } catch (err) {
     if (err instanceof IsloApiError) {
         console.log(err.statusCode);
@@ -191,9 +192,10 @@ import { createReadStream } from "fs";
 import * as fs from "fs";
 import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
 
-const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
-await client.knowledge.createKnowledgeMedia({
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
+await client.factories.createFactoryKnowledgeMedia({
     file: fs.createReadStream("/path/to/your/file"),
+    factory_id: "factory_id",
     item: "item"
 });
 ```
@@ -616,6 +618,29 @@ const text = new TextDecoder().decode(bytes);
 
 </details>
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { Islo, IsloApiEnvironment } from "@islo-labs/sdk";
+
+const client = new Islo({ environment: IsloApiEnvironment.Production, apiKey: "YOUR_API_KEY", apiVersion: "2026-09-15" });
+const pageableResponse = await client.environments.listEnvironments();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.environments.listEnvironments();
+while (page.hasNextPage()) {
+    page = await page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+```
+
 ## Advanced
 
 ### Subpackage Exports
@@ -623,9 +648,9 @@ const text = new TextDecoder().decode(bytes);
 This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
 
 ```typescript
-import { TenantsClient } from '@islo-labs/sdk/tenants';
+import { ByoClient } from '@islo-labs/sdk/byo';
 
-const client = new TenantsClient({...});
+const client = new ByoClient({...});
 ```
 
 ### Additional Headers
@@ -642,7 +667,7 @@ const client = new Islo({
     }
 });
 
-const response = await client.knowledge.createKnowledge(..., {
+const response = await client.byo.startByoInferenceSetup(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -654,7 +679,7 @@ const response = await client.knowledge.createKnowledge(..., {
 If you would like to send additional query string parameters as part of the request, use the `queryParams` request option.
 
 ```typescript
-const response = await client.knowledge.createKnowledge(..., {
+const response = await client.byo.startByoInferenceSetup(..., {
     queryParams: {
         'customQueryParamKey': 'custom query param value'
     }
@@ -667,16 +692,24 @@ The SDK is instrumented with automatic retries with exponential backoff. A reque
 as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
 retry limit (default: 2).
 
-A request is deemed retryable when any of the following HTTP status codes is returned:
+Which status codes are retried depends on the `retryStatusCodes` generator configuration:
 
+**`legacy`** (current default): retries on
 - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses) (All server errors, including 500)
+
+**`recommended`**: retries on
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [502](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/502) (Bad Gateway)
+- [503](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503) (Service Unavailable)
+- [504](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/504) (Gateway Timeout)
 
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.knowledge.createKnowledge(..., {
+const response = await client.byo.startByoInferenceSetup(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -686,7 +719,7 @@ const response = await client.knowledge.createKnowledge(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.knowledge.createKnowledge(..., {
+const response = await client.byo.startByoInferenceSetup(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -697,7 +730,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.knowledge.createKnowledge(..., {
+const response = await client.byo.startByoInferenceSetup(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request
@@ -709,7 +742,7 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.withRawResponse()` method returns a promise that results to an object with a `data` and a `rawResponse` property.
 
 ```typescript
-const { data, rawResponse } = await client.knowledge.createKnowledge(...).withRawResponse();
+const { data, rawResponse } = await client.byo.startByoInferenceSetup(...).withRawResponse();
 
 console.log(data);
 console.log(rawResponse.headers['X-My-Header']);

@@ -3,9 +3,9 @@
 import type * as IsloApi from "../index.js";
 
 export interface AgenticTransitionOutput {
-    id: string;
     from: string;
+    id: string;
     instructions: IsloApi.AgenticTransitionOutputInstructions;
-    options?: IsloApi.AgenticTransitionOption[] | undefined;
     label?: (string | null) | undefined;
+    options?: IsloApi.AgenticTransitionOption[] | undefined;
 }

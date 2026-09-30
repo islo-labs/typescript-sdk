@@ -2,7 +2,7 @@
 
 export interface JobScheduleResponse {
     cron: string;
-    timezone: string;
     enabled: boolean;
     schedule_generation: number;
+    timezone: string;
 }

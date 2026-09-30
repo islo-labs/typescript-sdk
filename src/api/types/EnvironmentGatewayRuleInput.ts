@@ -3,10 +3,10 @@
 import type * as IsloApi from "../index.js";
 
 export interface EnvironmentGatewayRuleInput {
-    host_pattern: string;
-    path_pattern?: (string | null) | undefined;
-    methods?: (string[] | null) | undefined;
-    rate_limit_rpm?: (number | null) | undefined;
     auth_strategy?: IsloApi.AuthStrategySchema | undefined;
     content_filter?: (unknown | null) | undefined;
+    host_pattern: string;
+    methods?: (string[] | null) | undefined;
+    path_pattern?: (string | null) | undefined;
+    rate_limit_rpm?: (number | null) | undefined;
 }

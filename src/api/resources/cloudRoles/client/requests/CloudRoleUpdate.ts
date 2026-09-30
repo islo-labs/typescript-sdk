@@ -8,7 +8,7 @@
  */
 export interface CloudRoleUpdate {
     role_id: string;
+    is_enabled?: boolean | null;
     role_arn?: string | null;
     session_duration_seconds?: number | null;
-    is_enabled?: boolean | null;
 }

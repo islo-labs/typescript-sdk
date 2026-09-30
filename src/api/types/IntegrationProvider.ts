@@ -6,7 +6,7 @@ import type * as IsloApi from "../index.js";
  * Information about an available provider.
  */
 export interface IntegrationProvider {
-    name: string;
-    hosts: string[];
     apps: IsloApi.ProviderApp[];
+    hosts: string[];
+    name: string;
 }

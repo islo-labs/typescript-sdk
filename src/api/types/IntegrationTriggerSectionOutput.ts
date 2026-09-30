@@ -3,9 +3,9 @@
 import type * as IsloApi from "../index.js";
 
 export interface IntegrationTriggerSectionOutput {
-    provider: string;
-    name: string;
-    selector: IsloApi.IntegrationTriggerSectionOutputSelector;
     filters?: IsloApi.LineConditionOutput[] | undefined;
+    name: string;
     outputs?: Record<string, IsloApi.TriggerPathBinding> | undefined;
+    provider: string;
+    selector: IsloApi.IntegrationTriggerSectionOutputSelector;
 }

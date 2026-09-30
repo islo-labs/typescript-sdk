@@ -6,18 +6,18 @@ import type * as IsloApi from "../index.js";
  * Durable external resource created or materially changed by a job step.
  */
 export interface ArtifactRef {
-    /** Resource type, normally external_ref.kind */
-    type: string;
-    /** Must match external_ref.provider */
-    provider: string;
-    /** What the step did, such as created, updated, or published */
-    operation?: (string | null) | undefined;
     /** Stable provider-specific identity */
     external_ref: IsloApi.ArtifactRefExternalRef;
-    /** Canonical resource URL */
-    url?: (string | null) | undefined;
-    title?: (string | null) | undefined;
-    status?: (string | null) | undefined;
     /** Provider-specific details that are not identity */
     metadata?: Record<string, unknown> | undefined;
+    /** What the step did, such as created, updated, or published */
+    operation?: (string | null) | undefined;
+    /** Must match external_ref.provider */
+    provider: string;
+    status?: (string | null) | undefined;
+    title?: (string | null) | undefined;
+    /** Resource type, normally external_ref.kind */
+    type: string;
+    /** Canonical resource URL */
+    url?: (string | null) | undefined;
 }

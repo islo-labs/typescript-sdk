@@ -6,10 +6,10 @@ import type * as IsloApi from "../index.js";
  * Full line.toml manifest (TOML or JSON authoring; stored as JSON).
  */
 export interface LineManifestInput {
-    line: IsloApi.LineSection;
-    trigger: IsloApi.LineManifestInputTrigger;
-    stages: IsloApi.LineStage[];
-    transitions?: IsloApi.LineManifestInputTransitionsItem[] | undefined;
     agent?: (IsloApi.LineAgentConfig | null) | undefined;
     limits?: IsloApi.LineLimitsInput | undefined;
+    line: IsloApi.LineSection;
+    stages: IsloApi.LineStage[];
+    transitions?: IsloApi.LineManifestInputTransitionsItem[] | undefined;
+    trigger: IsloApi.LineManifestInputTrigger;
 }

@@ -4,11 +4,11 @@ import type * as IsloApi from "../index.js";
 
 export interface LinearIssueSelector {
     kind?: LinearIssueSelector.Kind | undefined;
-    scope?: IsloApi.SelectorScope | undefined;
-    team_ids?: string[] | undefined;
-    project_ids?: string[] | undefined;
     labels?: string[] | undefined;
+    project_ids?: string[] | undefined;
+    scope?: IsloApi.SelectorScope | undefined;
     states?: string[] | undefined;
+    team_ids?: string[] | undefined;
 }
 
 export namespace LinearIssueSelector {

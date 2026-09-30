@@ -11,11 +11,12 @@ import type * as IsloApi from "../index.js";
  * job whose row could only ever say whether it passed.
  */
 export interface AgentResult {
-    mode?: (string | null) | undefined;
-    harness?: (string | null) | undefined;
-    status?: (string | null) | undefined;
-    outcome?: (string | null) | undefined;
     agent_session_id?: (string | null) | undefined;
+    harness?: (string | null) | undefined;
+    mode?: (string | null) | undefined;
+    model?: (string | null) | undefined;
+    outcome?: (string | null) | undefined;
     output_text?: (string | null) | undefined;
     outputs?: (Record<string, (IsloApi.JsonValue | undefined) | null> | null) | undefined;
+    status?: (string | null) | undefined;
 }

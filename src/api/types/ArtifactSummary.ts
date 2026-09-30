@@ -4,9 +4,9 @@
  * Identity-only view of an artifact, without provider-specific metadata.
  */
 export interface ArtifactSummary {
-    type?: (string | null) | undefined;
-    provider?: (string | null) | undefined;
-    url?: (string | null) | undefined;
-    title?: (string | null) | undefined;
     external_ref?: Record<string, unknown> | undefined;
+    provider?: (string | null) | undefined;
+    title?: (string | null) | undefined;
+    type?: (string | null) | undefined;
+    url?: (string | null) | undefined;
 }

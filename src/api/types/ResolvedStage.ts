@@ -6,23 +6,18 @@ import type * as IsloApi from "../index.js";
  * Stage metadata with job-derived kind and agent info.
  */
 export interface ResolvedStage {
-    id: string;
-    job: string;
-    description?: (string | null) | undefined;
-    kind?: ResolvedStage.Kind | undefined;
-    harness?: (ResolvedStage.Harness | null) | undefined;
     agent_model?: (string | null) | undefined;
     agent_role?: (string | null) | undefined;
-    runtime?: (string | null) | undefined;
+    description?: (string | null) | undefined;
+    harness?: (ResolvedStage.Harness | null) | undefined;
+    id: string;
+    job: string;
+    kind?: ResolvedStage.Kind | undefined;
     params?: IsloApi.JobParamDefinition[] | undefined;
+    runtime?: (string | null) | undefined;
 }
 
 export namespace ResolvedStage {
-    export const Kind = {
-        Agent: "agent",
-        Deterministic: "deterministic",
-    } as const;
-    export type Kind = (typeof Kind)[keyof typeof Kind];
     export const Harness = {
         Codex: "codex",
         Cursor: "cursor",
@@ -31,4 +26,9 @@ export namespace ResolvedStage {
         Custom: "custom",
     } as const;
     export type Harness = (typeof Harness)[keyof typeof Harness];
+    export const Kind = {
+        Agent: "agent",
+        Deterministic: "deterministic",
+    } as const;
+    export type Kind = (typeof Kind)[keyof typeof Kind];
 }

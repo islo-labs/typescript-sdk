@@ -2,8 +2,13 @@
 
 export const InferenceProvider = {
     Fireworks: "fireworks",
+    Anthropic: "anthropic",
+    Openai: "openai",
+    Xai: "xai",
     Thesean: "thesean",
     Databricks: "databricks",
     Alien: "alien",
+    Valarai: "valarai",
+    Typesafe: "typesafe",
 } as const;
 export type InferenceProvider = (typeof InferenceProvider)[keyof typeof InferenceProvider];

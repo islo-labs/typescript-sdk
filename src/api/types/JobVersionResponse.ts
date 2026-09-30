@@ -3,9 +3,9 @@
 import type * as IsloApi from "../index.js";
 
 export interface JobVersionResponse {
-    id: string;
-    version_number: number;
     content_hash: string;
     deployed_at: string;
+    id: string;
     manifest: IsloApi.JobManifestOutput;
+    version_number: number;
 }

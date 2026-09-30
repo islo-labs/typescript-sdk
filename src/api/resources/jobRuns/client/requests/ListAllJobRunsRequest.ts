@@ -9,6 +9,13 @@ import type * as IsloApi from "../../../../index.js";
 export interface ListAllJobRunsRequest {
     limit?: number;
     offset?: number;
-    /** Filter by run status */
-    status?: IsloApi.JobRunStatus | null;
+    cursor?: string | null;
+    /** Sort order. Allowed: -created_at, created_at */
+    sort?: string | null;
+    include?: string | string[];
+    status?: string | string[];
+    job_name?: string | string[];
+    /** created_at range. Operators: gte, gt, lte, lt. Serialized as created_at[gte]=…&created_at[lt]=… */
+    created_at?: IsloApi.TimestampRange;
+    q?: string | null;
 }

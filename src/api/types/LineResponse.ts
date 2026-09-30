@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineResponse {
-    id: string;
-    name: string;
-    description: string | null;
-    status: string;
     category?: (string | null) | undefined;
-    stage_count?: number | undefined;
-    trigger_type?: (string | null) | undefined;
-    latest_version_number: number | null;
-    resolved_stages?: IsloApi.ResolvedStage[] | undefined;
     created_at: string;
+    description: string | null;
+    id: string;
     latest_version: IsloApi.LineVersionResponse | null;
+    latest_version_number: number | null;
+    name: string;
+    resolved_stages?: IsloApi.ResolvedStage[] | undefined;
+    stage_count?: number | undefined;
+    status: string;
+    trigger_type?: (string | null) | undefined;
 }

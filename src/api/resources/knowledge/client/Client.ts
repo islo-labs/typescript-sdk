@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -29,74 +30,96 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.listKnowledge()
      */
-    public listKnowledge(
+    public async listKnowledge(
         request: IsloApi.ListKnowledgeRequest = {},
         requestOptions?: KnowledgeClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.PaginatedKnowledgeResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listKnowledge(request, requestOptions));
-    }
-
-    private async __listKnowledge(
-        request: IsloApi.ListKnowledgeRequest = {},
-        requestOptions?: KnowledgeClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.PaginatedKnowledgeResponse>> {
-        const { level, type: type_, tag, repository, q, cursor, limit } = request;
-        const _queryParams: Record<string, unknown> = {
-            level: level !== undefined ? level : undefined,
-            type: type_ !== undefined ? type_ : undefined,
-            tag,
-            repository,
-            q,
-            cursor,
-            limit,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                "knowledge",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.PaginatedKnowledgeResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
+    ): Promise<core.Page<IsloApi.KnowledgeItemListResponse, IsloApi.ListPageKnowledgeItemListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IsloApi.ListKnowledgeRequest,
+            ): Promise<core.WithRawResponse<IsloApi.ListPageKnowledgeItemListResponse>> => {
+                const { level, type: type_, tag, repository, q, cursor, limit, sort, include } = request;
+                const _queryParams: Record<string, unknown> = {
+                    level: level !== undefined ? level : undefined,
+                    type: type_ !== undefined ? type_ : undefined,
+                    tag,
+                    repository,
+                    q,
+                    cursor,
+                    limit,
+                    sort: sort != null ? sort : undefined,
+                    include,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    mergeOnlyDefinedHeaders({
+                        "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                    }),
+                    requestOptions?.headers,
+                );
+                const _response = await (this._options.fetcher ?? core.fetcher)({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)).control,
+                        "knowledge",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IsloApi.ListPageKnowledgeItemListResponse,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/knowledge");
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 422:
+                            throw new IsloApi.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IsloApiError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/knowledge");
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IsloApi.KnowledgeItemListResponse, IsloApi.ListPageKnowledgeItemListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.next_cursor != null &&
+                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
+            getItems: (response) => response?.items ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
+            },
+        });
     }
 
     /**
@@ -104,6 +127,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.createKnowledge({
@@ -125,6 +150,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -138,7 +166,7 @@ export class KnowledgeClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -166,10 +194,153 @@ export class KnowledgeClient {
     }
 
     /**
+     * @param {IsloApi.ListKnowledgeFacetsRequest} request
+     * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.knowledge.listKnowledgeFacets({
+     *         fields: ["fields"]
+     *     })
+     */
+    public listKnowledgeFacets(
+        request: IsloApi.ListKnowledgeFacetsRequest = {},
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.FacetsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listKnowledgeFacets(request, requestOptions));
+    }
+
+    private async __listKnowledgeFacets(
+        request: IsloApi.ListKnowledgeFacetsRequest = {},
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.FacetsResponse>> {
+        const { fields } = request;
+        const _queryParams: Record<string, unknown> = {
+            fields,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "knowledge/facets",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url
+                .queryBuilder()
+                .addMany(_queryParams)
+                .mergeAdditional(requestOptions?.queryParams)
+                .build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.FacetsResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/knowledge/facets");
+    }
+
+    /**
+     * @deprecated
+     *
+     * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.knowledge.listKnowledgeTags()
+     */
+    public listKnowledgeTags(
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.FacetsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listKnowledgeTags(requestOptions));
+    }
+
+    private async __listKnowledgeTags(
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.FacetsResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "knowledge/tags",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.FacetsResponse, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/knowledge/tags");
+    }
+
+    /**
      * @param {IsloApi.BodyCreateKnowledgeMedia} request
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     import { createReadStream } from "fs";
@@ -190,14 +361,17 @@ export class KnowledgeClient {
         requestOptions?: KnowledgeClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.KnowledgeItemResponse>> {
         const _body = await core.newFormData();
-        _body.append("item", request.item);
         await _body.appendFile("file", request.file);
+        _body.append("item", request.item);
         const _maybeEncodedRequest = await _body.getRequest();
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                ..._maybeEncodedRequest.headers,
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -243,6 +417,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.getKnowledge({
@@ -265,6 +441,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -307,6 +486,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.deleteKnowledge({
@@ -329,6 +510,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -367,32 +551,38 @@ export class KnowledgeClient {
     }
 
     /**
-     * @param {IsloApi.KnowledgeItemUpdate} request
+     * @param {IsloApi.UpdateKnowledgeRequest} request
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.updateKnowledge({
-     *         identifier: "identifier"
+     *         identifier: "identifier",
+     *         body: {}
      *     })
      */
     public updateKnowledge(
-        request: IsloApi.KnowledgeItemUpdate,
+        request: IsloApi.UpdateKnowledgeRequest,
         requestOptions?: KnowledgeClient.RequestOptions,
     ): core.HttpResponsePromise<IsloApi.KnowledgeItemResponse> {
         return core.HttpResponsePromise.fromPromise(this.__updateKnowledge(request, requestOptions));
     }
 
     private async __updateKnowledge(
-        request: IsloApi.KnowledgeItemUpdate,
+        request: IsloApi.UpdateKnowledgeRequest,
         requestOptions?: KnowledgeClient.RequestOptions,
     ): Promise<core.WithRawResponse<IsloApi.KnowledgeItemResponse>> {
-        const { identifier, ..._body } = request;
+        const { identifier, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -406,7 +596,7 @@ export class KnowledgeClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: _body,
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -438,6 +628,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.getKnowledgeContent({
@@ -460,6 +652,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -507,6 +702,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     import { createReadStream } from "fs";
@@ -533,7 +730,10 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                ..._maybeEncodedRequest.headers,
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -580,51 +780,54 @@ export class KnowledgeClient {
     }
 
     /**
-     * @param {IsloApi.ListKnowledgeVersionsRequest} request
+     * @param {IsloApi.RestoreKnowledgeVersionRequest} request
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
-     *     await client.knowledge.listKnowledgeVersions({
-     *         identifier: "identifier"
+     *     await client.knowledge.restoreKnowledgeVersion({
+     *         identifier: "identifier",
+     *         body: {
+     *             version_number: 1
+     *         }
      *     })
      */
-    public listKnowledgeVersions(
-        request: IsloApi.ListKnowledgeVersionsRequest,
+    public restoreKnowledgeVersion(
+        request: IsloApi.RestoreKnowledgeVersionRequest,
         requestOptions?: KnowledgeClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.PaginatedKnowledgeVersionResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listKnowledgeVersions(request, requestOptions));
+    ): core.HttpResponsePromise<IsloApi.KnowledgeItemResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__restoreKnowledgeVersion(request, requestOptions));
     }
 
-    private async __listKnowledgeVersions(
-        request: IsloApi.ListKnowledgeVersionsRequest,
+    private async __restoreKnowledgeVersion(
+        request: IsloApi.RestoreKnowledgeVersionRequest,
         requestOptions?: KnowledgeClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.PaginatedKnowledgeVersionResponse>> {
-        const { identifier, cursor, limit } = request;
-        const _queryParams: Record<string, unknown> = {
-            cursor,
-            limit,
-        };
+    ): Promise<core.WithRawResponse<IsloApi.KnowledgeItemResponse>> {
+        const { identifier, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).control,
-                `knowledge/${core.url.encodePathParam(identifier)}/versions`,
+                `knowledge/${core.url.encodePathParam(identifier)}/restore`,
             ),
-            method: "GET",
+            method: "POST",
             headers: _headers,
-            queryString: core.url
-                .queryBuilder()
-                .addMany(_queryParams)
-                .mergeAdditional(requestOptions?.queryParams)
-                .build(),
+            contentType: "application/json",
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            requestType: "json",
+            body: mergeAdditionalBodyParameters(_body, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -632,10 +835,7 @@ export class KnowledgeClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as IsloApi.PaginatedKnowledgeVersionResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as IsloApi.KnowledgeItemResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -654,9 +854,108 @@ export class KnowledgeClient {
         return handleNonStatusCodeError(
             _response.error,
             _response.rawResponse,
-            "GET",
-            "/knowledge/{identifier}/versions",
+            "POST",
+            "/knowledge/{identifier}/restore",
         );
+    }
+
+    /**
+     * @param {IsloApi.ListKnowledgeVersionsRequest} request
+     * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.knowledge.listKnowledgeVersions({
+     *         identifier: "identifier"
+     *     })
+     */
+    public async listKnowledgeVersions(
+        request: IsloApi.ListKnowledgeVersionsRequest,
+        requestOptions?: KnowledgeClient.RequestOptions,
+    ): Promise<core.Page<IsloApi.KnowledgeVersionListResponse, IsloApi.ListPageKnowledgeVersionListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IsloApi.ListKnowledgeVersionsRequest,
+            ): Promise<core.WithRawResponse<IsloApi.ListPageKnowledgeVersionListResponse>> => {
+                const { identifier, cursor, limit, sort, include } = request;
+                const _queryParams: Record<string, unknown> = {
+                    cursor,
+                    limit,
+                    sort: sort != null ? sort : undefined,
+                    include,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    mergeOnlyDefinedHeaders({
+                        "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                    }),
+                    requestOptions?.headers,
+                );
+                const _response = await (this._options.fetcher ?? core.fetcher)({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)).control,
+                        `knowledge/${core.url.encodePathParam(identifier)}/versions`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as IsloApi.ListPageKnowledgeVersionListResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 422:
+                            throw new IsloApi.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IsloApiError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/knowledge/{identifier}/versions",
+                );
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IsloApi.KnowledgeVersionListResponse, IsloApi.ListPageKnowledgeVersionListResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.next_cursor != null &&
+                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
+            getItems: (response) => response?.items ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
+            },
+        });
     }
 
     /**
@@ -664,6 +963,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.getKnowledgeVersion({
@@ -687,6 +988,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -734,6 +1038,8 @@ export class KnowledgeClient {
      * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.knowledge.getKnowledgeVersionContent({
@@ -757,6 +1063,9 @@ export class KnowledgeClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -796,79 +1105,6 @@ export class KnowledgeClient {
             _response.rawResponse,
             "GET",
             "/knowledge/{identifier}/versions/{version_number}/content",
-        );
-    }
-
-    /**
-     * @param {IsloApi.KnowledgeRestoreRequest} request
-     * @param {KnowledgeClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.knowledge.restoreKnowledgeVersion({
-     *         identifier: "identifier",
-     *         version_number: 1
-     *     })
-     */
-    public restoreKnowledgeVersion(
-        request: IsloApi.KnowledgeRestoreRequest,
-        requestOptions?: KnowledgeClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.KnowledgeItemResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__restoreKnowledgeVersion(request, requestOptions));
-    }
-
-    private async __restoreKnowledgeVersion(
-        request: IsloApi.KnowledgeRestoreRequest,
-        requestOptions?: KnowledgeClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.KnowledgeItemResponse>> {
-        const { identifier, ..._body } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                `knowledge/${core.url.encodePathParam(identifier)}/restore`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.KnowledgeItemResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/knowledge/{identifier}/restore",
         );
     }
 }

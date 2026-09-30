@@ -2,8 +2,10 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { toJson } from "../../../../core/json.js";
+import { mergeAdditionalBodyParameters } from "../../../../core/requestBody.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as IsloApi from "../../../index.js";
@@ -25,175 +27,6 @@ export class IntegrationsClient {
     }
 
     /**
-     * Return the integration providers available to connect from Islo, including the supported authentication methods and connection scopes.
-     *
-     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.integrations.listIntegrationProviders()
-     */
-    public listIntegrationProviders(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.IntegrationProvidersResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listIntegrationProviders(requestOptions));
-    }
-
-    private async __listIntegrationProviders(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.IntegrationProvidersResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                "integrations/providers",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.IntegrationProvidersResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.IsloApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/providers");
-    }
-
-    /**
-     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.integrations.listIntegrationTriggers()
-     */
-    public listIntegrationTriggers(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.TriggerCatalogListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listIntegrationTriggers(requestOptions));
-    }
-
-    private async __listIntegrationTriggers(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogListResponse>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                "integrations/triggers",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.TriggerCatalogListResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.IsloApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/triggers");
-    }
-
-    /**
-     * @param {IsloApi.GetIntegrationTriggerRequest} request
-     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.integrations.getIntegrationTrigger({
-     *         provider: "provider",
-     *         trigger_name: "trigger_name"
-     *     })
-     */
-    public getIntegrationTrigger(
-        request: IsloApi.GetIntegrationTriggerRequest,
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.TriggerCatalogItem> {
-        return core.HttpResponsePromise.fromPromise(this.__getIntegrationTrigger(request, requestOptions));
-    }
-
-    private async __getIntegrationTrigger(
-        request: IsloApi.GetIntegrationTriggerRequest,
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogItem>> {
-        const { provider, trigger_name: triggerName } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                `integrations/triggers/${core.url.encodePathParam(provider)}/${core.url.encodePathParam(triggerName)}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.TriggerCatalogItem, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/integrations/triggers/{provider}/{trigger_name}",
-        );
-    }
-
-    /**
      * List the integrations the user/tenant has connected.
      *
      * Includes preset providers (from the PROVIDERS registry) and tenant-scoped
@@ -209,23 +42,28 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.listIntegrations()
      */
     public listIntegrations(
         requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.IntegrationListResponse> {
+    ): core.HttpResponsePromise<IsloApi.ListPageIntegrationStatus> {
         return core.HttpResponsePromise.fromPromise(this.__listIntegrations(requestOptions));
     }
 
     private async __listIntegrations(
         requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.IntegrationListResponse>> {
+    ): Promise<core.WithRawResponse<IsloApi.ListPageIntegrationStatus>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -244,7 +82,7 @@ export class IntegrationsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.IntegrationListResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.ListPageIntegrationStatus, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -287,23 +125,28 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.listCustomServices()
      */
     public listCustomServices(
         requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.CustomServicesResponse> {
+    ): core.HttpResponsePromise<IsloApi.ListPageCustomService> {
         return core.HttpResponsePromise.fromPromise(this.__listCustomServices(requestOptions));
     }
 
     private async __listCustomServices(
         requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.CustomServicesResponse>> {
+    ): Promise<core.WithRawResponse<IsloApi.ListPageCustomService>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -322,7 +165,7 @@ export class IntegrationsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.CustomServicesResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as IsloApi.ListPageCustomService, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -366,6 +209,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.createCustomService({
@@ -390,6 +235,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -403,7 +251,7 @@ export class IntegrationsClient {
             contentType: "application/json",
             queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
             requestType: "json",
-            body: request,
+            body: mergeAdditionalBodyParameters(request, requestOptions?.additionalBodyParameters),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -451,13 +299,13 @@ export class IntegrationsClient {
     }
 
     /**
-     * Disconnect a custom integration by its Descope app ID.
+     * Disconnect a custom integration by its stable provider slug.
      *
-     * Authorization is by deterministic-ID prefix: only apps whose ID matches
-     * ``cust-{tenant-prefix}-`` are accepted, which scopes the operation to the
-     * caller's workspace without a DB lookup. ``scope`` selects which side's
-     * tokens to revoke (per-user vs tenant-wide); ``delete_app=true`` removes
-     * the Descope app entirely (affects every user in the workspace).
+     * The provider is resolved only within the authenticated tenant's custom
+     * service catalog, so callers cannot target another workspace. ``scope`` selects
+     * which side's tokens to revoke (per-user vs tenant-wide);
+     * ``delete_app=true`` removes the Descope app entirely (affects every user in
+     * the workspace).
      *
      * @param {IsloApi.DisconnectCustomIntegrationRequest} request
      * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -467,10 +315,12 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.disconnectCustomIntegration({
-     *         descope_app_id: "descope_app_id"
+     *         provider: "provider"
      *     })
      */
     public disconnectCustomIntegration(
@@ -484,7 +334,7 @@ export class IntegrationsClient {
         request: IsloApi.DisconnectCustomIntegrationRequest,
         requestOptions?: IntegrationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, unknown>>> {
-        const { descope_app_id: descopeAppId, scope, delete_app: deleteApp } = request;
+        const { provider, scope, delete_app: deleteApp } = request;
         const _queryParams: Record<string, unknown> = {
             scope: scope != null ? scope : undefined,
             delete_app: deleteApp,
@@ -493,13 +343,16 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).control,
-                `integrations/custom/${core.url.encodePathParam(descopeAppId)}`,
+                `integrations/custom/${core.url.encodePathParam(provider)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -552,7 +405,445 @@ export class IntegrationsClient {
             _response.error,
             _response.rawResponse,
             "DELETE",
-            "/integrations/custom/{descope_app_id}",
+            "/integrations/custom/{provider}",
+        );
+    }
+
+    /**
+     * Return the integration providers available to connect from Islo, including the supported authentication methods and connection scopes.
+     *
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.listIntegrationProviders()
+     */
+    public listIntegrationProviders(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.ListPageIntegrationProvider> {
+        return core.HttpResponsePromise.fromPromise(this.__listIntegrationProviders(requestOptions));
+    }
+
+    private async __listIntegrationProviders(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.ListPageIntegrationProvider>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "integrations/providers",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.ListPageIntegrationProvider, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.IsloApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/providers");
+    }
+
+    /**
+     * @param {IsloApi.ListIntegrationTriggerEventsRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.listIntegrationTriggerEvents()
+     */
+    public async listIntegrationTriggerEvents(
+        request: IsloApi.ListIntegrationTriggerEventsRequest = {},
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.Page<IsloApi.TriggerEventSummary, IsloApi.TriggerEventPage>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: IsloApi.ListIntegrationTriggerEventsRequest,
+            ): Promise<core.WithRawResponse<IsloApi.TriggerEventPage>> => {
+                const {
+                    cursor,
+                    limit,
+                    sort,
+                    provider,
+                    event_name: eventName,
+                    invocation_status: invocationStatus,
+                    outcome,
+                    received_at: receivedAt,
+                } = request;
+                const _queryParams: Record<string, unknown> = {
+                    cursor,
+                    limit,
+                    sort: sort !== undefined ? sort : undefined,
+                    provider: provider !== undefined ? toJson(provider) : undefined,
+                    event_name: eventName !== undefined ? toJson(eventName) : undefined,
+                    invocation_status: invocationStatus !== undefined ? toJson(invocationStatus) : undefined,
+                    outcome: outcome !== undefined ? toJson(outcome) : undefined,
+                    received_at: receivedAt,
+                };
+                const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    _authRequest.headers,
+                    this._options?.headers,
+                    mergeOnlyDefinedHeaders({
+                        "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+                    }),
+                    requestOptions?.headers,
+                );
+                const _response = await (this._options.fetcher ?? core.fetcher)({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)).control,
+                        "integrations/trigger-events",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryString: core.url
+                        .queryBuilder()
+                        .addMany(_queryParams)
+                        .mergeAdditional(requestOptions?.queryParams)
+                        .build(),
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return { data: _response.body as IsloApi.TriggerEventPage, rawResponse: _response.rawResponse };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 422:
+                            throw new IsloApi.UnprocessableEntityError(
+                                _response.error.body as unknown,
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.IsloApiError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "GET",
+                    "/integrations/trigger-events",
+                );
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<IsloApi.TriggerEventSummary, IsloApi.TriggerEventPage>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.next_cursor != null &&
+                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
+            getItems: (response) => response?.items ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
+            },
+        });
+    }
+
+    /**
+     * @param {IsloApi.GetIntegrationTriggerEventRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.getIntegrationTriggerEvent({
+     *         event_id: "event_id"
+     *     })
+     */
+    public getIntegrationTriggerEvent(
+        request: IsloApi.GetIntegrationTriggerEventRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.TriggerEventDetail> {
+        return core.HttpResponsePromise.fromPromise(this.__getIntegrationTriggerEvent(request, requestOptions));
+    }
+
+    private async __getIntegrationTriggerEvent(
+        request: IsloApi.GetIntegrationTriggerEventRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.TriggerEventDetail>> {
+        const { event_id: eventId } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `integrations/trigger-events/${core.url.encodePathParam(eventId)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.TriggerEventDetail, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/integrations/trigger-events/{event_id}",
+        );
+    }
+
+    /**
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.listIntegrationTriggers()
+     */
+    public listIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.ListPageTriggerCatalogItem> {
+        return core.HttpResponsePromise.fromPromise(this.__listIntegrationTriggers(requestOptions));
+    }
+
+    private async __listIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.ListPageTriggerCatalogItem>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "integrations/triggers",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.ListPageTriggerCatalogItem, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.IsloApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/integrations/triggers");
+    }
+
+    /**
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.listConnectedIntegrationTriggers()
+     */
+    public listConnectedIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.ListPageTriggerCatalogItem> {
+        return core.HttpResponsePromise.fromPromise(this.__listConnectedIntegrationTriggers(requestOptions));
+    }
+
+    private async __listConnectedIntegrationTriggers(
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.ListPageTriggerCatalogItem>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                "integrations/triggers/connected",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.ListPageTriggerCatalogItem, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/integrations/triggers/connected",
+        );
+    }
+
+    /**
+     * @param {IsloApi.GetIntegrationTriggerRequest} request
+     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
+     *
+     * @example
+     *     await client.integrations.getIntegrationTrigger({
+     *         provider: "provider",
+     *         trigger_name: "trigger_name"
+     *     })
+     */
+    public getIntegrationTrigger(
+        request: IsloApi.GetIntegrationTriggerRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): core.HttpResponsePromise<IsloApi.TriggerCatalogItem> {
+        return core.HttpResponsePromise.fromPromise(this.__getIntegrationTrigger(request, requestOptions));
+    }
+
+    private async __getIntegrationTrigger(
+        request: IsloApi.GetIntegrationTriggerRequest,
+        requestOptions?: IntegrationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogItem>> {
+        const { provider, trigger_name: triggerName } = request;
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
+            requestOptions?.headers,
+        );
+        const _response = await (this._options.fetcher ?? core.fetcher)({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).control,
+                `integrations/triggers/${core.url.encodePathParam(provider)}/${core.url.encodePathParam(triggerName)}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as IsloApi.TriggerCatalogItem, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 422:
+                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
+                default:
+                    throw new errors.IsloApiError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/integrations/triggers/{provider}/{trigger_name}",
         );
     }
 
@@ -568,6 +859,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.getIntegrationStatus({
@@ -590,6 +883,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -655,6 +951,8 @@ export class IntegrationsClient {
      * @throws {@link IsloApi.ForbiddenError}
      * @throws {@link IsloApi.NotFoundError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.integrations.disconnectIntegration({
@@ -681,6 +979,9 @@ export class IntegrationsClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -737,68 +1038,5 @@ export class IntegrationsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/integrations/{provider}");
-    }
-
-    /**
-     * @param {IntegrationsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link IsloApi.UnprocessableEntityError}
-     *
-     * @example
-     *     await client.integrations.listConnectedIntegrationTriggers()
-     */
-    public listConnectedIntegrationTriggers(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.TriggerCatalogListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listConnectedIntegrationTriggers(requestOptions));
-    }
-
-    private async __listConnectedIntegrationTriggers(
-        requestOptions?: IntegrationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.TriggerCatalogListResponse>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await (this._options.fetcher ?? core.fetcher)({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)).control,
-                "integrations/triggers/connected",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryString: core.url.queryBuilder().mergeAdditional(requestOptions?.queryParams).build(),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: _response.body as IsloApi.TriggerCatalogListResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new IsloApi.UnprocessableEntityError(_response.error.body as unknown, _response.rawResponse);
-                default:
-                    throw new errors.IsloApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/integrations/triggers/connected",
-        );
     }
 }

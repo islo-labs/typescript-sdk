@@ -7,8 +7,8 @@ import type * as IsloApi from "../../../../index.js";
  *     {
  *         profile_id: "profile_id",
  *         rules: [{
- *                 rule_id: "rule_id",
- *                 priority: 1
+ *                 priority: 1,
+ *                 rule_id: "rule_id"
  *             }]
  *     }
  */

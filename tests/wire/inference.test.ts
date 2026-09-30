@@ -10,30 +10,32 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
+            effort: { aliases: [{ harness: "codex", id: "id", model: "model" }], levels: [{ harness: "codex" }] },
             models: [
                 {
-                    id: "id",
-                    upstream_provider: "fireworks",
-                    upstream_model_id: "upstream_model_id",
-                    display_name: "display_name",
                     aliases: ["aliases"],
-                    client_apis: ["openai_chat_completions"],
-                    enabled: true,
-                    input_cents_per_1m_tokens: "input_cents_per_1m_tokens",
-                    cached_input_cents_per_1m_tokens: "cached_input_cents_per_1m_tokens",
                     cache_write_input_cents_per_1m_tokens: "cache_write_input_cents_per_1m_tokens",
+                    cached_input_cents_per_1m_tokens: "cached_input_cents_per_1m_tokens",
+                    client_apis: ["openai_chat_completions"],
+                    display_name: "display_name",
+                    enabled: true,
+                    id: "id",
+                    input_cents_per_1m_tokens: "input_cents_per_1m_tokens",
                     output_cents_per_1m_tokens: "output_cents_per_1m_tokens",
                     pricing_tiers: [
                         {
-                            input_cents_per_1m_tokens: "input_cents_per_1m_tokens",
                             cached_input_cents_per_1m_tokens: "cached_input_cents_per_1m_tokens",
+                            input_cents_per_1m_tokens: "input_cents_per_1m_tokens",
                             output_cents_per_1m_tokens: "output_cents_per_1m_tokens",
                         },
                     ],
+                    upstream_model_id: "upstream_model_id",
+                    upstream_provider: "fireworks",
                 },
             ],
         };
@@ -49,6 +51,7 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -66,6 +69,7 @@ describe("InferenceClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

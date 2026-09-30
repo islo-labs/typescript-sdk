@@ -6,5 +6,5 @@
  */
 export interface ListEnvironmentsRequest {
     limit?: number;
-    offset?: number;
+    cursor?: string | null;
 }

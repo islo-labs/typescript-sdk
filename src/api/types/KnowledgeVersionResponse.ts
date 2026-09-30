@@ -3,15 +3,15 @@
 import type * as IsloApi from "../index.js";
 
 export interface KnowledgeVersionResponse {
-    id: string;
-    version_number: number;
-    type: IsloApi.KnowledgeLevel;
-    level: IsloApi.KnowledgeLevel;
-    format: string;
     body: string;
-    metadata: Record<string, unknown>;
-    links: IsloApi.KnowledgeLinkResponse[];
+    byte_size?: (number | null) | undefined;
     content_hash: string;
     created_at: string;
-    byte_size?: (number | null) | undefined;
+    format: string;
+    id: string;
+    level: IsloApi.KnowledgeLevel;
+    links: IsloApi.KnowledgeLinkResponse[];
+    metadata: Record<string, unknown>;
+    type: IsloApi.KnowledgeLevel;
+    version_number: number;
 }

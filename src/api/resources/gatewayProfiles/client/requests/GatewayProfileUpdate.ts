@@ -10,13 +10,13 @@ import type * as IsloApi from "../../../../index.js";
  */
 export interface GatewayProfileUpdate {
     profile_id: string;
-    name?: string | null;
-    description?: string | null;
-    default_action?: IsloApi.GatewayAction | null;
-    internet_enabled?: boolean | null;
-    is_default?: boolean | null;
     /** Cloud role public ID (UUID), empty string to unset */
     cloud_role?: string | null;
+    default_action?: IsloApi.GatewayAction | null;
+    description?: string | null;
     /** Omit to leave unchanged; send {"mode": "all"} to allow all integrations */
     integration_policy?: IsloApi.GatewayProfileUpdateIntegrationPolicy | null;
+    internet_enabled?: boolean | null;
+    is_default?: boolean | null;
+    name?: string | null;
 }

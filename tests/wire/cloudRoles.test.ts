@@ -10,22 +10,27 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = [
-            {
-                id: "id",
-                provider: "provider",
-                type: "type",
-                role_arn: "role_arn",
-                session_duration_seconds: 1,
-                is_enabled: true,
-                islo_trust_role_arn: "islo_trust_role_arn",
-                created_at: "2024-01-15T09:30:00Z",
-                updated_at: "2024-01-15T09:30:00Z",
-            },
-        ];
+        const rawResponseBody = {
+            items: [
+                {
+                    created_at: "2024-01-15T09:30:00Z",
+                    id: "id",
+                    is_enabled: true,
+                    islo_trust_role_arn: "islo_trust_role_arn",
+                    provider: "provider",
+                    role_arn: "role_arn",
+                    session_duration_seconds: 1,
+                    type: "type",
+                    updated_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
 
         server.mockEndpoint().get("/cloud-roles").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
@@ -38,6 +43,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -55,6 +61,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -72,6 +79,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -89,18 +97,19 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "role_arn" };
         const rawResponseBody = {
+            created_at: "2024-01-15T09:30:00Z",
             id: "id",
-            provider: "provider",
-            type: "type",
-            role_arn: "role_arn",
-            session_duration_seconds: 1,
             is_enabled: true,
             islo_trust_role_arn: "islo_trust_role_arn",
-            created_at: "2024-01-15T09:30:00Z",
+            provider: "provider",
+            role_arn: "role_arn",
+            session_duration_seconds: 1,
+            type: "type",
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -125,6 +134,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
@@ -152,6 +162,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
@@ -179,6 +190,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { provider: "aws", role_arn: "x" };
@@ -206,18 +218,19 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
+            created_at: "2024-01-15T09:30:00Z",
             id: "id",
-            provider: "provider",
-            type: "type",
-            role_arn: "role_arn",
-            session_duration_seconds: 1,
             is_enabled: true,
             islo_trust_role_arn: "islo_trust_role_arn",
-            created_at: "2024-01-15T09:30:00Z",
+            provider: "provider",
+            role_arn: "role_arn",
+            session_duration_seconds: 1,
+            type: "type",
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -240,6 +253,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -265,6 +279,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -290,6 +305,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -315,6 +331,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -340,6 +357,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -356,6 +374,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -381,6 +400,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -406,6 +426,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -431,6 +452,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -456,18 +478,19 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
         const rawResponseBody = {
+            created_at: "2024-01-15T09:30:00Z",
             id: "id",
-            provider: "provider",
-            type: "type",
-            role_arn: "role_arn",
-            session_duration_seconds: 1,
             is_enabled: true,
             islo_trust_role_arn: "islo_trust_role_arn",
-            created_at: "2024-01-15T09:30:00Z",
+            provider: "provider",
+            role_arn: "role_arn",
+            session_duration_seconds: 1,
+            type: "type",
             updated_at: "2024-01-15T09:30:00Z",
         };
 
@@ -491,6 +514,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -517,6 +541,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -543,6 +568,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -569,6 +595,7 @@ describe("CloudRolesClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};

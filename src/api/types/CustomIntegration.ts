@@ -11,13 +11,13 @@ import type * as IsloApi from "../index.js";
  * is allowed to contain anything reasonable.
  */
 export interface CustomIntegration {
-    name: string;
-    slug: string;
-    mcp_url?: (string | null) | undefined;
     auth_method?: IsloApi.AuthMethod | undefined;
+    authorization_url?: (string | null) | undefined;
     client_id?: (string | null) | undefined;
     client_secret?: (string | null) | undefined;
-    authorization_url?: (string | null) | undefined;
-    token_url?: (string | null) | undefined;
+    mcp_url?: (string | null) | undefined;
+    name: string;
     scopes?: (string[] | null) | undefined;
+    slug: string;
+    token_url?: (string | null) | undefined;
 }

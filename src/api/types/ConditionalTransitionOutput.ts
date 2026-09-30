@@ -3,11 +3,11 @@
 import type * as IsloApi from "../index.js";
 
 export interface ConditionalTransitionOutput {
-    id: string;
     from: string;
-    to: string;
-    when: IsloApi.LineConditionOutput;
+    id: string;
     label?: (string | null) | undefined;
     max_iterations?: (number | null) | undefined;
     params?: Record<string, IsloApi.ConditionalTransitionOutputParamsValue> | undefined;
+    to: string;
+    when: IsloApi.LineConditionOutput;
 }

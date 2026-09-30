@@ -10,9 +10,9 @@
  * raw webhook body on list responses.
  */
 export interface TriggerSummary {
-    source: string;
-    provider?: (string | null) | undefined;
-    event_name?: (string | null) | undefined;
     delivery_id?: (string | null) | undefined;
+    event_name?: (string | null) | undefined;
     payload?: Record<string, unknown> | undefined;
+    provider?: (string | null) | undefined;
+    source: string;
 }

@@ -15,4 +15,6 @@ export interface ListKnowledgeRequest {
     q?: string | null;
     cursor?: string | null;
     limit?: number;
+    sort?: IsloApi.ListKnowledgeRequestSort;
+    include?: string | string[];
 }

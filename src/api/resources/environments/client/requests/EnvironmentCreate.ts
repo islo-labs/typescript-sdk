@@ -9,7 +9,7 @@ import type * as IsloApi from "../../../../index.js";
  *     }
  */
 export interface EnvironmentCreate {
-    name: string;
-    is_default?: boolean;
     entries?: IsloApi.EnvironmentCreateEntriesItem[];
+    is_default?: boolean;
+    name: string;
 }

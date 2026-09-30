@@ -10,31 +10,44 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
             items: [
                 {
-                    id: "id",
-                    slug: "slug",
-                    type: "episodic",
-                    level: "episodic",
-                    status: "active",
-                    links: [{ link_type: "repository", value: "value" }],
+                    byte_size: 1,
                     created_at: "2024-01-15T09:30:00Z",
+                    id: "id",
+                    level: "episodic",
+                    links: [{ link_type: "repository", value: "value" }],
+                    slug: "slug",
+                    status: "active",
+                    type: "episodic",
                     updated_at: "2024-01-15T09:30:00Z",
                     version_number: 1,
-                    byte_size: 1,
                 },
             ],
             next_cursor: "next_cursor",
+            total: 1,
         };
 
-        server.mockEndpoint().get("/knowledge").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint({ once: false })
+            .get("/knowledge")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        const response = await client.knowledge.listKnowledge();
-        expect(response).toEqual(rawResponseBody);
+        const expected = rawResponseBody;
+        const page = await client.knowledge.listKnowledge();
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
     });
 
     test("listKnowledge (2)", async () => {
@@ -42,6 +55,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -59,24 +73,25 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { slug: "slug" };
         const rawResponseBody = {
-            id: "id",
-            slug: "slug",
-            type: "episodic",
-            level: "episodic",
-            format: "format",
             body: "body",
-            metadata: { key: "value" },
-            status: "active",
-            links: [{ link_type: "repository", value: "value" }],
+            byte_size: 1,
             created_at: "2024-01-15T09:30:00Z",
+            format: "format",
+            id: "id",
+            level: "episodic",
+            links: [{ link_type: "repository", value: "value" }],
+            metadata: { key: "value" },
+            slug: "slug",
+            status: "active",
+            type: "episodic",
             updated_at: "2024-01-15T09:30:00Z",
             version_id: "version_id",
             version_number: 1,
-            byte_size: 1,
         };
 
         server
@@ -99,6 +114,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { slug: "x" };
@@ -120,29 +136,102 @@ describe("KnowledgeClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("listKnowledgeFacets (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { facets: { key: [{ key: "value" }] } };
+
+        server.mockEndpoint().get("/knowledge/facets").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.knowledge.listKnowledgeFacets({
+            fields: ["fields"],
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("listKnowledgeFacets (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/knowledge/facets").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.knowledge.listKnowledgeFacets();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("listKnowledgeTags (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { facets: { key: [{ key: "value" }] } };
+
+        server.mockEndpoint().get("/knowledge/tags").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.knowledge.listKnowledgeTags();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("listKnowledgeTags (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server.mockEndpoint().get("/knowledge/tags").respondWith().statusCode(422).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.knowledge.listKnowledgeTags();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("getKnowledge (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            id: "id",
-            slug: "slug",
-            type: "episodic",
-            level: "episodic",
-            format: "format",
             body: "body",
-            metadata: { key: "value" },
-            status: "active",
-            links: [{ link_type: "repository", value: "value" }],
+            byte_size: 1,
             created_at: "2024-01-15T09:30:00Z",
+            format: "format",
+            id: "id",
+            level: "episodic",
+            links: [{ link_type: "repository", value: "value" }],
+            metadata: { key: "value" },
+            slug: "slug",
+            status: "active",
+            type: "episodic",
             updated_at: "2024-01-15T09:30:00Z",
             version_id: "version_id",
             version_number: 1,
-            byte_size: 1,
         };
 
         server
@@ -164,6 +253,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -189,6 +279,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -205,6 +296,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -230,24 +322,25 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
         const rawResponseBody = {
-            id: "id",
-            slug: "slug",
-            type: "episodic",
-            level: "episodic",
-            format: "format",
             body: "body",
-            metadata: { key: "value" },
-            status: "active",
-            links: [{ link_type: "repository", value: "value" }],
+            byte_size: 1,
             created_at: "2024-01-15T09:30:00Z",
+            format: "format",
+            id: "id",
+            level: "episodic",
+            links: [{ link_type: "repository", value: "value" }],
+            metadata: { key: "value" },
+            slug: "slug",
+            status: "active",
+            type: "episodic",
             updated_at: "2024-01-15T09:30:00Z",
             version_id: "version_id",
             version_number: 1,
-            byte_size: 1,
         };
 
         server
@@ -261,6 +354,7 @@ describe("KnowledgeClient", () => {
 
         const response = await client.knowledge.updateKnowledge({
             identifier: "identifier",
+            body: {},
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -270,6 +364,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = {};
@@ -287,6 +382,7 @@ describe("KnowledgeClient", () => {
         await expect(async () => {
             return await client.knowledge.updateKnowledge({
                 identifier: "identifier",
+                body: {},
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
@@ -296,6 +392,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -320,6 +417,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -340,31 +438,112 @@ describe("KnowledgeClient", () => {
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 
+    test("restoreKnowledgeVersion (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { version_number: 1 };
+        const rawResponseBody = {
+            body: "body",
+            byte_size: 1,
+            created_at: "2024-01-15T09:30:00Z",
+            format: "format",
+            id: "id",
+            level: "episodic",
+            links: [{ link_type: "repository", value: "value" }],
+            metadata: { key: "value" },
+            slug: "slug",
+            status: "active",
+            type: "episodic",
+            updated_at: "2024-01-15T09:30:00Z",
+            version_id: "version_id",
+            version_number: 1,
+        };
+
+        server
+            .mockEndpoint()
+            .post("/knowledge/identifier/restore")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.knowledge.restoreKnowledgeVersion({
+            identifier: "identifier",
+            body: {
+                version_number: 1,
+            },
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("restoreKnowledgeVersion (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+        const rawRequestBody = { version_number: 1 };
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .post("/knowledge/identifier/restore")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.knowledge.restoreKnowledgeVersion({
+                identifier: "identifier",
+                body: {
+                    version_number: 1,
+                },
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
     test("listKnowledgeVersions (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            items: [{ id: "id", version_number: 1, created_at: "2024-01-15T09:30:00Z" }],
+            items: [{ created_at: "2024-01-15T09:30:00Z", id: "id", version_number: 1 }],
             next_cursor: "next_cursor",
+            total: 1,
         };
 
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .get("/knowledge/identifier/versions")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.knowledge.listKnowledgeVersions({
+        const expected = rawResponseBody;
+        const page = await client.knowledge.listKnowledgeVersions({
             identifier: "identifier",
         });
-        expect(response).toEqual(rawResponseBody);
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
     });
 
     test("listKnowledgeVersions (2)", async () => {
@@ -372,6 +551,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -397,21 +577,22 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            id: "id",
-            version_number: 1,
-            type: "episodic",
-            level: "episodic",
-            format: "format",
             body: "body",
-            metadata: { key: "value" },
-            links: [{ link_type: "repository", value: "value" }],
+            byte_size: 1,
             content_hash: "content_hash",
             created_at: "2024-01-15T09:30:00Z",
-            byte_size: 1,
+            format: "format",
+            id: "id",
+            level: "episodic",
+            links: [{ link_type: "repository", value: "value" }],
+            metadata: { key: "value" },
+            type: "episodic",
+            version_number: 1,
         };
 
         server
@@ -434,6 +615,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -460,6 +642,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -485,6 +668,7 @@ describe("KnowledgeClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -500,74 +684,6 @@ describe("KnowledgeClient", () => {
 
         await expect(async () => {
             return await client.knowledge.getKnowledgeVersionContent({
-                identifier: "identifier",
-                version_number: 1,
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("restoreKnowledgeVersion (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = { version_number: 1 };
-        const rawResponseBody = {
-            id: "id",
-            slug: "slug",
-            type: "episodic",
-            level: "episodic",
-            format: "format",
-            body: "body",
-            metadata: { key: "value" },
-            status: "active",
-            links: [{ link_type: "repository", value: "value" }],
-            created_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            version_id: "version_id",
-            version_number: 1,
-            byte_size: 1,
-        };
-
-        server
-            .mockEndpoint()
-            .post("/knowledge/identifier/restore")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.knowledge.restoreKnowledgeVersion({
-            identifier: "identifier",
-            version_number: 1,
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("restoreKnowledgeVersion (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-        const rawRequestBody = { version_number: 1 };
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .post("/knowledge/identifier/restore")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.knowledge.restoreKnowledgeVersion({
                 identifier: "identifier",
                 version_number: 1,
             });

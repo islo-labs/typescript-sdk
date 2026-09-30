@@ -6,5 +6,5 @@
  */
 export interface ListFactoryLinesRequest {
     limit?: number;
-    offset?: number;
+    cursor?: string | null;
 }

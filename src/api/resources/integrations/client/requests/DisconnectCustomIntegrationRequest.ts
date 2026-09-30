@@ -5,11 +5,11 @@ import type * as IsloApi from "../../../../index.js";
 /**
  * @example
  *     {
- *         descope_app_id: "descope_app_id"
+ *         provider: "provider"
  *     }
  */
 export interface DisconnectCustomIntegrationRequest {
-    descope_app_id: string;
+    provider: string;
     /** Which token to revoke: 'user' (this user's personal) or 'tenant' (workspace) */
     scope?: IsloApi.IntegrationLevel;
     /** Also remove the Descope outbound app entirely (affects every user in this workspace) */

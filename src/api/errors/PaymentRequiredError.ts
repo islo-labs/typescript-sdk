@@ -5,6 +5,8 @@ import * as errors from "../../errors/index.js";
 import type * as IsloApi from "../index.js";
 
 export class PaymentRequiredError extends errors.IsloApiError {
+    public declare readonly body: IsloApi.ErrorResponse;
+
     constructor(body: IsloApi.ErrorResponse, rawResponse?: core.RawResponse) {
         super({
             message: "PaymentRequiredError",
@@ -17,6 +19,6 @@ export class PaymentRequiredError extends errors.IsloApiError {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "PaymentRequiredError";
     }
 }

@@ -3,8 +3,8 @@
 import type * as IsloApi from "../index.js";
 
 export interface ByoProviderStatus {
+    message?: (string | null) | undefined;
+    provider_name?: (string | null) | undefined;
     source_kind: IsloApi.ByoSourceKind;
     state: IsloApi.ByoConnectionState;
-    provider_name?: (string | null) | undefined;
-    message?: (string | null) | undefined;
 }

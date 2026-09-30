@@ -5,16 +5,16 @@ import type * as IsloApi from "../../../../index.js";
 /**
  * @example
  *     {
- *         provider: "ecr",
- *         registry_host: "registry_host",
  *         cloud_role_id: "cloud_role_id",
- *         region: "region"
+ *         provider: "ecr",
+ *         region: "region",
+ *         registry_host: "registry_host"
  *     }
  */
 export interface ContainerRegistryCreate {
+    cloud_role_id: string;
     provider: IsloApi.RegistryProvider;
+    region: string;
     registry_host: string;
     repository_prefixes?: string[];
-    cloud_role_id: string;
-    region: string;
 }

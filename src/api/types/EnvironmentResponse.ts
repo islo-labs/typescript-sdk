@@ -3,10 +3,10 @@
 import type * as IsloApi from "../index.js";
 
 export interface EnvironmentResponse {
-    id: string;
-    name: string;
-    is_default: boolean;
-    entries: IsloApi.EnvironmentEntryResponse[];
     created_at: string;
+    entries: IsloApi.EnvironmentEntryResponse[];
+    id: string;
+    is_default: boolean;
+    name: string;
     updated_at: string;
 }

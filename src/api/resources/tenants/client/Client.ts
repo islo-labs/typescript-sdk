@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -31,23 +31,28 @@ export class TenantsClient {
      *
      * @throws {@link IsloApi.UnauthorizedError}
      * @throws {@link IsloApi.UnprocessableEntityError}
+     * @throws {@link errors.IsloApiError}
+     * @throws {@link errors.IsloApiTimeoutError}
      *
      * @example
      *     await client.tenants.listTenantComputeRegions()
      */
     public listTenantComputeRegions(
         requestOptions?: TenantsClient.RequestOptions,
-    ): core.HttpResponsePromise<IsloApi.TenantRegionsResponse> {
+    ): core.HttpResponsePromise<IsloApi.ListPageComputeRegionResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listTenantComputeRegions(requestOptions));
     }
 
     private async __listTenantComputeRegions(
         requestOptions?: TenantsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<IsloApi.TenantRegionsResponse>> {
+    ): Promise<core.WithRawResponse<IsloApi.ListPageComputeRegionResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
+            mergeOnlyDefinedHeaders({
+                "X-Islo-Api-Version": requestOptions?.apiVersion ?? this._options?.apiVersion ?? "2026-09-15",
+            }),
             requestOptions?.headers,
         );
         const _response = await (this._options.fetcher ?? core.fetcher)({
@@ -66,7 +71,10 @@ export class TenantsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as IsloApi.TenantRegionsResponse, rawResponse: _response.rawResponse };
+            return {
+                data: _response.body as IsloApi.ListPageComputeRegionResponse,
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

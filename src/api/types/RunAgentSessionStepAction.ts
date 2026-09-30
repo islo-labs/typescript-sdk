@@ -3,18 +3,23 @@
 import type * as IsloApi from "../index.js";
 
 export interface RunAgentSessionStepAction {
+    command?: (RunAgentSessionStepAction.Command | null) | undefined;
+    /** Reasoning effort token. Requires model. Legal values come from the effort table on GET /inference/models, which is keyed by harness and optionally by model. For cursor the pair also resolves to a real model id, because cursor encodes effort in the id rather than taking a flag. Omit to use the harness default. */
+    effort?: (string | null) | undefined;
     /** Session outputs require claude, codex, cursor, or opencode. */
     harness: RunAgentSessionStepAction.Harness;
+    knowledge?: (IsloApi.KnowledgeBinding[] | null) | undefined;
+    /** MCP server descriptors to make available to the agent. Each entry carries a key (unique label) and url (MCP endpoint). Duplicates by key are rejected. */
+    mcp?: (IsloApi.McpEntry[] | null) | undefined;
     model?: (string | null) | undefined;
     model_provider?: (RunAgentSessionStepAction.ModelProvider | null) | undefined;
     prompt?: (IsloApi.RunAgentSessionStepActionPrompt | null) | undefined;
     resume_prompt?: (IsloApi.RunAgentSessionStepActionResumePrompt | null) | undefined;
-    knowledge?: (IsloApi.KnowledgeBinding[] | null) | undefined;
     session?: (string | null) | undefined;
-    command?: (RunAgentSessionStepAction.Command | null) | undefined;
 }
 
 export namespace RunAgentSessionStepAction {
+    export type Command = string[] | string;
     /** Session outputs require claude, codex, cursor, or opencode. */
     export const Harness = {
         Codex: "codex",
@@ -28,5 +33,4 @@ export namespace RunAgentSessionStepAction {
         IsloInference: "islo_inference",
     } as const;
     export type ModelProvider = (typeof ModelProvider)[keyof typeof ModelProvider];
-    export type Command = string[] | string;
 }

@@ -6,7 +6,7 @@ import type * as IsloApi from "../index.js";
  * Connection option for one authentication method and scope.
  */
 export interface ProviderApp {
+    app_id: string;
     auth_method: IsloApi.AuthMethod;
     scope: IsloApi.IntegrationLevel;
-    app_id: string;
 }

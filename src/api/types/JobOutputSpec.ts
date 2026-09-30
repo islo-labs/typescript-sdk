@@ -8,25 +8,17 @@
  * the producer type, not the published array).
  */
 export interface JobOutputSpec {
-    type: JobOutputSpec.Type;
-    /** Item type for array outputs. Required at deploy when type = array. Do not use reduce = collect with type = array; use gather to concatenate arrays. */
-    items?: (JobOutputSpec.Items | null) | undefined;
-    required?: boolean | undefined;
     description?: (string | null) | undefined;
     enum?: (unknown[] | null) | undefined;
+    /** Item type for array outputs. Required at deploy when type = array. Do not use reduce = collect with type = array; use gather to concatenate arrays. */
+    items?: (JobOutputSpec.Items | null) | undefined;
     /** one: exactly one claiming step. last: last successful write in manifest task order. collect: published array of producer values (dense nulls for missing tasks); required collect must be claimed by every task. gather: concatenate arrays or collect scalars, skipping omissions. */
     reduce?: JobOutputSpec.Reduce | undefined;
+    required?: boolean | undefined;
+    type: JobOutputSpec.Type;
 }
 
 export namespace JobOutputSpec {
-    export const Type = {
-        String: "string",
-        Integer: "integer",
-        Number: "number",
-        Boolean: "boolean",
-        Array: "array",
-    } as const;
-    export type Type = (typeof Type)[keyof typeof Type];
     export const Items = {
         String: "string",
         Integer: "integer",
@@ -42,4 +34,12 @@ export namespace JobOutputSpec {
         Gather: "gather",
     } as const;
     export type Reduce = (typeof Reduce)[keyof typeof Reduce];
+    export const Type = {
+        String: "string",
+        Integer: "integer",
+        Number: "number",
+        Boolean: "boolean",
+        Array: "array",
+    } as const;
+    export type Type = (typeof Type)[keyof typeof Type];
 }

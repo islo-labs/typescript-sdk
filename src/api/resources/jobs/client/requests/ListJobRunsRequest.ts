@@ -9,5 +9,5 @@
 export interface ListJobRunsRequest {
     name: string;
     limit?: number;
-    offset?: number;
+    cursor?: string | null;
 }

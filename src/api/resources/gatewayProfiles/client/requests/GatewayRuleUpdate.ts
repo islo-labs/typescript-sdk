@@ -12,13 +12,13 @@ import type * as IsloApi from "../../../../index.js";
 export interface GatewayRuleUpdate {
     profile_id: string;
     rule_id: string;
-    priority?: number | null;
-    host_pattern?: string | null;
-    path_pattern?: string | null;
-    methods?: string[] | null;
     action?: IsloApi.GatewayAction | null;
-    rate_limit_rpm?: number | null;
-    provider_key?: string | null;
     auth_strategy?: IsloApi.AuthStrategySchema | null;
     content_filter?: IsloApi.GatewayRuleUpdateContentFilter | null;
+    host_pattern?: string | null;
+    methods?: string[] | null;
+    path_pattern?: string | null;
+    priority?: number | null;
+    provider_key?: string | null;
+    rate_limit_rpm?: number | null;
 }

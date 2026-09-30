@@ -8,6 +8,7 @@ import type * as IsloApi from "../index.js";
 export type ArtifactRefExternalRef =
     | IsloApi.ArtifactRefExternalRef.Github
     | IsloApi.ArtifactRefExternalRef.Islo
+    | IsloApi.ArtifactRefExternalRef.Jira
     | IsloApi.ArtifactRefExternalRef.Linear
     | IsloApi.ArtifactRefExternalRef.Slack
     | IsloApi.ArtifactRefExternalRef.Url;
@@ -19,6 +20,10 @@ export namespace ArtifactRefExternalRef {
 
     export interface Islo extends IsloApi.IsloKnowledgeItemExternalRef {
         provider: "islo";
+    }
+
+    export interface Jira extends IsloApi.JiraExternalRef {
+        provider: "jira";
     }
 
     export interface Linear extends IsloApi.LinearExternalRef {

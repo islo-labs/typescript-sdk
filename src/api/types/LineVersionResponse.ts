@@ -3,10 +3,10 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineVersionResponse {
-    id: string;
-    version_number: number;
     content_hash: string;
     deployed_at: string;
-    manifest: IsloApi.LineManifestOutput;
+    id: string;
     input_params?: IsloApi.JobParamDefinition[] | undefined;
+    manifest: IsloApi.LineManifestOutput;
+    version_number: number;
 }

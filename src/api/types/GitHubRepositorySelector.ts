@@ -4,8 +4,8 @@ import type * as IsloApi from "../index.js";
 
 export interface GitHubRepositorySelector {
     kind?: GitHubRepositorySelector.Kind | undefined;
-    scope?: IsloApi.SelectorScope | undefined;
     repositories?: string[] | undefined;
+    scope?: IsloApi.SelectorScope | undefined;
 }
 
 export namespace GitHubRepositorySelector {

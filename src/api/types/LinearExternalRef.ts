@@ -4,9 +4,9 @@
  * Linear identity: issues use id or identifier; comments use id.
  */
 export interface LinearExternalRef {
-    kind?: string | undefined;
     id?: (string | null) | undefined;
     identifier?: (string | null) | undefined;
-    team?: (string | null) | undefined;
     issue_id?: (string | null) | undefined;
+    kind?: string | undefined;
+    team?: (string | null) | undefined;
 }

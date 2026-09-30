@@ -3,8 +3,8 @@
 import type * as IsloApi from "../index.js";
 
 export interface AgenticTransitionOption {
-    name: string;
-    to: string;
     label?: (string | null) | undefined;
+    name: string;
     params?: Record<string, IsloApi.AgenticTransitionOptionParamsValue> | undefined;
+    to: string;
 }

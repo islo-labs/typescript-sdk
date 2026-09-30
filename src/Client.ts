@@ -6,6 +6,7 @@ import { ComputeEventsClient } from "./api/resources/computeEvents/client/Client
 import { ContainerRegistriesClient } from "./api/resources/containerRegistries/client/Client.js";
 import { CreditsClient } from "./api/resources/credits/client/Client.js";
 import { EnvironmentsClient } from "./api/resources/environments/client/Client.js";
+import { FactoriesClient } from "./api/resources/factories/client/Client.js";
 import { FactoryClient } from "./api/resources/factory/client/Client.js";
 import { GatewayProfilesClient } from "./api/resources/gatewayProfiles/client/Client.js";
 import { InferenceClient } from "./api/resources/inference/client/Client.js";
@@ -13,7 +14,9 @@ import { IntegrationsClient } from "./api/resources/integrations/client/Client.j
 import { JobRunsClient } from "./api/resources/jobRuns/client/Client.js";
 import { JobsClient } from "./api/resources/jobs/client/Client.js";
 import { KnowledgeClient } from "./api/resources/knowledge/client/Client.js";
+import { MachinesClient } from "./api/resources/machines/client/Client.js";
 import { SandboxesClient } from "./api/resources/sandboxes/client/Client.js";
+import { SandboxTemplatesClient } from "./api/resources/sandboxTemplates/client/Client.js";
 import { SharesClient } from "./api/resources/shares/client/Client.js";
 import { SnapshotsClient } from "./api/resources/snapshots/client/Client.js";
 import { TenantsClient } from "./api/resources/tenants/client/Client.js";
@@ -30,20 +33,23 @@ export declare namespace Islo {
 
 export class Islo {
     protected readonly _options: NormalizedClientOptionsWithAuth<Islo.Options>;
-    protected _tenants: TenantsClient | undefined;
-    protected _knowledge: KnowledgeClient | undefined;
-    protected _credits: CreditsClient | undefined;
-    protected _integrations: IntegrationsClient | undefined;
-    protected _gatewayProfiles: GatewayProfilesClient | undefined;
-    protected _environments: EnvironmentsClient | undefined;
-    protected _cloudRoles: CloudRolesClient | undefined;
     protected _byo: ByoClient | undefined;
-    protected _inference: InferenceClient | undefined;
-    protected _containerRegistries: ContainerRegistriesClient | undefined;
-    protected _jobs: JobsClient | undefined;
-    protected _jobRuns: JobRunsClient | undefined;
-    protected _factory: FactoryClient | undefined;
+    protected _cloudRoles: CloudRolesClient | undefined;
     protected _computeEvents: ComputeEventsClient | undefined;
+    protected _containerRegistries: ContainerRegistriesClient | undefined;
+    protected _credits: CreditsClient | undefined;
+    protected _environments: EnvironmentsClient | undefined;
+    protected _factories: FactoriesClient | undefined;
+    protected _machines: MachinesClient | undefined;
+    protected _factory: FactoryClient | undefined;
+    protected _gatewayProfiles: GatewayProfilesClient | undefined;
+    protected _inference: InferenceClient | undefined;
+    protected _integrations: IntegrationsClient | undefined;
+    protected _jobRuns: JobRunsClient | undefined;
+    protected _jobs: JobsClient | undefined;
+    protected _knowledge: KnowledgeClient | undefined;
+    protected _sandboxTemplates: SandboxTemplatesClient | undefined;
+    protected _tenants: TenantsClient | undefined;
     protected _sandboxes: SandboxesClient | undefined;
     protected _shares: SharesClient | undefined;
     protected _snapshots: SnapshotsClient | undefined;
@@ -53,60 +59,72 @@ export class Islo {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
-    public get tenants(): TenantsClient {
-        return (this._tenants ??= new TenantsClient(this._options));
-    }
-
-    public get knowledge(): KnowledgeClient {
-        return (this._knowledge ??= new KnowledgeClient(this._options));
-    }
-
-    public get credits(): CreditsClient {
-        return (this._credits ??= new CreditsClient(this._options));
-    }
-
-    public get integrations(): IntegrationsClient {
-        return (this._integrations ??= new IntegrationsClient(this._options));
-    }
-
-    public get gatewayProfiles(): GatewayProfilesClient {
-        return (this._gatewayProfiles ??= new GatewayProfilesClient(this._options));
-    }
-
-    public get environments(): EnvironmentsClient {
-        return (this._environments ??= new EnvironmentsClient(this._options));
+    public get byo(): ByoClient {
+        return (this._byo ??= new ByoClient(this._options));
     }
 
     public get cloudRoles(): CloudRolesClient {
         return (this._cloudRoles ??= new CloudRolesClient(this._options));
     }
 
-    public get byo(): ByoClient {
-        return (this._byo ??= new ByoClient(this._options));
-    }
-
-    public get inference(): InferenceClient {
-        return (this._inference ??= new InferenceClient(this._options));
+    public get computeEvents(): ComputeEventsClient {
+        return (this._computeEvents ??= new ComputeEventsClient(this._options));
     }
 
     public get containerRegistries(): ContainerRegistriesClient {
         return (this._containerRegistries ??= new ContainerRegistriesClient(this._options));
     }
 
-    public get jobs(): JobsClient {
-        return (this._jobs ??= new JobsClient(this._options));
+    public get credits(): CreditsClient {
+        return (this._credits ??= new CreditsClient(this._options));
     }
 
-    public get jobRuns(): JobRunsClient {
-        return (this._jobRuns ??= new JobRunsClient(this._options));
+    public get environments(): EnvironmentsClient {
+        return (this._environments ??= new EnvironmentsClient(this._options));
+    }
+
+    public get factories(): FactoriesClient {
+        return (this._factories ??= new FactoriesClient(this._options));
+    }
+
+    public get machines(): MachinesClient {
+        return (this._machines ??= new MachinesClient(this._options));
     }
 
     public get factory(): FactoryClient {
         return (this._factory ??= new FactoryClient(this._options));
     }
 
-    public get computeEvents(): ComputeEventsClient {
-        return (this._computeEvents ??= new ComputeEventsClient(this._options));
+    public get gatewayProfiles(): GatewayProfilesClient {
+        return (this._gatewayProfiles ??= new GatewayProfilesClient(this._options));
+    }
+
+    public get inference(): InferenceClient {
+        return (this._inference ??= new InferenceClient(this._options));
+    }
+
+    public get integrations(): IntegrationsClient {
+        return (this._integrations ??= new IntegrationsClient(this._options));
+    }
+
+    public get jobRuns(): JobRunsClient {
+        return (this._jobRuns ??= new JobRunsClient(this._options));
+    }
+
+    public get jobs(): JobsClient {
+        return (this._jobs ??= new JobsClient(this._options));
+    }
+
+    public get knowledge(): KnowledgeClient {
+        return (this._knowledge ??= new KnowledgeClient(this._options));
+    }
+
+    public get sandboxTemplates(): SandboxTemplatesClient {
+        return (this._sandboxTemplates ??= new SandboxTemplatesClient(this._options));
+    }
+
+    public get tenants(): TenantsClient {
+        return (this._tenants ??= new TenantsClient(this._options));
     }
 
     public get sandboxes(): SandboxesClient {

@@ -5,97 +5,21 @@ import { Islo } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ByoClient", () => {
-    test("get_byo_inference_status (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            statuses: [
-                {
-                    source_kind: "databricks",
-                    state: "not_connected",
-                    provider_name: "provider_name",
-                    message: "message",
-                },
-            ],
-        };
-
-        server
-            .mockEndpoint()
-            .get("/byo/inference/status")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.byo.getByoInferenceStatus();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("get_byo_inference_status (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
-
-        server
-            .mockEndpoint()
-            .get("/byo/inference/status")
-            .respondWith()
-            .statusCode(401)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.byo.getByoInferenceStatus();
-        }).rejects.toThrow(IsloApi.UnauthorizedError);
-    });
-
-    test("get_byo_inference_status (3)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/byo/inference/status")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.byo.getByoInferenceStatus();
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("start_byo_inference_setup (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { source_kind: "databricks" };
         const rawResponseBody = {
-            setup_session_id: "setup_session_id",
             connection_id: "connection_id",
-            source_kind: "databricks",
-            setup_mode: "managed_setup_link",
             redirect_url: "redirect_url",
+            setup_mode: "managed_setup_link",
+            setup_session_id: "setup_session_id",
+            source_kind: "databricks",
         };
 
         server
@@ -118,6 +42,7 @@ describe("ByoClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { source_kind: "databricks" };
@@ -144,6 +69,7 @@ describe("ByoClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { source_kind: "databricks" };
@@ -170,6 +96,7 @@ describe("ByoClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { source_kind: "databricks" };
@@ -196,6 +123,7 @@ describe("ByoClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { source_kind: "databricks" };
@@ -215,5 +143,85 @@ describe("ByoClient", () => {
                 source_kind: "databricks",
             });
         }).rejects.toThrow(IsloApi.BadGatewayError);
+    });
+
+    test("get_byo_inference_status (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            statuses: [
+                {
+                    message: "message",
+                    provider_name: "provider_name",
+                    source_kind: "databricks",
+                    state: "not_connected",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/byo/inference/status")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.byo.getByoInferenceStatus();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("get_byo_inference_status (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { code: "AUTH_REQUIRED", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/byo/inference/status")
+            .respondWith()
+            .statusCode(401)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.byo.getByoInferenceStatus();
+        }).rejects.toThrow(IsloApi.UnauthorizedError);
+    });
+
+    test("get_byo_inference_status (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/byo/inference/status")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.byo.getByoInferenceStatus();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 });

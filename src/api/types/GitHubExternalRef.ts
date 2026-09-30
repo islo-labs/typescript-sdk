@@ -4,10 +4,10 @@
  * GitHub identity: PRs/issues use owner, repo, and number; comments use id.
  */
 export interface GitHubExternalRef {
+    id?: (string | null) | undefined;
     kind: string;
+    node_id?: (string | null) | undefined;
+    number?: (number | null) | undefined;
     owner?: (string | null) | undefined;
     repo?: (string | null) | undefined;
-    number?: (number | null) | undefined;
-    node_id?: (string | null) | undefined;
-    id?: (string | null) | undefined;
 }

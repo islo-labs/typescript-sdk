@@ -3,9 +3,9 @@
 import type * as IsloApi from "../index.js";
 
 export interface SlackChannelSelector {
+    channels?: string[] | undefined;
     kind?: SlackChannelSelector.Kind | undefined;
     scope?: IsloApi.SelectorScope | undefined;
-    channels?: string[] | undefined;
 }
 
 export namespace SlackChannelSelector {

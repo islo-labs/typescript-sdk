@@ -6,26 +6,27 @@ import type * as IsloApi from "../index.js";
  * Sandbox requirements for job runs (matches compute IncomingWebhookSandboxTemplate shape).
  */
 export interface SandboxConfig {
+    cache_key?: (string | null) | undefined;
+    disk_gb?: number | undefined;
+    env?: (Record<string, string | null> | null) | undefined;
+    environment?: (string | null) | undefined;
+    gateway_profile?: (string | null) | undefined;
+    /** Required for provision/ensure. */
+    image?: (string | null) | undefined;
+    init?: (IsloApi.SandboxConfigInit | null) | undefined;
+    internet_enabled?: boolean | undefined;
+    lifecycle?: (IsloApi.LifecyclePolicy | null) | undefined;
+    memory_mb?: number | undefined;
     mode?: SandboxConfig.Mode | undefined;
     /** Required for ensure/reuse. Supports {{param}} substitution. */
     name?: (string | null) | undefined;
-    /** Required for provision/ensure. */
-    image?: (string | null) | undefined;
-    vcpus?: number | undefined;
-    memory_mb?: number | undefined;
-    disk_gb?: number | undefined;
+    setup_scripts?: (IsloApi.SetupScript[] | null) | undefined;
     snapshot_name?: (string | null) | undefined;
-    gateway_profile?: (string | null) | undefined;
-    environment?: (string | null) | undefined;
-    init?: (IsloApi.SandboxConfigInit | null) | undefined;
-    internet_enabled?: boolean | undefined;
+    sources?: (IsloApi.ControlPlaneGitSource[] | null) | undefined;
+    template?: (IsloApi.SandboxTemplateRef | null) | undefined;
+    vcpus?: number | undefined;
     /** Sandbox default working directory. Used when [run].workdir is omitted. */
     workdir?: (string | null) | undefined;
-    cache_key?: (string | null) | undefined;
-    env?: (Record<string, string | null> | null) | undefined;
-    sources?: (IsloApi.GitSource[] | null) | undefined;
-    setup_scripts?: (IsloApi.SetupScript[] | null) | undefined;
-    lifecycle?: (IsloApi.LifecyclePolicy | null) | undefined;
 }
 
 export namespace SandboxConfig {

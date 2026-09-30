@@ -6,5 +6,5 @@
  */
 export interface ListJobsRequest {
     limit?: number;
-    offset?: number;
+    cursor?: string | null;
 }

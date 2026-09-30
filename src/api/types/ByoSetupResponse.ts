@@ -3,9 +3,9 @@
 import type * as IsloApi from "../index.js";
 
 export interface ByoSetupResponse {
-    setup_session_id: string;
     connection_id: string;
-    source_kind: IsloApi.ByoSourceKind;
-    setup_mode: IsloApi.ByoSetupMode;
     redirect_url: string;
+    setup_mode: IsloApi.ByoSetupMode;
+    setup_session_id: string;
+    source_kind: IsloApi.ByoSourceKind;
 }

@@ -5,150 +5,28 @@ import { Islo } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("IntegrationsClient", () => {
-    test("list_integration_providers", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            providers: [
-                { name: "name", hosts: ["hosts"], apps: [{ auth_method: "oauth", scope: "user", app_id: "app_id" }] },
-            ],
-        };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/providers")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.integrations.listIntegrationProviders();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("list_integration_triggers", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            triggers: [
-                {
-                    provider: "provider",
-                    name: "name",
-                    kind: "kind",
-                    title: "title",
-                    description: "description",
-                    selector_schema: { key: "value" },
-                    filter_operators: ["filter_operators"],
-                    raw_payload_example: { key: "value" },
-                    docs_url: "docs_url",
-                    connected: true,
-                },
-            ],
-        };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/triggers")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.integrations.listIntegrationTriggers();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("get_integration_trigger (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            provider: "provider",
-            name: "name",
-            kind: "kind",
-            title: "title",
-            description: "description",
-            selector_schema: { key: "value" },
-            filter_operators: ["filter_operators"],
-            raw_payload_example: { key: "value" },
-            docs_url: "docs_url",
-            connected: true,
-        };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/triggers/provider/trigger_name")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.integrations.getIntegrationTrigger({
-            provider: "provider",
-            trigger_name: "trigger_name",
-        });
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("get_integration_trigger (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/triggers/provider/trigger_name")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.integrations.getIntegrationTrigger({
-                provider: "provider",
-                trigger_name: "trigger_name",
-            });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
     test("list_integrations (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            integrations: [
+            items: [
                 {
-                    provider: "provider",
-                    connected: true,
-                    level: "user",
                     auth_method: "oauth",
-                    preset_id: "preset_id",
+                    connected: true,
                     display_name: "display_name",
+                    level: "user",
+                    preset_id: "preset_id",
+                    provider: "provider",
                 },
             ],
+            next_cursor: "next_cursor",
+            total: 1,
         };
 
         server.mockEndpoint().get("/integrations").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -162,6 +40,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -179,6 +58,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -196,6 +76,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -213,10 +94,15 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
-        const rawResponseBody = { services: [{ name: "name", slug: "slug", auth_method: "oauth" }] };
+        const rawResponseBody = {
+            items: [{ auth_method: "oauth", name: "name", slug: "slug" }],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
 
         server
             .mockEndpoint()
@@ -235,6 +121,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -258,6 +145,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -281,6 +169,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -304,10 +193,11 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
-        const rawResponseBody = { app_id: "app_id", name: "name", slug: "slug", auth_method: "oauth" };
+        const rawResponseBody = { app_id: "app_id", auth_method: "oauth", name: "name", slug: "slug" };
 
         server
             .mockEndpoint()
@@ -332,6 +222,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -361,6 +252,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -390,6 +282,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -419,6 +312,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
         const rawRequestBody = { custom: { name: "name", slug: "slug" } };
@@ -448,6 +342,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -455,14 +350,14 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
         const response = await client.integrations.disconnectCustomIntegration({
-            descope_app_id: "descope_app_id",
+            provider: "provider",
         });
         expect(response).toEqual(rawResponseBody);
     });
@@ -472,6 +367,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -479,7 +375,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
@@ -487,7 +383,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.BadRequestError);
     });
@@ -497,6 +393,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -504,7 +401,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(401)
             .jsonBody(rawResponseBody)
@@ -512,7 +409,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.UnauthorizedError);
     });
@@ -522,6 +419,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -529,7 +427,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(403)
             .jsonBody(rawResponseBody)
@@ -537,7 +435,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.ForbiddenError);
     });
@@ -547,6 +445,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -554,7 +453,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
@@ -562,7 +461,7 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
             });
         }).rejects.toThrow(IsloApi.NotFoundError);
     });
@@ -572,6 +471,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -579,7 +479,7 @@ describe("IntegrationsClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/integrations/custom/descope_app_id")
+            .delete("/integrations/custom/provider")
             .respondWith()
             .statusCode(422)
             .jsonBody(rawResponseBody)
@@ -587,7 +487,361 @@ describe("IntegrationsClient", () => {
 
         await expect(async () => {
             return await client.integrations.disconnectCustomIntegration({
-                descope_app_id: "descope_app_id",
+                provider: "provider",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("list_integration_providers", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            items: [
+                { apps: [{ app_id: "app_id", auth_method: "oauth", scope: "user" }], hosts: ["hosts"], name: "name" },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/providers")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.listIntegrationProviders();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_integration_trigger_events (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            history_window: { key: "value" },
+            items: [
+                {
+                    complete: true,
+                    effect_count: 1,
+                    event_name: "event_name",
+                    id: "id",
+                    invocation_status: "invocation_status",
+                    manager_outcome: "manager_outcome",
+                    outcome: "outcome",
+                    provider: "provider",
+                    provider_delivery_id: "provider_delivery_id",
+                    received_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+            next_cursor: "next_cursor",
+            oldest_available_at: "2024-01-15T09:30:00Z",
+            total: 1,
+        };
+
+        server
+            .mockEndpoint({ once: false })
+            .get("/integrations/trigger-events")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = rawResponseBody;
+        const page = await client.integrations.listIntegrationTriggerEvents();
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
+    });
+
+    test("list_integration_trigger_events (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/trigger-events")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.listIntegrationTriggerEvents();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("get_integration_trigger_event (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            complete: true,
+            effect_count: 1,
+            effects: [
+                {
+                    delivery_id: "delivery_id",
+                    factory: "factory",
+                    factory_id: "factory_id",
+                    failure_code: "failure_code",
+                    failure_summary: "failure_summary",
+                    line: "line",
+                    line_id: "line_id",
+                    line_run_id: "line_run_id",
+                    line_version: 1,
+                    line_version_id: "line_version_id",
+                    status: "status",
+                },
+            ],
+            event_name: "event_name",
+            failure_code: "failure_code",
+            failure_summary: "failure_summary",
+            history_note: "history_note",
+            history_window: { key: "value" },
+            id: "id",
+            invocation_status: "invocation_status",
+            manager_outcome: "manager_outcome",
+            manager_routing: { key: 1 },
+            oldest_available_at: "2024-01-15T09:30:00Z",
+            outcome: "outcome",
+            payload: { key: "value" },
+            payload_redacted_bytes: 1,
+            payload_truncated: true,
+            provider: "provider",
+            provider_delivery_id: "provider_delivery_id",
+            received_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/trigger-events/event_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.getIntegrationTriggerEvent({
+            event_id: "event_id",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("get_integration_trigger_event (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/trigger-events/event_id")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.getIntegrationTriggerEvent({
+                event_id: "event_id",
+            });
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("list_integration_triggers", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            items: [
+                {
+                    connected: true,
+                    description: "description",
+                    docs_url: "docs_url",
+                    filter_operators: ["filter_operators"],
+                    kind: "kind",
+                    name: "name",
+                    provider: "provider",
+                    raw_payload_example: { key: "value" },
+                    selector_schema: { key: "value" },
+                    title: "title",
+                },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/triggers")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.listIntegrationTriggers();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_connected_integration_triggers (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            items: [
+                {
+                    connected: true,
+                    description: "description",
+                    docs_url: "docs_url",
+                    filter_operators: ["filter_operators"],
+                    kind: "kind",
+                    name: "name",
+                    provider: "provider",
+                    raw_payload_example: { key: "value" },
+                    selector_schema: { key: "value" },
+                    title: "title",
+                },
+            ],
+            next_cursor: "next_cursor",
+            total: 1,
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/triggers/connected")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.listConnectedIntegrationTriggers();
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("list_connected_integration_triggers (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/triggers/connected")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.listConnectedIntegrationTriggers();
+        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
+    });
+
+    test("get_integration_trigger (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            connected: true,
+            description: "description",
+            docs_url: "docs_url",
+            filter_operators: ["filter_operators"],
+            kind: "kind",
+            name: "name",
+            provider: "provider",
+            raw_payload_example: { key: "value" },
+            selector_schema: { key: "value" },
+            title: "title",
+        };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/triggers/provider/trigger_name")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.integrations.getIntegrationTrigger({
+            provider: "provider",
+            trigger_name: "trigger_name",
+        });
+        expect(response).toEqual(rawResponseBody);
+    });
+
+    test("get_integration_trigger (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new Islo({
+            maxRetries: 0,
+            apiKey: "test",
+            apiVersion: "test",
+            environment: { control: server.baseUrl, compute: server.baseUrl },
+        });
+
+        const rawResponseBody = { key: "value" };
+
+        server
+            .mockEndpoint()
+            .get("/integrations/triggers/provider/trigger_name")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.integrations.getIntegrationTrigger({
+                provider: "provider",
+                trigger_name: "trigger_name",
             });
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
@@ -597,24 +851,25 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
             provider: "provider",
-            user: {
-                connected: true,
-                connected_at: "connected_at",
-                username: "username",
-                email: "email",
-                scopes: ["scopes"],
-            },
             tenant: {
                 connected: true,
                 connected_at: "connected_at",
-                username: "username",
                 email: "email",
                 scopes: ["scopes"],
+                username: "username",
+            },
+            user: {
+                connected: true,
+                connected_at: "connected_at",
+                email: "email",
+                scopes: ["scopes"],
+                username: "username",
             },
         };
 
@@ -637,6 +892,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -662,6 +918,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -687,6 +944,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -712,6 +970,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -737,6 +996,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -761,6 +1021,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -786,6 +1047,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -811,6 +1073,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -836,6 +1099,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -861,6 +1125,7 @@ describe("IntegrationsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -878,66 +1143,6 @@ describe("IntegrationsClient", () => {
             return await client.integrations.disconnectIntegration({
                 provider: "provider",
             });
-        }).rejects.toThrow(IsloApi.UnprocessableEntityError);
-    });
-
-    test("list_connected_integration_triggers (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            triggers: [
-                {
-                    provider: "provider",
-                    name: "name",
-                    kind: "kind",
-                    title: "title",
-                    description: "description",
-                    selector_schema: { key: "value" },
-                    filter_operators: ["filter_operators"],
-                    raw_payload_example: { key: "value" },
-                    docs_url: "docs_url",
-                    connected: true,
-                },
-            ],
-        };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/triggers/connected")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.integrations.listConnectedIntegrationTriggers();
-        expect(response).toEqual(rawResponseBody);
-    });
-
-    test("list_connected_integration_triggers (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new Islo({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { control: server.baseUrl, compute: server.baseUrl },
-        });
-
-        const rawResponseBody = { key: "value" };
-
-        server
-            .mockEndpoint()
-            .get("/integrations/triggers/connected")
-            .respondWith()
-            .statusCode(422)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.integrations.listConnectedIntegrationTriggers();
         }).rejects.toThrow(IsloApi.UnprocessableEntityError);
     });
 });

@@ -7,9 +7,9 @@ import type * as IsloApi from "../index.js";
  */
 export interface JobManifestOutput {
     job: IsloApi.JobSection;
+    /** Public job output contract for the job and downstream lines. */
+    outputs?: (Record<string, IsloApi.JobOutputSpec | null> | null) | undefined;
     run: IsloApi.RunSectionOutput;
     schedule?: (IsloApi.ScheduleSection | null) | undefined;
     verification?: (IsloApi.VerificationSection | null) | undefined;
-    /** Public job output contract for the job and downstream lines. */
-    outputs?: (Record<string, IsloApi.JobOutputSpec | null> | null) | undefined;
 }

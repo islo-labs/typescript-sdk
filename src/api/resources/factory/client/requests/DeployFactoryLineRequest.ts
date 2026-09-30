@@ -11,18 +11,18 @@ import type * as IsloApi from "../../../../index.js";
  *                 line: {
  *                     name: "name"
  *                 },
- *                 trigger: {
- *                     type: "integration_trigger",
- *                     provider: "provider",
- *                     name: "name",
- *                     selector: {
- *                         provider: "github"
- *                     }
- *                 },
  *                 stages: [{
  *                         id: "id",
  *                         job: "job"
- *                     }]
+ *                     }],
+ *                 trigger: {
+ *                     type: "integration_trigger",
+ *                     name: "name",
+ *                     provider: "provider",
+ *                     selector: {
+ *                         provider: "github"
+ *                     }
+ *                 }
  *             }
  *         }
  *     }

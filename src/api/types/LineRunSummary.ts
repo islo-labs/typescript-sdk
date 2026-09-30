@@ -3,19 +3,25 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineRunSummary {
+    artifact_count?: number | undefined;
+    artifacts?: IsloApi.ArtifactSummary[] | undefined;
+    completed_at?: (string | null) | undefined;
+    compute_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
+    created_at: string;
+    error_message?: (string | null) | undefined;
+    failure?: (IsloApi.LineRunFailure | null) | undefined;
     id: string;
+    inference_cost_cents?: number | undefined;
     line_name: string;
     line_version_id?: (string | null) | undefined;
-    status: string;
-    trigger: IsloApi.TriggerSummary;
+    manager_turns?: IsloApi.ManagerTurnSummary[] | undefined;
     region?: (string | null) | undefined;
     run_params?: Record<string, unknown> | undefined;
     stages?: IsloApi.LineRunStageSummary[] | undefined;
-    artifact_count?: number | undefined;
-    artifacts?: IsloApi.ArtifactSummary[] | undefined;
-    error_message?: (string | null) | undefined;
-    failure?: (IsloApi.LineRunFailure | null) | undefined;
     started_at?: (string | null) | undefined;
-    completed_at?: (string | null) | undefined;
-    created_at: string;
+    status: string;
+    total_cost_cents?: number | undefined;
+    trigger: IsloApi.TriggerSummary;
+    triggered_by_actor?: (Record<string, unknown> | null) | undefined;
 }

@@ -10,19 +10,22 @@ describe("TenantsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
         const rawResponseBody = {
-            regions: [
+            items: [
                 {
+                    api_url: "https://ca.compute.islo.dev",
+                    is_default: true,
                     key: "us-west",
                     label: "US West",
-                    api_url: "https://ca.compute.islo.dev",
                     ws_url: "wss://ca.compute.islo.dev",
-                    is_default: true,
                 },
             ],
+            next_cursor: "next_cursor",
+            total: 1,
         };
 
         server.mockEndpoint().get("/tenants/regions").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -36,6 +39,7 @@ describe("TenantsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 
@@ -53,6 +57,7 @@ describe("TenantsClient", () => {
         const client = new Islo({
             maxRetries: 0,
             apiKey: "test",
+            apiVersion: "test",
             environment: { control: server.baseUrl, compute: server.baseUrl },
         });
 

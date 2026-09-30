@@ -4,11 +4,11 @@
  * The first failed step within the run's last failed stage attempt.
  */
 export interface LineRunFailureSummary {
+    compute_command_id?: (string | null) | undefined;
+    error_code?: (string | null) | undefined;
+    error_details?: (Record<string, unknown> | null) | undefined;
+    error_message?: (string | null) | undefined;
+    failure_class?: (string | null) | undefined;
     stage_name?: (string | null) | undefined;
     step_name?: (string | null) | undefined;
-    failure_class?: (string | null) | undefined;
-    error_code?: (string | null) | undefined;
-    error_message?: (string | null) | undefined;
-    error_details?: (Record<string, unknown> | null) | undefined;
-    compute_command_id?: (string | null) | undefined;
 }

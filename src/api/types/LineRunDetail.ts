@@ -3,22 +3,28 @@
 import type * as IsloApi from "../index.js";
 
 export interface LineRunDetail {
-    id: string;
-    line_name: string;
-    line_version_id: string;
-    workflow_run_id: string;
-    status: string;
-    trigger: IsloApi.TriggerSummary;
-    region?: (string | null) | undefined;
-    run_params?: Record<string, unknown> | undefined;
-    result_payload?: (Record<string, unknown> | null) | undefined;
-    error_message?: (string | null) | undefined;
-    iteration_count?: number | undefined;
     budget_used_usd?: (string | null) | undefined;
-    retry?: (IsloApi.LineRunRetryAction | null) | undefined;
-    stages?: IsloApi.LineRunStageDetail[] | undefined;
-    failure?: (IsloApi.LineRunFailure | null) | undefined;
-    started_at?: (string | null) | undefined;
     completed_at?: (string | null) | undefined;
+    compute_cost_cents?: number | undefined;
+    cost_rated_at?: (string | null) | undefined;
     created_at: string;
+    error_message?: (string | null) | undefined;
+    failure?: (IsloApi.LineRunFailure | null) | undefined;
+    id: string;
+    inference_cost_cents?: number | undefined;
+    iteration_count?: number | undefined;
+    line_name: string;
+    line_version: IsloApi.LineRunVersionResponse;
+    line_version_id: string;
+    region?: (string | null) | undefined;
+    result_payload?: (Record<string, unknown> | null) | undefined;
+    retry?: (IsloApi.LineRunRetryAction | null) | undefined;
+    run_params?: Record<string, unknown> | undefined;
+    stages?: IsloApi.LineRunStageDetail[] | undefined;
+    started_at?: (string | null) | undefined;
+    status: string;
+    total_cost_cents?: number | undefined;
+    trigger: IsloApi.TriggerSummary;
+    triggered_by_actor?: (Record<string, unknown> | null) | undefined;
+    workflow_run_id: string;
 }

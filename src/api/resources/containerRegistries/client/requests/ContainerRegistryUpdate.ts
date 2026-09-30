@@ -8,7 +8,7 @@
  */
 export interface ContainerRegistryUpdate {
     id: string;
-    repository_prefixes?: string[] | null;
     cloud_role_id?: string | null;
     is_enabled?: boolean | null;
+    repository_prefixes?: string[] | null;
 }
