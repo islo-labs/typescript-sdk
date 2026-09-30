@@ -18,6 +18,10 @@ export function setObjectProperty<T extends object>(object: T, path: string, val
         // Invalid path; do nothing.
         return object;
     }
+    if (keys.some((key) => key === "__proto__" || key === "prototype" || key === "constructor")) {
+        // Never walk into or assign a JavaScript prototype.
+        return object;
+    }
 
     let current: Record<string, any> = object;
     for (let i = 0; i < keys.length - 1; i++) {

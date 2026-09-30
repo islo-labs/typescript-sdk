@@ -9,6 +9,14 @@ interface TestCase {
 }
 
 describe("Test setObjectProperty", () => {
+    test.each(["__proto__.polluted", "constructor.prototype.polluted"])("rejects a prototype path: %s", (path) => {
+        try {
+            setObjectProperty({}, path, true);
+            expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+        } finally {
+            delete (Object.prototype as Record<string, unknown>).polluted;
+        }
+    });
     const testCases: TestCase[] = [
         {
             description: "empty",
