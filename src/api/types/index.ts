@@ -258,3 +258,5 @@ export * from "./WebhookActionAttempt.js";
 export * from "./WebhookDeliveryDetail.js";
 export * from "./WebhookDeliverySummary.js";
 export * from "./WebhookTriggerSection.js";
+export * from "./AgentRunResponse.js";
+export * from "./SrcAgentsSchemasAgentSessionResponse.js";

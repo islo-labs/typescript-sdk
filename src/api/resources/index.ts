@@ -33,3 +33,6 @@ export * as snapshots from "./snapshots/index.js";
 export * as tenants from "./tenants/index.js";
 export * from "./webhooks/client/requests/index.js";
 export * as webhooks from "./webhooks/index.js";
+export * from "./agents/client/requests/AgentSessionCreate.js";
+export * from "./agents/client/requests/GetFactoryAgentRunRequest.js";
+export * as agents from "./agents/index.js";
